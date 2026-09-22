@@ -1,0 +1,318 @@
+diff -r 814095fc3091 src/cl_main.cpp
+--- a/src/cl_main.cpp	Sun Sep 15 23:42:35 2013 +0300
++++ b/src/cl_main.cpp	Mon Sep 23 22:43:35 2013 +0300
+@@ -48,6 +48,8 @@
+ //
+ //-----------------------------------------------------------------------------
+ 
++#include <map>
++#include <functional> 
+ #include "networkheaders.h"
+ #include "a_action.h"
+ #include "a_sharedglobal.h"
+@@ -1335,6 +1337,17 @@
+ }
+ 
+ //*****************************************************************************
++// [Dusk] Helper functor, this lets me use FStrings in a std::map even though
++// FString does not have operator== overloaded.
++struct client_compareStrings : std::binary_function<FString, FString, bool>
++{
++	bool operator( )( const FString& a, const FString& b )
++	{
++		return a.Compare( b ) < 0;
++	}
++};
++
++//*****************************************************************************
+ //
+ void CLIENT_ProcessCommand( LONG lCommand, BYTESTREAM_s *pByteStream )
+ {
+@@ -1407,9 +1420,11 @@
+ 		}
+ 		break;
+ 	case SVCC_ERROR:
+-		{
+-			char	szErrorString[256];
+-			ULONG	ulErrorCode;
++	{
++			const FString   website = TEXTCOLOR_LIGHTBLUE "http://www." DOMAIN_NAME "/" TEXTCOLOR_ORANGE;
++			const FString	errorStart = "\n" TEXTCOLOR_ORANGE "Failed to connect: ";
++			FString			errorString;
++			ULONG			ulErrorCode;
+ 
+ 			// Read in the error code.
+ 			ulErrorCode = NETWORK_ReadByte( pByteStream );
+@@ -1419,30 +1434,25 @@
+ 			{
+ 			case NETWORK_ERRORCODE_WRONGPASSWORD:
+ 
+-				sprintf( szErrorString, "Incorrect password." );
++				errorString = "Incorrect password.";
+ 				break;
+ 			case NETWORK_ERRORCODE_WRONGVERSION:
+ 
+-				sprintf( szErrorString, "Failed connect. Your version is different.\nThis server is using version: %s\nPlease check http://www." DOMAIN_NAME "/ for updates.", NETWORK_ReadString( pByteStream ));
++				errorString.Format( "Your version is different.\nThis server is using version: %s\nPlease check %s for updates.",
++					NETWORK_ReadString( pByteStream ), website.GetChars());
+ 				break;
+ 			case NETWORK_ERRORCODE_WRONGPROTOCOLVERSION:
+-
+-				sprintf( szErrorString, "Failed connect. Your version uses outdated network code.\nPlease check http://www." DOMAIN_NAME "/ for updates." );
++				errorString.Format( "Your version uses outdated network code.\nPlease check %s for updates.", website.GetChars() );
+ 				break;
+ 			case NETWORK_ERRORCODE_BANNED:
+ 
+ 				{
+-					sprintf( szErrorString, "Couldn't connect. \\cgYou have been banned from this server!\\c-" );
++					errorString = TEXTCOLOR_RED "You have been banned from the server!" TEXTCOLOR_ORANGE;
+ 
+ 					// [RC] Read the reason for this ban.
+ 					const char		*pszBanReason = NETWORK_ReadString( pByteStream );
+-					char			szShortBanReason[128]; // Don't allow servers to overflow szErrorString.
+ 					if ( strlen( pszBanReason ))
+-					{
+-						strncpy( szShortBanReason, pszBanReason, 127 );
+-						szShortBanReason[127] = 0;
+-						sprintf( szErrorString, "%s\nReason for ban: %s", szErrorString, szShortBanReason );
+-					}
++						errorString.AppendFormat( "\nReason for ban: %s", pszBanReason );
+ 
+ 					// [RC] Read the expiration date for this ban.
+ 					time_t			tExpiration = (time_t) NETWORK_ReadLong( pByteStream );
+@@ -1453,53 +1463,100 @@
+ 
+ 						pTimeInfo = localtime( &tExpiration );
+ 						strftime( szDate, 32, "%m/%d/%Y %H:%M", pTimeInfo);
+-						sprintf( szErrorString, "%s\nYour ban expires on: %s (server time)", szErrorString, szDate );
++						errorString.AppendFormat( "\nYour ban expires on: %s (server time)", szDate );
+ 					}
+ 					break;
+ 				}
+ 			case NETWORK_ERRORCODE_SERVERISFULL:
+ 
+-				sprintf( szErrorString, "Server is full." );
++				errorString = "Server is full.";
+ 				break;
+ 			case NETWORK_ERRORCODE_AUTHENTICATIONFAILED:
+ 			case NETWORK_ERRORCODE_PROTECTED_LUMP_AUTHENTICATIONFAILED:
+-				{
+-					std::list<std::pair<FString, FString> > serverPWADs;
++			{
++					errorString.Format( "%s authentication failed.\nPlease make sure you are using the exact same WAD(s) as the server, and try again.\n\n",
++						( ulErrorCode == NETWORK_ERRORCODE_PROTECTED_LUMP_AUTHENTICATIONFAILED ) ? "Protected lump" : "Level" );
++
++					enum { Missing, Different, Matches, Extra };
++					std::list<std::pair<FString, FString> >::iterator it;
++					std::map<FString, int, client_compareStrings> wadStates;
++					FString extraWads;
++
++					// [Dusk] Server also sends the IWAD for further processing.
++					const FString iwadName = NETWORK_ReadString( pByteStream ),
++						iwadSum = NETWORK_ReadString( pByteStream );
+ 					const int numServerPWADs = NETWORK_ReadByte( pByteStream );
++
++					errorString.AppendFormat( TEXTCOLOR_NORMAL "IWAD: %s: %s\n", iwadName.GetChars( ),
++						( iwadSum.Compare( NETWORK_GetIWADChecksum( )) == 0) ? TEXTCOLOR_GREEN "MATCHES" : TEXTCOLOR_RED "DIFFERENT" );
++
++					if ( numServerPWADs > 0 )
++						errorString += TEXTCOLOR_NORMAL "PWADs:\n";
++
++					// [Dusk] Mark any PWADs on our end extra by default - the WADs the server does
++					// have loaded will have their state changed in the next loop.
++					for ( it = NETWORK_GetPWADList( )->begin( ); it != NETWORK_GetPWADList( )->end( ); ++it )
++						wadStates[it->first] = Extra;
++
++					// [Dusk] Go through the server's WADs and find our counterparts
+ 					for ( int i = 0; i < numServerPWADs; ++i )
+ 					{
+-						std::pair<FString, FString> pwad;
+-						pwad.first = NETWORK_ReadString( pByteStream );
+-						pwad.second = NETWORK_ReadString( pByteStream );
+-						serverPWADs.push_back ( pwad );
++						const FString pwadName = NETWORK_ReadString( pByteStream ),
++							pwadSum = NETWORK_ReadString( pByteStream );
++						int state = Missing;
++
++						// [Dusk] Compare the data and tell the relationships between pwads (matches/different/missing)
++						// The WAD is considered matched if it is found and the checksum matches, different if
++						// found but checksum is different and missing if not found at all.
++						for ( it = NETWORK_GetPWADList( )->begin( ); it != NETWORK_GetPWADList( )->end( ); ++it )
++						{
++							if ( it->first.Compare( pwadName ) == 0 )
++							{
++								state = ( it->second == pwadSum ) ? Matches : Different;
++								break;
++							}
++						}
++
++						// [Dusk] Mark this down.
++						wadStates[pwadName] = state;
+ 					}
+ 
+-					sprintf( szErrorString, "%s authentication failed.\nPlease make sure you are using the exact same WAD(s) as the server, and try again.", ( ulErrorCode == NETWORK_ERRORCODE_PROTECTED_LUMP_AUTHENTICATIONFAILED ) ? "Protected lump" : "Level" );
+-
+-					Printf ( "The server reports %d pwad(s):\n", numServerPWADs );
+-					for( std::list<std::pair<FString, FString> >::iterator i = serverPWADs.begin( ); i != serverPWADs.end( ); ++i )
+-						Printf( "PWAD: %s - %s\n", i->first.GetChars(), i->second.GetChars() );
+-					Printf ( "You have loaded %d pwad(s):\n", NETWORK_GetPWADList( )->size() );
+-					for( std::list<std::pair<FString, FString> >::iterator i = NETWORK_GetPWADList( )->begin( ); i != NETWORK_GetPWADList( )->end( ); ++i )
+-						Printf( "PWAD: %s - %s\n", i->first.GetChars(), i->second.GetChars() );
+-
++					// [Dusk] Now go through the information we processed and digest it into output. We stuff
++					// the extra WAD information into a separate paragraph since the server does not have them
++					// and the first PWAD list is for the WADs the server has loaded but the client potentially
++					// does not.
++					for ( std::map<FString, int, client_compareStrings>::iterator it = wadStates.begin( ); it != wadStates.end( ); it++ )
++					{
++						if ( it->second != Extra )
++							errorString.AppendFormat( TEXTCOLOR_NORMAL "- %s: %s\n", it->first.GetChars( ),
++								( it->second == Matches ) ? TEXTCOLOR_GREEN "MATCHES" :
++								( it->second == Different ) ? TEXTCOLOR_RED "DIFFERENT" :
++								TEXTCOLOR_RED "MISSING" );
++						else
++							extraWads.AppendFormat( TEXTCOLOR_NORMAL "-" TEXTCOLOR_RED " %s\n", it->first.GetChars( ));
++					}
++
++					// [Dusk] If there were any extraneous WADs, append that information to the error.
++					if ( extraWads.IsNotEmpty( ))
++						errorString.AppendFormat( TEXTCOLOR_ORANGE "\nYou have these WADs loaded the server does not:\n%s",
++							extraWads.GetChars( ));
+ 					break;
+ 				}
+ 			case NETWORK_ERRORCODE_FAILEDTOSENDUSERINFO:
+ 
+-				sprintf( szErrorString, "Failed to send userinfo." );
++				errorString = "Failed to send userinfo to the server.";
+ 				break;
+ 			case NETWORK_ERRORCODE_TOOMANYCONNECTIONSFROMIP:
+ 
+-				sprintf( szErrorString, "Too many connections from your IP." );
++				errorString = "The server has too many connections from your IP.";
+ 				break;
+ 			default:
+ 
+-				sprintf( szErrorString, "Unknown error code: %d!\n\nYour version may be different. Please check http://www." DOMAIN_NAME "/ for updates.", static_cast<unsigned int> (ulErrorCode) );
++				errorString.Format( "Unknown error code recieved: %lu\nYour version may be different. Please check http://www." DOMAIN_NAME "/ for updates.", ulErrorCode );
+ 				break;
+ 			}
+ 
+-			CLIENT_QuitNetworkGame( szErrorString );
++			CLIENT_QuitNetworkGame(( errorStart + errorString ).GetChars( ));
+ 		}
+ 		return;
+ 	case SVC_HEADER:
+diff -r 814095fc3091 src/network.cpp
+--- a/src/network.cpp	Sun Sep 15 23:42:35 2013 +0300
++++ b/src/network.cpp	Mon Sep 23 22:43:35 2013 +0300
+@@ -106,6 +106,7 @@
+ 
+ static	std::list<std::pair<FString, FString> >	g_PWADs;
+ static	FString		g_IWAD; // [RC/BB] Which IWAD are we using?
++static	FString		g_IWADChecksum; // [Dusk] MD5 checksum of the IWAD
+ 
+ FString g_lumpsAuthenticationChecksum;
+ FString g_MapCollectionChecksum;
+@@ -904,6 +905,13 @@
+ }
+ 
+ //*****************************************************************************
++// [Dusk]
++const char *NETWORK_GetIWADChecksum( )
++{
++	return g_IWADChecksum.GetChars( );
++}
++
++//*****************************************************************************
+ //
+ void NETWORK_AddLumpForAuthentication( const LONG LumpNumber )
+ {
+@@ -1207,17 +1215,22 @@
+ 	// Collect all the PWADs into a list.
+ 	for ( ULONG ulIdx = 0; Wads.GetWadName( ulIdx ) != NULL; ulIdx++ )
+ 	{
+-		// Skip the IWAD, zandronum.pk3, files that were automatically loaded from subdirectories (such as skin files), and WADs loaded automatically within pk3 files.
+-		if (( ulIdx == ulRealIWADIdx ) ||
+-			( stricmp( Wads.GetWadName( ulIdx ), GAMENAMELOWERCASE ".pk3" ) == 0 ) ||
++		// Skip zandronum.pk3, files that were automatically loaded from subdirectories (such as skin files), and WADs loaded automatically within pk3 files.
++		if (( stricmp( Wads.GetWadName( ulIdx ), GAMENAMELOWERCASE ".pk3" ) == 0 ) ||
+ 			( Wads.GetLoadedAutomatically( ulIdx )) ||
+ 			( strchr( Wads.GetWadName( ulIdx ), ':' ) != NULL ))
+ 		{
+ 			continue;
+ 		}
++
+ 		char MD5Sum[33];
+ 		MD5SumOfFile ( Wads.GetWadFullName( ulIdx ), MD5Sum );
+-		g_PWADs.push_back( std::pair<FString, FString> ( Wads.GetWadName( ulIdx ), MD5Sum ) );
++
++		// [Dusk] Store the IWAD checksum elsewhere.
++		if ( ulIdx == ulRealIWADIdx )
++			g_IWADChecksum = MD5Sum;
++		else
++			g_PWADs.push_back( std::pair<FString, FString> ( Wads.GetWadName( ulIdx ), MD5Sum ) );
+ 	}
+ }
+ 
+diff -r 814095fc3091 src/network.h
+--- a/src/network.h	Sun Sep 15 23:42:35 2013 +0300
++++ b/src/network.h	Mon Sep 23 22:43:35 2013 +0300
+@@ -351,6 +351,7 @@
+ 
+ std::list<std::pair<FString, FString> >	*NETWORK_GetPWADList( void ); // [RC]
+ const char		*NETWORK_GetIWAD( void );
++const char      *NETWORK_GetIWADChecksum( ); // [Dusk]
+ void			NETWORK_AddLumpForAuthentication( const LONG LumpNumber );
+ void			NETWORK_GenerateMapLumpMD5Hash( MapData *Map, const LONG LumpNumber, FString &MD5Hash );
+ void			NETWORK_GenerateLumpMD5Hash( const int LumpNum, FString &MD5Hash );
+diff -r 814095fc3091 src/sv_main.cpp
+--- a/src/sv_main.cpp	Sun Sep 15 23:42:35 2013 +0300
++++ b/src/sv_main.cpp	Mon Sep 23 22:43:35 2013 +0300
+@@ -2175,8 +2175,10 @@
+ //
+ void SERVER_ClientError( ULONG ulClient, ULONG ulErrorCode )
+ {
+-	NETWORK_WriteByte( &g_aClients[ulClient].PacketBuffer.ByteStream, SVCC_ERROR );
+-	NETWORK_WriteByte( &g_aClients[ulClient].PacketBuffer.ByteStream, ulErrorCode );
++	BYTESTREAM_s *pStream = &g_aClients[ulClient].PacketBuffer.ByteStream;
++
++	NETWORK_WriteByte( pStream, SVCC_ERROR );
++	NETWORK_WriteByte( pStream, ulErrorCode );
+ 
+ 	// Display error message locally in the console.
+ 	switch ( ulErrorCode )
+@@ -2190,24 +2192,28 @@
+ 		Printf( "Incorrect version.\n" );
+ 
+ 		// Tell the client what version this server using.
+-		NETWORK_WriteString( &g_aClients[ulClient].PacketBuffer.ByteStream, DOTVERSIONSTR );
++		NETWORK_WriteString( pStream, DOTVERSIONSTR );
+ 		break;
+ 	case NETWORK_ERRORCODE_BANNED:
+ 
+ 		Printf( "Client banned.\n" );
+ 
+ 		// Tell the client why he was banned, and when his ban expires.
+-		NETWORK_WriteString( &g_aClients[ulClient].PacketBuffer.ByteStream, SERVERBAN_GetBanList( )->getEntryComment( g_aClients[ulClient].Address ));
+-		NETWORK_WriteLong( &g_aClients[ulClient].PacketBuffer.ByteStream, (LONG) SERVERBAN_GetBanList( )->getEntryExpiration( g_aClients[ulClient].Address ));
++		NETWORK_WriteString( pStream, SERVERBAN_GetBanList( )->getEntryComment( g_aClients[ulClient].Address ));
++		NETWORK_WriteLong( pStream, (LONG) SERVERBAN_GetBanList( )->getEntryExpiration( g_aClients[ulClient].Address ));
+ 		break;
+ 	case NETWORK_ERRORCODE_AUTHENTICATIONFAILED:
+ 	case NETWORK_ERRORCODE_PROTECTED_LUMP_AUTHENTICATIONFAILED:
+ 
+-		NETWORK_WriteByte( &g_aClients[ulClient].PacketBuffer.ByteStream, NETWORK_GetPWADList( )->size( ));
++		// [Dusk] Send the IWAD data as well for the client to compare.
++		NETWORK_WriteString( pStream, NETWORK_GetIWAD( ));
++		NETWORK_WriteString( pStream, NETWORK_GetIWADChecksum( ));
++		NETWORK_WriteByte( pStream, NETWORK_GetPWADList( )->size( ));
++
+ 		for( std::list<std::pair<FString, FString> >::iterator i = NETWORK_GetPWADList( )->begin( ); i != NETWORK_GetPWADList( )->end(); ++i )
+ 		{
+-			NETWORK_WriteString( &g_aClients[ulClient].PacketBuffer.ByteStream, i->first.GetChars( ));
+-			NETWORK_WriteString( &g_aClients[ulClient].PacketBuffer.ByteStream, i->second.GetChars( ));
++			NETWORK_WriteString( pStream, i->first.GetChars( ));
++			NETWORK_WriteString( pStream, i->second.GetChars( ));
+ 		}
+ 
+ 		Printf( "%s authentication failed.\n", ( ulErrorCode == NETWORK_ERRORCODE_PROTECTED_LUMP_AUTHENTICATIONFAILED ) ? "Protected lump" : "Level" );

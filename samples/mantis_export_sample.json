@@ -1,0 +1,2691 @@
+[
+    {
+        "mantis_id": 4423,
+        "project_id": 1,
+        "reporter": "__Sidle",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 10,
+        "title": "Allow bot chatlump to read from Language",
+        "description": "Botchat files currently don't have a way to access language lumps. Having that supported opens up translations to be farther reaching/more seamless.\r\n\r\nChecking for language via l:\"\" seems ideal for legacy files, as well as avoiding the $ symbol already being the leading character for substitutions ($player_random_notself, $level_name, etc.)",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2024-10-11T19:16:49",
+        "updated_at": "2024-10-11T19:16:49",
+        "attachments": [],
+        "comments": []
+    },
+    {
+        "mantis_id": 4,
+        "project_id": 1,
+        "reporter": "Anonymous",
+        "handler": "Dusk",
+        "priority": 30,
+        "status": 90,
+        "title": "Make ban descriptions a little \"nicer\".",
+        "description": "I remember this discussion on Doomworld:\n\nhttp://www.doomworld.com/vb/doomworld-news/51717-skulltag-98-3rd-mix/\n\nSomeone was unfairly caught in a range ban and they felt alienated by the ban messages.  I think that there are a few things here that could be done better:\n\n1. For local bans, when the user caught in an IP range connects to the server, add a hard-coded message after the ban message that says something to the effect of:\n\n\"Your IP (<ip address>) has been banned from this server.  If you feel this is in error, please contact <admin email address>.\"\n\n2. For master bans, use this message:\n\n\"Your IP (<ip address>) has been banned from Skulltag.  If you feel this is in error, please contact <url to contact form  or email address>.\"\n\n3. For forum bans, remove profanity from the existing bans, and add a link to a contact form or email address, similar to 2.\n\nJust a small thing or two that might go a little way in improving our image.",
+        "steps_to_reproduce": "",
+        "additional_information": "By the way, you might want to not give people control over the \"priority\" of bugs. :)",
+        "created_at": "2010-09-05T16:21:27",
+        "updated_at": "2018-09-30T22:18:04",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 2,
+                "author": "Blzut3",
+                "text": "\"By the way, you might want to not give people control over the \"priority\" of bugs. :)\"\r\n\r\nI believe you can only set it initially.  Once you report we're free to make corrections here.  I think for now we should just wait to see if this will be abused.",
+                "created_at": "2010-09-05T16:42:05"
+            },
+            {
+                "comment_id": 5,
+                "author": "Blzut3",
+                "text": "I was told that administration issues should be kept on the forums, so I'm closing this issue.",
+                "created_at": "2010-09-06T16:29:58"
+            },
+            {
+                "comment_id": 6,
+                "author": "Eruanna",
+                "text": "I am reopening this for points 1 and 2 - this isn't COMPLETELY apparant in the original suggestion and they were undermined by point 3 which made this appear to be an admin issue. Nevertheless, point 1 and 2 are meant as points for the Skulltag binary itself, rather than admin practices. This may need further feedback before consideration, however.",
+                "created_at": "2010-09-06T23:45:22"
+            },
+            {
+                "comment_id": 7,
+                "author": "DevilHunter",
+                "text": "I was gonna make a suggestion like this... But only to the VoteKick Reasons...\r\n\r\nShould make it more like \"You have been VoteKicked, and Temp-banned for 5 mins.\" \r\n\r\nThe current message seems a bit harsh, and I remember we had a discussion about this, but was never put in.  Just want to make it more user friendly for everyone..",
+                "created_at": "2010-09-07T03:10:43"
+            },
+            {
+                "comment_id": 13424,
+                "author": "Dusk",
+                "text": "https://bitbucket.org/Torr_Samaho/zandronum/pull-requests/20",
+                "created_at": "2015-09-05T17:08:03"
+            },
+            {
+                "comment_id": 13425,
+                "author": "cobalt",
+                "text": "Issue addressed by commit 9b63d506cbc5: [b][url=https://bitbucket.org/Torr_Samaho/zandronum/commits/9b63d506cbc5]Being banned from the server now shows contact information, being masterbanned now directs the banned user to the forums (resolves 4)[/url][/b]\nCommitted by Teemu Piippo [Dusk] on Saturday 05 September 2015 20:07:11\n\nChanges in files:\n[code]\n docs/zandronum-history.txt |   1 +\n src/cl_main.cpp            |  19 ++++++++++++++++++-\n src/sv_ban.cpp             |  11 ++++++++++-\n src/sv_ban.h               |   1 +\n src/sv_main.cpp            |  13 ++++++++++---\n 5 files changed, 40 insertions(+), 5 deletions(-)\n\n[/code]",
+                "created_at": "2015-09-05T17:45:33"
+            },
+            {
+                "comment_id": 13484,
+                "author": "DevilHunter",
+                "text": "Ok... I'm gonna ask it.. How does this work exactly?? Does it just provide the host email to the user?",
+                "created_at": "2015-09-11T08:04:40"
+            },
+            {
+                "comment_id": 13485,
+                "author": "Dusk",
+                "text": "It provides whatever sv_hostemail is set to.",
+                "created_at": "2015-09-11T18:51:17"
+            },
+            {
+                "comment_id": 13533,
+                "author": "DevilHunter",
+                "text": "Ah, well it works.",
+                "created_at": "2015-09-19T17:54:46"
+            },
+            {
+                "comment_id": 13625,
+                "author": "Dusk",
+                "text": "WaTaKiD confirmed this is fixed.",
+                "created_at": "2015-10-07T16:00:56"
+            }
+        ]
+    },
+    {
+        "mantis_id": 38,
+        "project_id": 1,
+        "reporter": "AlexMax",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 30,
+        "title": "\"sv_externalbanfile\" replaces master banlist",
+        "description": "I have found out recently that 98c seems to take your server off the master banlist if \"sv_enforcemasterbanlist\" is false.  It also appears impossible to whitelist IP's that are on the master banlist.\r\n\r\nInstead of a banlist which is distributed by the master server, I have a much better idea, a new variable called sv_externalbanfile.  This variable would be set to a webpage where a hosted banlist is retrieved, in plain text, in a similar format to the existing banlists.  By default, it would point to the a banlist hosted by skulltag, but it can be changed to another external URL if desired.\r\n\r\nWhitelisting should also take priority over the both the local and external ban file.  This is so if we get a user who is caught in an IP range ban meant for someone else, we can unban them manually.",
+        "steps_to_reproduce": "",
+        "additional_information": "Some thoughts on why a centrally managed banlist is a bad idea:\r\n\r\nhttp://alexmax2742.blogspot.com/2010/09/few-thoughts-on-policing-multiplayer.html",
+        "created_at": "2010-09-19T21:23:54",
+        "updated_at": "2022-02-20T07:49:37",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 124,
+                "author": "Torr Samaho",
+                "text": "Before I added the hiding mechanism I proposed very similar things to SuperGod (user selectable launcher side hiding of the servers without the ban list or a special mark on those servers in the launcher list to distinguish them from the other servers) but he refused to accept either of them and continued to insist that sv_enforcemasterbanlist has to be removed completely. The master side hiding was the only thing he eventually accepted, after I made clear that I'll never remove sv_enforcemasterbanlist.",
+                "created_at": "2010-09-21T20:14:21"
+            },
+            {
+                "comment_id": 102,
+                "author": "Torr Samaho",
+                "text": "I pretty much agree with your blog post, but I'm not the one who needs to be convinced (if it was just for me, the master ban list would never even have been broadcasted to the servers). If you want a way to disable / whitelist any of the master bans on a server but still have that server listed on the master server, talk to the master server admins and convince them to allow this.\r\n\r\nOnce this is done, we can start talking about how to implement this. For instance, having the local whitelist take precedence over the master banlist is trivial to implement.",
+                "created_at": "2010-09-19T21:39:56"
+            },
+            {
+                "comment_id": 118,
+                "author": "Spleen",
+                "text": "If we broadcast servers that use whitelists, it's the same as broadcasting a server that doesn't enforce the master banlist, since someone could simply whitelist arbitrary hackers or even whitelist everyone.\r\n\r\nThat said, I'm in favor of a \"shield icon\" system.  In Doomseeker/IDE, servers that strictly enforce the master banlist would have a shield icon next to them, showing that they are secured against hackers.  Servers that don't enforce the master banlist, or use a whitelist, would have some kind of alert icon in place of the shield icon.  Additionally, a player will be asked for confirmation when they try to join a server that doesn't enforce the banlist, asking whether they truly want to join that server.  However, this confirmation dialog could be turned off in the options.\r\n\r\nThis system would allow some groups of players to play in \"safe\" servers without hackers, while allowing other groups of players more freedom by letting the server hosts manage their own banlists.  I'm willing to work on both Skulltag and Doomseeker to make this a reality, but I am not sure what would have to be done for IDE.\r\n\r\nI also like the idea of allowing people to grab an external banlist, as a separate feature.",
+                "created_at": "2010-09-21T00:22:03"
+            },
+            {
+                "comment_id": 120,
+                "author": "Blzut3",
+                "text": "I can't remember if we had a reason against it or if my posts just got ignored, but I originally suggested making the list of servers which don't enforce the ban list opt-in (check box in the Doomseeker config \"See all servers including those which don't enforce the ban list\").  Of course the default would be to not list them.",
+                "created_at": "2010-09-21T01:12:30"
+            },
+            {
+                "comment_id": 129,
+                "author": "Eruanna",
+                "text": "This is one reason why I want to open up additional master servers for the community. One of them even being that there are absolutely no rules or bans. Skulltag is a game source port - not an MMO. While we would like to maintain a community that is protected from the idiots and morons that seek to drive it apart, they will always be strong in both numbers and persistence. The best solution is to allow them to thrive - and hopefully mature - on their own, in another place that hopefully will become popular enough for their needs. But this idea might be too ideal.",
+                "created_at": "2010-09-22T09:27:04"
+            },
+            {
+                "comment_id": 134,
+                "author": "Spleen",
+                "text": "What do you guys think about releasing official master server binaries?",
+                "created_at": "2010-09-22T17:29:37"
+            },
+            {
+                "comment_id": 136,
+                "author": "Torr Samaho",
+                "text": "I think it would be better if the GPLed master server is updated to work with the current Skulltag version instead. GhostlyDeath asked about the protocol changes some time ago, but I think he didn't implement them yet.",
+                "created_at": "2010-09-22T19:57:10"
+            },
+            {
+                "comment_id": 1015,
+                "author": "AlexMax",
+                "text": "I actually have misgivings with the VAC shield system.  I think it's perfectly acceptable for a paid game, but for a free one, I think there is an issue.\r\n\r\nFirst, ask yourself why you would want to not use the master banlist as it's handed out now?  There are two reasons:\r\n\r\n1. You are hosting a \"Legitimate\" server that happens to be inconvenienced by the master banlist that is in place.\r\n2. You are an abusive server trying to fuck with Skulltag players by attracting hackers, using your server as a hack testing ground against unsuspecting players, etc.\r\n\r\nNumber 1 is how FUNCRUSHER+ was for a period of 3-4 months after some community drama necessitated it.  In this case, if VAC shields were used and filtered out, I would lose many players who would think that my servers simply shut down for one reason or another (when they're actually just being filtered out), and why not filter by VAC because those servers are full of hackers, right?\r\n\r\nNumber 2 is the reason that the master banlist was forced on in 98c, if I recall correctly.  However, I think that this was the complete wrong reaction.  A forced master banlist targets bad clients who are joining servers, when what you actually wanted to take care of was malicious server admins \"attacking\" the master server with \"poisonous\" servers.  Hosting a server that attracts hackers is no better, in my opinion, than someone who spams the master with tons of bot servers and a rude message in the hostname, and should be dealt with similarly, using an IP block at the master level to prevent them from reporting to the master and a limit to the number of untrusted servers at the same time.  You don't need an enforced master banlist for that.\r\n\r\nTo summarize, having a \"trusted\" shield only hurts legitimate server owners who are inconvenienced by the master server forced banlist, while actual malicious servers can be IP banned and untrusted ones throttled.  In fact, with sv_externalbanfile, you can conceivably have a right click menu in Doomseeker that links directly to the banlist in question so you can see for yourself what IP's the server bans.\n\n",
+                "created_at": "2011-02-07T17:13:38"
+            },
+            {
+                "comment_id": 1028,
+                "author": "Torr Samaho",
+                "text": "I never liked to enforce the master banlist, but the current hiding system is the only compromise I could find that on the one hand the master server admins accepted and on the other hand still leaves full control of a server to the server runner.\r\n\r\nThe people who fought for the banlist enforcement all retired by now, so probably the current admins think differently. You'll have to discuss with those people though. In case they agree not to hide servers which don't enforce the master bans, they just need to restart the master with a different option. When implementing the hiding, I made it optional from the get go.\n\n",
+                "created_at": "2011-02-09T12:20:45"
+            },
+            {
+                "comment_id": 1040,
+                "author": "AlexMax",
+                "text": "I will do so.  However, in the meantime, do you have any thoughts on sv_externalbanfile itself?  Would having it grab a webpage be feasible?  What about multiple sources (sv_externalbanfile \"http://www.skulltag.com/bans.txt /opt/skulltag/lists/banlist.txt\")?",
+                "created_at": "2011-02-11T17:03:14"
+            },
+            {
+                "comment_id": 6107,
+                "author": "Watermelon",
+                "text": "I was working on an HTML parser for a raw banlist. I was thinking the sv_externalbanfile would point to (as Alex posted) a link? I have the code to open the website and parse it, though it's sort of borrowed for proof of concept from some random C++ forum.",
+                "created_at": "2013-03-12T04:20:11"
+            },
+            {
+                "comment_id": 6108,
+                "author": "Dusk",
+                "text": "Why would it need to be html-parsed anyway? Aren't banlists usually just plain text? :?",
+                "created_at": "2013-03-12T14:31:42"
+            },
+            {
+                "comment_id": 6109,
+                "author": "Watermelon",
+                "text": "I'm not sure of how well C++ parses internet files, though that's true that there won't be (or ideally shouldn't be) any HTML in a banlist. I've got a basic program that actually parses a website well, but I'm unsure of how to handle users putting in malformed URLs or weird timeout's happening and such.",
+                "created_at": "2013-03-12T15:45:24"
+            },
+            {
+                "comment_id": 6171,
+                "author": "Metal",
+                "text": "I'm gonna go ahead and bump this. I disagree with having the master banlist \"off\" by default. That would be terrible. I also don't completely agree with public servers being able to whitelist people who are master banned. However, if we were to allow it, and in this case the majority would probably rule it forward, I would really highly recommend flagging servers in Doomseeker and IDE that use this feature as \"insecure\" or \"untrusted\".",
+                "created_at": "2013-03-24T18:59:44"
+            },
+            {
+                "comment_id": 6172,
+                "author": "Watermelon",
+                "text": "This can also be done but we'd need something like cURL to be used, it's a widespread library that is used to parse websites and such. This would effectively allow us to maintain a master ban list and people may opt out of it. By default it would be on. Also it should flag as \"unsafe/insecure\" if not pointed to zandronum.com/banlist.txt or wherever it's stored.",
+                "created_at": "2013-03-24T19:56:13"
+            },
+            {
+                "comment_id": 6174,
+                "author": "Dusk",
+                "text": "If we go for this kind of external banlisting (about what we've had some good discussion with the staff recently), would it make sense to have a \"banlist server\" which could be queried? That way we could minimize banlist traffic by using a protocol similar to the one used to enforce master bans.\r\n\r\n<@HeavenWraith> actually, we should bring torr over here [#stmods] one day and discuss all of this\r\n\r\nI got a feeling there's still a lot to chat about.\n\n",
+                "created_at": "2013-03-26T14:49:44"
+            },
+            {
+                "comment_id": 7661,
+                "author": "AlexMax",
+                "text": "This has come up again, and I actually think that in lieu of my plans of grandiose distributed login system (that I haven't really worked on at all, so blame me), the \"Trusted Shield\" would be a reasonable compromise.\r\n\r\nHere's something that's a little more formal:\r\n* Servers report to clients a 'trusted' variable which can be on or off.  The trusted variable is read-only and can't be modified directly.\r\n* Servers can either shut off the master banlist wholesale or whitelist masterbans.  However, if either is done, the trusted variable is shut off.  Otherwise, it stays on.\r\n\r\nEDIT: Apparently there was \"trusted icon\" functionality at some point\r\n\r\nhttps://bitbucket.org/Blzut3/doomseeker/commits/e27f625057e68aae74beb4dbb0a9b819894bf2a5\r\n\r\nbut it broke recently.  Once that is fixed, I think the only remaining step is to change the master to not delist people for not using the master banlist.  A HTTP banlist system can come later.\n\n",
+                "created_at": "2013-12-03T00:11:30"
+            },
+            {
+                "comment_id": 15113,
+                "author": "GramGreen",
+                "text": "Hey, sorry to revive this years-old ticket but I was just wondering what the status of this change is? Please correct me if I am wrong but this is what I seem to have so far:\r\n\r\n1. sv_enforcemasterbanlist will be optional and servers choosing not to use the master server banlist will not be removed from the master server.\r\n\r\n2. Servers with sv_enforcemasterbanlist enabled will be displayed on clients (Doomseeker and Doom Explorer) as having a (shield?) icon, similar to VALVE anti-cheat.\r\n\r\n3. sv_externalbanlist would presumably be able to take a list of banlists so that server hosts can have an easier time. The goal here is for readily-available http-banlists to be mixed and matched until desired results are achieved (for instance, a DNSBLacklist similar to things that popular IRC modules use, a banlist only for cheaters, and more).\r\n\r\nAm I correct in assuming these three ideas are the core concepts of this change? I'm not a Zandronum developer but I've done my fair share of C++ and these don't seem like hard changes to implement. I can provide a proof of concept and submit a pull request in the near future if this is okay?\n\n",
+                "created_at": "2016-06-25T23:55:37"
+            },
+            {
+                "comment_id": 15367,
+                "author": "Dusk",
+                "text": "I think with the new master server policy of only banning cheaters, I think the need for this feature has been obsoleted and this should not be implemented. Too much work for no good reason.\n\n",
+                "created_at": "2016-07-17T21:22:11"
+            },
+            {
+                "comment_id": 22138,
+                "author": "Combinebobnt",
+                "text": "don't worry guys just 2 more patches",
+                "created_at": "2022-02-20T07:49:37"
+            }
+        ]
+    },
+    {
+        "mantis_id": 11,
+        "project_id": 1,
+        "reporter": "XutaWoo",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 90,
+        "title": "Remove skin size limit for base skins.",
+        "description": "As stated here (http://www.skulltag.com/forum/viewtopic.php?f=33&t=26141), the current skin size limit prevents 32x32 sprites from being uses for a 32x32 player.\r\n\r\nNow, while that's definantly odd, something else hit me.\r\n\r\nWhy are the base skins limited in size?\r\nSo now I'm suggesting that the base skin of a player is ignored by the skin checker; if it's way too large or too small, then that's the modder's decision and might just plain be intentional.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-08T21:24:04",
+        "updated_at": "2010-09-10T06:37:32",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 11,
+                "author": "Torr Samaho",
+                "text": "Unfortunately, it's crucial to enforce this limit. Before I implemented it some people added huge spikes to their local player sprites making players much more visible and for instance also spot-able behind obstacles. But the size limit only prevents you from using sprites that are considerably higher / wider than the player height / width and I don't see any reason why you would want to do this.\r\n\r\nIn particular, the check itself allows small player classes to be used with correspondingly small sprites. The problem you encounter here is a bug of the check: Your wad doesn't replace Doom2's PLAYB1 lump, that's why the check thinks that you are using a sprite of height 56 with a player class of height 32. What the check doesn't take into account is that Doom2's PLAYB1 lump is never used when your wad is loaded because it has a PLAYA1B1 lump. So, the check needs to be fixed (this is why your bug report is still open) but needs to stay. Till the check is fixed, you can workaround the problem be replacing all of Doom2's PLAY* lumps.",
+                "created_at": "2010-09-09T19:44:16"
+            },
+            {
+                "comment_id": 12,
+                "author": "Torr Samaho",
+                "text": "We need a resolution type \"no\" or \"denied\" to mark denied feature requests.",
+                "created_at": "2010-09-09T19:47:45"
+            },
+            {
+                "comment_id": 16,
+                "author": "Blzut3",
+                "text": "Should be there now, but I haven't tested it.",
+                "created_at": "2010-09-09T23:25:22"
+            },
+            {
+                "comment_id": 19,
+                "author": "Torr Samaho",
+                "text": "Thanks! Works fine.",
+                "created_at": "2010-09-10T06:37:32"
+            }
+        ]
+    },
+    {
+        "mantis_id": 31,
+        "project_id": 1,
+        "reporter": "AlexMax",
+        "handler": "Torr Samaho",
+        "priority": 30,
+        "status": 90,
+        "title": "New DMFlag: \"Use Classic PRNG\"",
+        "description": "This is a well known issue with modern source ports, but since there isn't a bug for it on the bugtracker I'll post it here.\r\n\r\nBasically, the doom PRNG resulted in higher than average SSG damage, and many oldschool players complain that the skulltag SSG feels \"nerfed\" compared to the Doom 2 rendition.  It would be nice if there was a DMFlag to switch back to the old PRNG.",
+        "steps_to_reproduce": "",
+        "additional_information": "The Doom wiki covers the major points:\r\n\r\nhttp://doomwiki.org/wiki/Random",
+        "created_at": "2010-09-16T23:22:48",
+        "updated_at": "2018-09-30T22:43:30",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 67,
+                "author": "unknownna",
+                "text": "If what you say is true, then IMHO, this should have been added in ages ago. Perhaps a compatibility flag? But wouldn't it need the old blockmap behavior as well?\r\n\r\nhttp://www.doomworld.com/vb/showthread.php?s=&postid=880116#post880116:\r\n-restored original Doom behavior for hitscans to only check actors which have their center in the blockmap cells being checked, compatibility optioned by COMPATF_HITSCAN\r\n-re-added the original hitscan checking code using a cross-section of the actor instead of the bounding box, compatibility optioned with COMPATF_HITSCAN\n\n",
+                "created_at": "2010-09-17T09:49:57"
+            },
+            {
+                "comment_id": 71,
+                "author": "TIHan",
+                "text": "I can see this could be interesting. I have noticed myself that in Odamex and ZDaemon the SSG deals more damage than Skulltag. But then again, you probably want to consult with ZDoom on this.",
+                "created_at": "2010-09-17T20:34:58"
+            },
+            {
+                "comment_id": 131,
+                "author": "unknownna",
+                "text": "> ZD's does 4.24% more damage than ST's. IIRC this has not been fixed in ST (So ST's SSG is the same as ZDoom's). In ZD it is a DMFlag and it's typically only on on OS 1on1 servers, not CTF/FFA. The difference is so minor anyway that most people wont notice it, but it IS there.\r\n\r\n> I've heard lots of claims that the ZDoom SSG is less powerful, just from gut feeling. Now, gut feeling isn't scientific, so since it was a possible \"compatability problem\" for me, I decided to go out and research it. Here is what I found. ZDoom uses a pseudo random number generator, Doom2.exe uses a fixed table of 256 numbers, ranging from 0 to 255, all accounted for. Doom2.exe iterates through this table linearly.\r\n\r\n> There are exactly 256 different SSG shots patterns possibile in Doom2.exe. Each shot pattern does the same damage every time. I even wrote a little mod that plays back a demo, takes a screenshot of each ssg shot, and points out the profile number for you to look in another chart I made (which contains all the different SSG spread patterns).\r\n\r\n> The ZD SSG uses the doom2.exe mode. Dash also did damage calculations (where the 4.24% comes from), and the ZD SSG does more damage on average.\r\n\r\nZDaemon has something called \"classic weapon strength\". It's toggled by setting \"sv_oldrandom\" to 1 or 0.\r\n\r\n> \"Random\" numbers on a computer are normally pseudo-random: not truly random. This applies to practically all computer programs out there. The reason is that computers are deterministic machines and it's pretty hard to find a source of true randomness.\r\n\r\n> Every pseudo-random number generator (PRNG) generates some sequence of numbers that look random enough to pass statistical tests. That's usually good enough for games and other simulations (but not for crypto work; you need fancier PRNGs there). Whether that's done via some math algorithm or some table is pretty much irrelevant. What really matters is the mean and std. deviation of the sequence.\r\n\r\n> The dmflag (sv_oldrandom) you're asking about determines if ZDaemon uses the PRNG of Doom (OS) or the one of ZDoom (NS). Their means are not very different, but their std. deviations are (OS PRNG has higher std. dev. than the NS one); that is important with weapons such as the SG, SSG, CG where you fire repeated shots at the opponent (vs. the RL for example where the damage per hit is much larger); the increased std. deviation means that wild shots from downtown will bring the other guy down. Of course there is the flip side of the coin: you might hit someone right on the chest and very little damage happens (which also means that you should not blame every SSG miss to netcode, lag, etc)\r\n\r\n> Overall, it's fairly clear that the OS PRNG makes the SG, SSG, CG more effective than otherwise. This is just the way things are; I'm not implying that one way is better than the other. Please avoid turning this into the millionth OS/NS debate. There is no point in that.\r\n\r\n> Here is my comment from the X-Doom m_random.cpp source tree:\r\n\r\n// [Dash|RD] -- Make random number generation use the original random number chart.\r\n// The way we pick numbers from this chart is NOT the way the original\r\n// game does it, but that's hardly relevant. We aren't trying to play back\r\n// demos afterall. More work may need to be done on this.\r\n//\r\n// Why did I do it? With this chart the game appears to pick consistently higher\r\n// numbers. This should address the reports that the SSG (and various other weapons)\r\n// do less damage in ZDaemon.\r\n//\r\n// SSG damage statistics, 20 shot survey.\r\n// PrBoom -- Max: 245 Min: 165 Median: 210 Average: 206.5 Total: 4,130\r\n// ZDaemon -- Max: 215 Min: 155 Median: 195 Average: 194.5 Total: 3,890\r\n// This Code -- Max: 245 Min: 155 Median: 205 Average: 202.75 Total: 4,055\r\n//\r\n// Obviously you want to give a bit of room for randomness, but has is definitely been my experience that\r\n// this code statistically gives off higher `random' numbers. Other shotgun guru's have also claimed that\r\n// this code fixes their issues with weapon damage.\n\n",
+                "created_at": "2010-09-22T12:10:13"
+            },
+            {
+                "comment_id": 872,
+                "author": "Torr Samaho",
+                "text": "So, technically speaking, it should be sufficient if I add a compat flag that makes FRandom::operator()() return P_Random() and FRandom::Random2() return \"P_Random()-P_Random()\" where P_Random() gets the next number from Vanilla Doom's random table?",
+                "created_at": "2011-01-25T02:07:02"
+            },
+            {
+                "comment_id": 873,
+                "author": "AlexMax",
+                "text": "I admit that I'm not that familiar with ZDoom's code, so I can't give you a definitive yes.  However, that would probably be a good starting point.\r\n\r\nDefinitely would recommend a numbered 98e beta though, so we can test it using real world conditions.  I've been looking forward to the next version of Skulltag anyway because of your fixes to keepteams. :)",
+                "created_at": "2011-01-25T02:22:30"
+            },
+            {
+                "comment_id": 886,
+                "author": "Torr Samaho",
+                "text": "Ok, I excavated P_Random from the original Doom source and added the new flag compat_oldrandom that replaces ZDoom's rng in the functions I mentioned above. Before I roll out an official beta build, I'd like somebody to confirm that [url=http://www.dailydoomer.com/tsst/misc/SkullDev98eOldRandomTest.7z]this[/url] at least seems to be somewhat working.",
+                "created_at": "2011-01-29T01:11:24"
+            },
+            {
+                "comment_id": 889,
+                "author": "unknownna",
+                "text": "The compat flag isn't cleared when I set another compatibility mode. I also wonder, what is exactly affected by this? The player weapons only? Does it take code pointers such as A_Explode into account?\r\n\r\nEDIT:\r\n\r\nOk, it's in compatflags2.\n\n",
+                "created_at": "2011-01-29T04:24:57"
+            },
+            {
+                "comment_id": 893,
+                "author": "Torr Samaho",
+                "text": "> I also wonder, what is exactly affected by this?\r\n\r\nTechnically, everything that uses FRandom::operator()() and FRandom::Random2(). Thus, it should affect everything that uses random integers between [0,255] which should include most of the code pointers and definitely all of the pointers used in the Vanilla Doom weapons.",
+                "created_at": "2011-01-29T13:03:10"
+            },
+            {
+                "comment_id": 894,
+                "author": "unknownna",
+                "text": "> Doom2.exe uses a fixed table of 256 numbers, ranging from 0 to 255, all accounted for. Doom2.exe iterates through this table linearly. There are exactly 256 different SSG shots patterns possibile in Doom2.exe. Each shot pattern does the same damage every time.\r\n\r\nSo the compat flag basically does this? Runs through the old table linearly exactly like Vanilla Doom did.\n\n",
+                "created_at": "2011-01-29T13:29:46"
+            },
+            {
+                "comment_id": 895,
+                "author": "AlexMax",
+                "text": "Well, he did say that he \"excavated the old function\", so I don't see why not.",
+                "created_at": "2011-01-29T14:22:11"
+            },
+            {
+                "comment_id": 896,
+                "author": "Torr Samaho",
+                "text": "> Runs through the old table linearly exactly like Vanilla Doom did.\r\n\r\nExactly.",
+                "created_at": "2011-01-29T14:28:35"
+            },
+            {
+                "comment_id": 897,
+                "author": "unknownna",
+                "text": "Thanks. Now we finally have it. Thank you very much for this, Torr.",
+                "created_at": "2011-01-29T14:37:31"
+            },
+            {
+                "comment_id": 898,
+                "author": "Torr Samaho",
+                "text": "You're welcome :). Let's just hope that it is working as expected, so far I didn pretty much no tests with it. To facilitate testing before I make the next official beta release, I created matching [url=http://www.dailydoomer.com/tsst/misc/SkullDev98e-3064linux-x86.tar.bz2]Linux[/url] and a [url=http://www.dailydoomer.com/tsst/misc/SkullDev98e-3064windows.7z]Windows[/url] binaries.",
+                "created_at": "2011-01-29T15:22:46"
+            },
+            {
+                "comment_id": 899,
+                "author": "AlexMax",
+                "text": "Preliminary reports:\r\n\r\n\"Yea, it works, I can tell already\"\r\n\"It's better than zd's, it feels like choco doom\"\r\n\"Yeah, it's a lot nicer\"\r\n\r\nWill keep you updated if there are any complaints, but so far I think you nailed it.\r\n\r\nThanks a million Torr.\n\n",
+                "created_at": "2011-01-29T18:51:23"
+            },
+            {
+                "comment_id": 900,
+                "author": "Xenaero",
+                "text": "Yeah, this works really well. Great stuff, thanks Torr!",
+                "created_at": "2011-01-29T19:43:37"
+            },
+            {
+                "comment_id": 902,
+                "author": "Torr Samaho",
+                "text": "I'm glad to hear that :). If all goes well I'll make an official beta release tomorrow evening so that this can receive more widespread testing.",
+                "created_at": "2011-01-29T23:19:27"
+            },
+            {
+                "comment_id": 906,
+                "author": "unknownna",
+                "text": "Perhaps the server dialog box needs to be updated to support this compat flag. It won't allow me to set the flag in \"Settings -> Flags... -> Compatibility\". Setting the compatflags2 value to 8 has no effect.",
+                "created_at": "2011-01-30T21:24:38"
+            },
+            {
+                "comment_id": 907,
+                "author": "Torr Samaho",
+                "text": "You are right. This reminds me of one of the reasons why I hate the Windows server GUI code. Anyway, should be fixed now.",
+                "created_at": "2011-01-30T22:29:34"
+            },
+            {
+                "comment_id": 912,
+                "author": "unknownna",
+                "text": "Would it be possible to also have it as a visible option to toggle in the \"Oldschool\" section? Actually, there are more flags you cannot see in the compatibility options, e.g., compat_noland and compat_clientssendfullbuttoninfo.\r\n\r\nOk, it seems like compat_nocrosshair and compat_disabletaunts is toggled in \"Settings -> Flags... -> Players\".\r\n\r\nI'm also testing the new feature on the tracker.\n\n",
+                "created_at": "2011-02-01T07:11:54"
+            },
+            {
+                "comment_id": 914,
+                "author": "Edward-san",
+                "text": "It would be useful, indeed. Even better is if it's backported to zdoom code.\r\n\r\nTorr: Can I ask Graf to backport this into zdoom code?",
+                "created_at": "2011-02-01T12:01:28"
+            },
+            {
+                "comment_id": 934,
+                "author": "Torr Samaho",
+                "text": "> Would it be possible to also have it as a visible option to toggle in the \"Oldschool\" section? Actually, there are more flags you cannot see in the compatibility options, e.g., compat_noland and compat_clientssendfullbuttoninfo.\r\n\r\nThat's certainly possible. The main problem is that I really don't like Windows GUI coding ;) (platform independent GUI libs are much nicer).\r\n\r\n> Torr: Can I ask Graf to backport this into zdoom code? \r\n\r\nSure, but Skulltag's implementation needs to be adjusted to be used in ZDoom. Otherwise you most likely would get sync problems in ZDoom's multiplayer and in single player demos.",
+                "created_at": "2011-02-03T01:25:03"
+            },
+            {
+                "comment_id": 939,
+                "author": "unknownna",
+                "text": "> That's certainly possible. The main problem is that I really don't like Windows GUI coding ;) (platform independent GUI libs are much nicer).\r\n\r\nI understand. But it would be nice and practical to have it though.\r\n\r\nEDIT:\r\n\r\nI just wonder, why are these new compat flags in compatflags2?\n\n",
+                "created_at": "2011-02-03T11:37:56"
+            },
+            {
+                "comment_id": 942,
+                "author": "Edward-san",
+                "text": "> Sure, but Skulltag's implementation needs to be adjusted to be used in ZDoom. Otherwise you most likely would get sync problems in ZDoom's multiplayer and in single player demos. \r\n\r\nOk, I'll wait for this. Should I make a new suggestion in the tracker about this?",
+                "created_at": "2011-02-03T13:23:10"
+            },
+            {
+                "comment_id": 943,
+                "author": "Torr Samaho",
+                "text": "> I just wonder, why are these new compat flags in compatflags2?\r\n\r\ncompatflags is full.\r\n\r\n> Ok, I'll wait for this. Should I make a new suggestion in the tracker about this? \r\n\r\nRight now I don't intend to make these adaptions myself because they are not needed in Skulltag at all: ST neither supports single player demos nor ZDoom's P2P networking.",
+                "created_at": "2011-02-03T13:31:46"
+            },
+            {
+                "comment_id": 1014,
+                "author": "Wagi",
+                "text": "Please note that the claim that all the numbers between 0-255 are \"accounted for\" is false. In Vanilla Doom's random number table, 1 does not appear at all, for example. 145 appears five times, 0 appears twice.",
+                "created_at": "2011-02-07T16:47:38"
+            }
+        ]
+    },
+    {
+        "mantis_id": 15,
+        "project_id": 1,
+        "reporter": "Anonymous",
+        "handler": "Eruanna",
+        "priority": 20,
+        "status": 90,
+        "title": "Wireless Internet connection lost.",
+        "description": "Mostly a very problem for people who has Wireless connection. When on Skulltag on any server, some other time it will randomly say \"waiting for server\" which means that there's a problem with the Wireless connection which means it's a lose of Wireless connection........",
+        "steps_to_reproduce": "Restart the whole computer, for restoring Wireless Internet.",
+        "additional_information": "If one of you developers could fixed this problem. I would finally go on Skulltag without any interference with the Wireless Connection......\r\n\r\n\r\n\r\n\r\n\r\nPS: I also have Wireless Internet.",
+        "created_at": "2010-09-10T22:47:54",
+        "updated_at": "2010-09-11T02:51:28",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 26,
+                "author": "Eruanna",
+                "text": "This is not a Skulltag issue, but rather an issue with your wireless hardware, drivers, settings, and/or conditions. It is not possible to fix with the Skulltag source. There is nothing that can be done here.",
+                "created_at": "2010-09-11T02:48:46"
+            }
+        ]
+    },
+    {
+        "mantis_id": 6,
+        "project_id": 1,
+        "reporter": "Konda",
+        "handler": "Torr Samaho",
+        "priority": 10,
+        "status": 90,
+        "title": "ONLINE - Weapon shows 0 ammo but functions almost normally",
+        "description": "I have been working on a project, and there you pick up custom inventory that do checks before giving you the weapon (checking for slots taken, if the player already has the weapon, etc.). The weapon's ammo maximum amount is 1 and it disappears from your inventory after you use it. It all works perfectly fine offline but online when you pick up the weapon it shows 0 ammo. After using it, it works normally, but doesn't disappear from your inventory after using it. Alt fire works the same way but it spawns the projectile that spawns the weapon (weapon drop) but that is probably because the weapon uses no ammo for alt fire. On alt fire, the weapon is \"dropped\" and the weapon disappears from your inventory.",
+        "steps_to_reproduce": "Trying to reproduce it online, I have tried the 'give' cheats to give myself ammo of that weapon or the custom inventory that gives me the weapon, but nothing has changed. After that I tried giving myself the weapon and the ammo was showing up like it should, and the weapon disappears from your inventory after fire like it should be. Bingo! I found how to reproduce it! Then in the DECORATE script I tried raising the second parameter of A_GiveInventory (for weapon) which is inventory amount given but it didn't work. So after I was thinking what the hell is wrong now I figured out that there must be a delay between each time the script gives you the weapon. So I did delay 1 between each A_GiveInventory (for weapon).\r\n\r\nTL;DR version:\r\nThe script gave the weapon to the player once. After researches I found out that the script has to give the weapon to the player at least twice (with a delay between each time), which shouldn't be the only way it works properly.",
+        "additional_information": "The ZIP contains 2 files, the WAD with the issue mentioned (smokebomb-onlinebug.wad) and the one which has reproduced the bug via DECORATE script (smokebomb-reproduced.wad). In the game turn on cheats and summon \"ISmokeGrenade\" and pick it up. First try it with smokebomb-onlinebug.wad and then with smokebomb-reproduced.wad online. The wads must NOT be loaded together\r\n\r\nDON'T MIND THE TEXT.TXT, IT IS AN EMPTY TEXT FILE. I COULDN'T REMOVE THE FILE FROM THE UPLOAD ONCE I REALIZED IT HAS MORE THAN 2MB OF SIZE.\r\n\r\nDOWNLOAD LINK: http://www.speedyshare.com/files/24145358/smokebomb-report.zip",
+        "created_at": "2010-09-06T20:59:14",
+        "updated_at": "2018-09-30T22:52:39",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 83,
+                "author": "Torr Samaho",
+                "text": "http://www.dailydoomer.com/tsst/misc/SkullDev98dAmmoFixTest.7z should fix the issue. Please test and report back.",
+                "created_at": "2010-09-19T08:23:40"
+            },
+            {
+                "comment_id": 96,
+                "author": "Konda",
+                "text": "After trying the skulltag version you posted, everything works fine - It shows me 1/1 in ammo like it should and the weapon disappears after fire like it should.\r\nEDIT: I tried it online too, and everything works fine just like in single player. Good job\n\n",
+                "created_at": "2010-09-19T16:02:21"
+            },
+            {
+                "comment_id": 97,
+                "author": "Torr Samaho",
+                "text": "Thanks for testing! I'll consider this to be fixed then.",
+                "created_at": "2010-09-19T16:24:20"
+            },
+            {
+                "comment_id": 138,
+                "author": "Torr Samaho",
+                "text": "It turned out that this is not a Skulltag bug at all, but a bug in the example wad. SNadeAmmo is not an ammo type because it is not directly derived from AAmmo and hence can't be used as ammo type for SmokeGrenade. See http://zdoom.org/wiki/Classes:Ammo",
+                "created_at": "2010-09-22T20:31:25"
+            }
+        ]
+    },
+    {
+        "mantis_id": 20,
+        "project_id": 1,
+        "reporter": "unknownna",
+        "handler": "unassigned_0",
+        "priority": 20,
+        "status": 90,
+        "title": "If server host has french IWAD, door messages display in French to players with non-French IWAD",
+        "description": "I noticed this while playing in a coop server. The host said that she had the French version of Doom 2.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-12T15:19:18",
+        "updated_at": "2018-09-30T22:52:48",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 35,
+                "author": "Spleen",
+                "text": "I think this happens due to the regional settings of the server, and not due to the IWAD.\r\n\r\n\r\nNevertheless, it would be nice to eventually have client-side language lumps.",
+                "created_at": "2010-09-12T15:58:52"
+            },
+            {
+                "comment_id": 43,
+                "author": "Torr Samaho",
+                "text": "Yeah, that's more a missing feature than a bug. IIRC there should be a thread about client-side language lump support on the forums.",
+                "created_at": "2010-09-12T19:45:32"
+            },
+            {
+                "comment_id": 51,
+                "author": "unknownna",
+                "text": "Yeah, here's a link to the thread - http://www.skulltag.com/forum/viewtopic.php?f=155&t=25999\r\n\r\nMy apologies for not noticing it before making this report.",
+                "created_at": "2010-09-13T03:47:40"
+            },
+            {
+                "comment_id": 57,
+                "author": "Torr Samaho",
+                "text": "Thanks for digging out the thread!",
+                "created_at": "2010-09-14T19:53:19"
+            }
+        ]
+    },
+    {
+        "mantis_id": 12,
+        "project_id": 1,
+        "reporter": "Konda",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 90,
+        "title": "map doesn't change after a changemap vote passed",
+        "description": "This happens very rarely, but it happens. The vote passed and nothing happens",
+        "steps_to_reproduce": "",
+        "additional_information": "screenshot: http://img534.imageshack.us/img534/657/screenshotdoom201009092.png",
+        "created_at": "2010-09-09T18:19:59",
+        "updated_at": "2018-09-30T22:52:57",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 14,
+                "author": "Torr Samaho",
+                "text": "Does anybody have even the slightest clue under which circumstances this happens?",
+                "created_at": "2010-09-09T21:46:02"
+            },
+            {
+                "comment_id": 17,
+                "author": "Anonymous",
+                "text": "Yes, this happened to me only once, when my isp was bugging with me and I was lagging very badly.",
+                "created_at": "2010-09-10T03:15:53"
+            },
+            {
+                "comment_id": 20,
+                "author": "Anonymous",
+                "text": "I wasn't lagging when this happened. I had 120+ ping.",
+                "created_at": "2010-09-10T08:26:18"
+            },
+            {
+                "comment_id": 21,
+                "author": "Torr Samaho",
+                "text": "I see how lag could possibly prevent some votes from being counted, but it should not stop a server from changing a map after a vote passed. Any other theories? Did this ever happen with a different vote type?\n\n",
+                "created_at": "2010-09-10T15:58:40"
+            },
+            {
+                "comment_id": 24,
+                "author": "Konda",
+                "text": "Well to me it only happened with the changemap vote.",
+                "created_at": "2010-09-10T16:14:23"
+            },
+            {
+                "comment_id": 44,
+                "author": "Torr Samaho",
+                "text": "Did you cast the vote during a countdown? http://dev.skulltag.net/tracker/view.php?id=16",
+                "created_at": "2010-09-12T19:48:54"
+            },
+            {
+                "comment_id": 55,
+                "author": "Konda",
+                "text": "AFAIR I tried to call the vote while spectating, but the server acquired players to vote. So I called a changemap vote ASAP when I joined and voted yes. So that process happened while the countdown, and the countdown wasn't finished yet.",
+                "created_at": "2010-09-14T13:05:45"
+            },
+            {
+                "comment_id": 56,
+                "author": "Torr Samaho",
+                "text": "Alright, so we can safely assume that this is the same as \r\nhttp://dev.skulltag.net/tracker/view.php?id=16",
+                "created_at": "2010-09-14T19:49:33"
+            }
+        ]
+    },
+    {
+        "mantis_id": 27,
+        "project_id": 1,
+        "reporter": "unknownna",
+        "handler": "unassigned_0",
+        "priority": 20,
+        "status": 90,
+        "title": "allow new players joining survival servers be able to instantly join the game instead of having to wait until the round ends",
+        "description": "This is just a little suggestion to make survival servers more attractive to play on, particularly when large-scale maps are being played by few people. Most players don't want to wait 30+ minutes to join a game. And even if they leave and come back later, they might end up coming back right after the intermission screen, ending up having to wait for another round.\r\n\r\nBasically, new players connected to the server will be able to join the game instantly instead of having to wait until the round ends. The server must somehow keep track of the clients' lives for each round so that they cannot simply disconnect, then reconnect and join again to play. The temporary tracking/list of IPs/lives would clear for each round.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-15T09:35:33",
+        "updated_at": "2010-09-21T20:30:40",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 60,
+                "author": "unknownna",
+                "text": "Now that I think about it, if players were to disconnect from the server or enter spectator mode by choice/accident, make them lose a life. AFAIK, that way they wouldn't be able to abuse the system if it were to be implemented.\r\n\r\nBut then again, there are clients with dynamic IP addresses, so that's another issue.\r\n\r\nAnd should the server have more spectators allowed than players, make it so that when a player loses all of his/her lives by choice/accident, the next player in line is allowed to take his/her place, unless the next player in line already has lost all of his/her lives in the current round.\n\n",
+                "created_at": "2010-09-15T10:58:00"
+            },
+            {
+                "comment_id": 66,
+                "author": "Spleen",
+                "text": "I don't like this idea, Skulltag has no real way of tracking who's who without a ZDaemon-like account system.  Dynamic IPs make it too easy to death evade.",
+                "created_at": "2010-09-17T09:28:25"
+            },
+            {
+                "comment_id": 68,
+                "author": "unknownna",
+                "text": "I agree with you there.\r\n\r\nunknownna said:\r\nBut then again, there are clients with dynamic IP addresses, so that's another issue.",
+                "created_at": "2010-09-17T09:56:01"
+            },
+            {
+                "comment_id": 70,
+                "author": "TIHan",
+                "text": "I don't agree with this suggestion. Survival is fine the way it is.",
+                "created_at": "2010-09-17T20:31:42"
+            },
+            {
+                "comment_id": 126,
+                "author": "Torr Samaho",
+                "text": "Closed by request of the original reporter.",
+                "created_at": "2010-09-21T20:30:39"
+            },
+            {
+                "comment_id": 121,
+                "author": "unknownna",
+                "text": "I think that this suggestion can be closed due to the fundamental flaw in it. It could probably be emulated by loading a mod.",
+                "created_at": "2010-09-21T02:33:31"
+            }
+        ]
+    },
+    {
+        "mantis_id": 28,
+        "project_id": 1,
+        "reporter": "XutaWoo",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 90,
+        "title": "Online Camera Auto-Aim ignores +NOAUTOAIM",
+        "description": "Now, I'm not sure if the forced auto-aim online while looking through a camera is intentional or not, as it's inconsistent with multiplayer, but there's certainly a problem with it; it ignores the +NOAUTOAIM flag on weapons.\r\nWhich is a problem when projectiles are supposed to only go a certain way.",
+        "steps_to_reproduce": "1. Load magicaldim_bug.wad. It's my 2D project stripped of most of the stuff; if you already have the latest version of the real wad, you can just load that. \r\n2. Play it in singleplayer and summon a monster of your choice; the fireball (slot 2 in the _bug, second slot 1 in _b1qf3) should always go straight regardless of your autoaim setting, while the rapid-fire magic (slot 1 in the _bug, first slot 1 in _b1qf3) should be aimed automatically, provided autoaim isn't set to never.\r\n3. Create a server, local or not, with the wad loaded; sv_cheats should be set to 1 for the sake of summoning a monster, and MAG01 is recommended as most vanilla levels don't work well. The rapid-fire magic should work as intended, though it'll always autoaim regardless of what you have it set to. This is the same for the fireball, which has +NOAUTOAIM on the weapon.",
+        "additional_information": "Really unbalances my wad, yo.\r\n\r\n...what? It's called additional information. :P\r\n\r\nAlso, ignore the <!>s, this was just a lazy cut through with SLumpEd.",
+        "created_at": "2010-09-15T20:11:54",
+        "updated_at": "2015-09-01T20:40:58",
+        "attachments": [
+            {
+                "file_id": 6,
+                "filename": "magicaldim_bug.wad",
+                "local_path": "attachments/attachment_28_6_magicaldim_bug.wad",
+                "file_type": "application/octet-stream"
+            },
+            {
+                "file_id": 29,
+                "filename": "magicaldim_bug2.wad",
+                "local_path": "attachments/attachment_28_29_magicaldim_bug2.wad",
+                "file_type": "application/octet-stream"
+            },
+            {
+                "file_id": 30,
+                "filename": "2010.10.09_08.41.20_magicaldim_bug2.cld",
+                "local_path": "attachments/attachment_28_30_2010.10.09_08.41.20_magicaldim_bug2.cld",
+                "file_type": "application/octet-stream"
+            }
+        ],
+        "comments": [
+            {
+                "comment_id": 77,
+                "author": "Torr Samaho",
+                "text": "I couldn't reproduce this so far. Please simplify the example wad (at least put some monsters and the necessary weapons in there so that one can reproduce the problem without needing to do anything in the console) and make a client side demo showing the problem.",
+                "created_at": "2010-09-18T19:34:30"
+            },
+            {
+                "comment_id": 85,
+                "author": "Torr Samaho",
+                "text": "I edited the report so that you are shown as reporter.",
+                "created_at": "2010-09-19T08:51:30"
+            },
+            {
+                "comment_id": 248,
+                "author": "Torr Samaho",
+                "text": "Without your feedback, there is nothing I can do about this.",
+                "created_at": "2010-10-03T15:00:20"
+            },
+            {
+                "comment_id": 257,
+                "author": "XutaWoo",
+                "text": "Yeah, sorry about that. I made a more test-built map, made a demo for it, tried to figure out how to remove old files, renamed the new thing, demos stopped working, frustration caused procrastination, and now I'm in a situation where I can't really access my DOOM stuff. x-x\r\n\r\nI do have a theory on how to work around it, but I'll still try to get that demo in a soon as possible.",
+                "created_at": "2010-10-03T19:30:40"
+            },
+            {
+                "comment_id": 317,
+                "author": "Torr Samaho",
+                "text": "Ok, I can see the problem in the demo, but I can't reproduce it on a local server. Please post the exact settings you used to start the server.",
+                "created_at": "2010-10-10T10:33:53"
+            },
+            {
+                "comment_id": 322,
+                "author": "XutaWoo",
+                "text": "Hm. Well, this might be unrelated to cameras but to DMFLAGs instead now that I've glazed back over them.\r\n\r\nWeapon Stay\r\nSpawn Farthest\r\nNo Monsters\r\nItems Respawn\r\nNo Freelook <- That's what I think is the the problem now.\r\nNo Crouching\r\nLimited Air Movement\r\nClients Send Full Button Info",
+                "created_at": "2010-10-10T15:38:52"
+            },
+            {
+                "comment_id": 324,
+                "author": "Torr Samaho",
+                "text": "Alright, this is not a bug then. Forbidding freelook intentionally automatically enforces autoaim. IIRC ZDoom should behave the same.",
+                "created_at": "2010-10-10T18:55:19"
+            },
+            {
+                "comment_id": 13372,
+                "author": "Dusk",
+                "text": "Indeed, ZDoom still behaves the same.",
+                "created_at": "2015-09-01T20:40:55"
+            }
+        ]
+    },
+    {
+        "mantis_id": 3619,
+        "project_id": 1,
+        "reporter": "Seiat",
+        "handler": "Edward-san",
+        "priority": 20,
+        "status": 80,
+        "title": "Spread rune does not save",
+        "description": "Spread rune power stops working when you load a saved game, but the hud shows that you still have it. Saves normally in 2.1.2. Doesn't seem to be effecting other runes. Not multiplayer related so low priority.",
+        "steps_to_reproduce": "Load skulltag_actors.pk3 with Zandronum\r\ngive spreadrune\r\nsave and reload",
+        "additional_information": "",
+        "created_at": "2019-03-10T09:12:16",
+        "updated_at": "2019-04-07T20:10:16",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 20441,
+                "author": "Edward-san",
+                "text": "Should be fixed with this pull request: https://bitbucket.org/Torr_Samaho/zandronum-stable/pull-requests/82/fixed-loading-from-a-savegame-lost-the/diff",
+                "created_at": "2019-03-12T10:37:00"
+            },
+            {
+                "comment_id": 20475,
+                "author": "Edward-san",
+                "text": "Added to zandronum stable repository for 3.1: https://bitbucket.org/Torr_Samaho/zandronum-stable/commits/fbd12f655a50b9f7fbf6eac32f1d9d6957d30521",
+                "created_at": "2019-04-06T09:18:43"
+            }
+        ]
+    },
+    {
+        "mantis_id": 180,
+        "project_id": 1,
+        "reporter": "Twister",
+        "handler": "Eruanna",
+        "priority": 10,
+        "status": 90,
+        "title": "Modify sv_nocallvote 2",
+        "description": "When server sets sv_nocallvote 2, spectators should be allowed to vote yes or no. If a player is waiting to respawn in an LMS or survival game mode, they should be allowed to cast a vote as a if considered a player in game.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-11-07T04:00:35",
+        "updated_at": "2010-11-09T05:27:11",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 576,
+                "author": "Dark-Assassin",
+                "text": "You have the server variable wrong. It should be sv_allowspectatorvote.",
+                "created_at": "2010-11-07T14:28:45"
+            },
+            {
+                "comment_id": 577,
+                "author": "Twister",
+                "text": "Well, the suggestion is the same, right? Allow spectators to vote yes or no even if they can't call a vote. Like, sv_allowspectatorvote 2, allow them to vote yes or no but not call votes. Also, allow players waiting to respawn to call votes.",
+                "created_at": "2010-11-07T15:03:02"
+            },
+            {
+                "comment_id": 589,
+                "author": "Eruanna",
+                "text": "... what is the point of this?\r\n\r\nsv_nocallvote 0 to get what you want.",
+                "created_at": "2010-11-09T05:24:36"
+            }
+        ]
+    },
+    {
+        "mantis_id": 13,
+        "project_id": 1,
+        "reporter": "Anonymous",
+        "handler": "unassigned_0",
+        "priority": 20,
+        "status": 90,
+        "title": "Projectiles Dont Spawn correctly compared to Single player.",
+        "description": "Here is a wad that uses projectiles, please play map jd01 for about a minute, then try playing the same map online... You'll see the clear difference. I can't really describe it.\r\n\r\nhttp://wadhost.fathax.com/files/MGV1B6FIX9.zip",
+        "steps_to_reproduce": "1. goto map jd01 in singleplayer\r\n2. play for a minute, make observations.\r\n3. host server with wad (LMS gamemode)\r\n4. goto map jd01 online\r\n5. Behold, the projectiles are \"strange\"",
+        "additional_information": "game mode : lms\r\nmap : jd01\r\n\r\n\r\nsingle player + multiplayer\r\n\r\nMap is unbeatable, you just need to pay attention to the projectiles.",
+        "created_at": "2010-09-10T03:24:39",
+        "updated_at": "2014-05-15T21:48:07",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 152,
+                "author": "unknownna",
+                "text": "I don't understand what you're trying to say. I couldn't verify any differences at all.\r\n\r\nLet's see, there are several script warnings, tries to register class 'Barrel' more than once, two actors have the same DoomEdNum of 2024.",
+                "created_at": "2010-09-24T23:18:30"
+            },
+            {
+                "comment_id": 8798,
+                "author": "Dusk",
+                "text": "old ticket, no feedback, wad link is dead",
+                "created_at": "2014-05-15T21:48:06"
+            }
+        ]
+    },
+    {
+        "mantis_id": 25,
+        "project_id": 1,
+        "reporter": "Konda",
+        "handler": "unassigned_0",
+        "priority": 10,
+        "status": 90,
+        "title": "Port ACS function Plane_Align to skulltag",
+        "description": "Summary: Self explanatory.\r\n\r\nIt would be useful for lines that have multiple functions. Example: Line identification and plane align. So the plane align would be used to create cool stuff in your map while using a middle texture that can be set to nothing and turn off line blocking using ACS when a switch is pressed.",
+        "steps_to_reproduce": "Try compiling an ACS script with Plane_Align for Skulltag games(Skulltag Doom in hexen, UDMF format).",
+        "additional_information": "http://zdoom.org/wiki/Plane_Align\r\nhttp://img186.imageshack.us/img186/3779/noplanealign.png",
+        "created_at": "2010-09-14T13:28:47",
+        "updated_at": "2014-06-08T22:02:49",
+        "attachments": [],
+        "comments": []
+    },
+    {
+        "mantis_id": 26,
+        "project_id": 1,
+        "reporter": "Anonymous",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 90,
+        "title": "Allow server the option to enable/disable muting,",
+        "description": "It gets annoying when im in my own server and a buddy of mine was telling me an interesting story and he gets muted... Then when he checks to see if he was unmuted, it tells him he was muted for 1 min, as a server host, I cannot unmute specific players nor disable it altogether. Server hosters atleast need the freedom to enable/disable this.\r\n\r\nIf you want to take a step further, add a command such as sv_mutetime which controls how long someone is muted by seconds.\r\n\r\nSv_additionalmutetime true/false, which enables/disables that 1 minute thing I was talking about earlier. \r\n\r\nThank you for reviewing this suggestion.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-15T05:25:11",
+        "updated_at": "2014-06-08T22:04:39",
+        "attachments": [],
+        "comments": []
+    },
+    {
+        "mantis_id": 37,
+        "project_id": 1,
+        "reporter": "AlexMax",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 30,
+        "title": "Extend playerinfo to show team, frags, team score, etc.",
+        "description": "Right now, it's not possible to tell what the score of the game is unless you're using the windows console.  It would be nice if either playerinfo was added on to, or a new command would reveal which team each player was on, their score, their frags, their deaths, and so on.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-19T15:33:04",
+        "updated_at": "2014-06-08T22:05:56",
+        "attachments": [],
+        "comments": []
+    },
+    {
+        "mantis_id": 17,
+        "project_id": 1,
+        "reporter": "Anonymous",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 90,
+        "title": "Allow server to mute people",
+        "description": "[b]Is this an improvement to an already-existing feature, or a new feature entirely?[/b]\r\n[i]New[/i]\r\n\r\n[b]If an improvement, what original feature is it improving upon?[/b]\r\n[i]N/A[/i]\r\n\r\n[b]How would this work?[/b]\r\n[i]It gives an administrator of a server the ability to mute people, I'll explain this a bit more in the bottom.[/i]\r\n\r\n[b]Can you give an example in how useful this feature would be?[/b]\r\n[i]Lets say there are spammers in a server. They need a punishment, lets not just kick them, but mute them as well! So, the server has a timer for banned IP's, why not make a timer for people who are muted? We'll let them play in the server, but their ability to communicate with others is forbidden.\r\n\r\nIf hes a known spammer, I'd rather just permanently mute them, instead of the BanHammer.\r\n\r\nI mean hey, if you can mute yourself, why not let the server mute?\r\n\r\nDon't bring up ignore, because if its a well known spammer, then the next day he's gonna be back.\r\n\r\nAlso, this well prevent players from abusing the space button on their messages, via :\r\n\"Player: Hi\r\n<Server>: hey im onnnn\"\r\nThat'd prevent them from spamming space to make a new line to act like others.[/i]",
+        "steps_to_reproduce": "N/A",
+        "additional_information": "Its a bigger punishment to let them play, but not talk with others.",
+        "created_at": "2010-09-12T02:27:24",
+        "updated_at": "2014-06-11T21:51:34",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 33,
+                "author": "Eruanna",
+                "text": "Please note this is just an opinion, not a developer decision on this:\r\n\r\nIf a person was that much of a problem I find it better to just ban them anyway. I don't really see much good that muting does to them. And plus when they're muted they cannot properly collaborate with team members in team games or coop anyway. Mute, in my opinion, is only good for short term punishments. I think it's fine the way it is.",
+                "created_at": "2010-09-12T13:31:41"
+            },
+            {
+                "comment_id": 42,
+                "author": "Torr Samaho",
+                "text": "I agree with Eruanna. If you really need to permanently mute somebody, that somebody should probably banned.",
+                "created_at": "2010-09-12T19:44:14"
+            },
+            {
+                "comment_id": 64,
+                "author": "Akasha",
+                "text": "Shouldn't there be a cmd or setup to disable chat in servers?",
+                "created_at": "2010-09-16T18:21:27"
+            },
+            {
+                "comment_id": 4514,
+                "author": "ZzZombo",
+                "text": "ignore and ignore_idx already can mute people on the whole server if used from the server console or RCON'd.",
+                "created_at": "2012-08-30T05:01:54"
+            }
+        ]
+    },
+    {
+        "mantis_id": 40,
+        "project_id": 1,
+        "reporter": "Theshooter7",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 90,
+        "title": "Backport Bullet function Flags for DECORATE",
+        "description": "I know this has been asked by some before, but I literally cannot proceed with my project without these flags now. It isn't of deathly importance, but I would hope to see them implemented soon enough, if possible, and thus why I submit this suggestion.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-20T01:47:23",
+        "updated_at": "2014-06-12T20:16:26",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 9157,
+                "author": "Watermelon",
+                "text": "Hopefully it's in, if not it will get in eventually. If its in, check and see if it wrks in 2.0",
+                "created_at": "2014-06-12T20:16:24"
+            }
+        ]
+    },
+    {
+        "mantis_id": 10,
+        "project_id": 1,
+        "reporter": "ant1991331",
+        "handler": "unassigned_0",
+        "priority": 10,
+        "status": 90,
+        "title": "Allow game mode changing without having to use \"map\" to take effect",
+        "description": "I've noticed that using \"map\" to change a game mode is somewhat annoying, especially for global ACS.\r\n\r\nAnyway, I've also noticed that a game mode will automatically switch in the right conditions after an intermission (which doesn't allow a game mode to change, normally). This includes changing a Deathmatch into a CTF if there are only team starts and 2 flags placed on the map. Or a Team LMS turning into a TeamGame if there are only team starts placed on the map.\r\n\r\nNow, why is it that we have to do \"map map01\" to get these game mode settings to take effect? - Such as the \"deathmatch will be changed for next game.\", this should mean next map.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-08T14:03:31",
+        "updated_at": "2015-10-10T01:41:48",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 23,
+                "author": "Torr Samaho",
+                "text": "The game mode already needs to be known when the map is set up initially, for instance some map things are only spawned in deathmatch. So it's not feasible to change the game mode on the fly and that's why all the game mode CVARs are latched. It would be technically possible to change the game mode after a \"changemap\" map change (and this is already done under some special circumstances), but I don't think that this is worth the effort.",
+                "created_at": "2010-09-10T16:09:39"
+            },
+            {
+                "comment_id": 29,
+                "author": "Blzut3",
+                "text": "I can't tell if you misread the request, but it was for having changemap change the game mode and not for on the fly game mode changes.",
+                "created_at": "2010-09-11T14:55:01"
+            },
+            {
+                "comment_id": 30,
+                "author": "Torr Samaho",
+                "text": "I reread the request and still don't see that it clearly requests under which circumstances game mode changes should take effect (that's why I mentioned both obvious occasions under which one could want this before), but you are likely right that it was meant to request having \"changemap\" change the game mode.\r\n\r\nThe main technical reasons why a \"changemap\" map change doesn't change the game mode is that ZDoom doesn't unlatch CVARs after such a map change.",
+                "created_at": "2010-09-11T15:38:36"
+            },
+            {
+                "comment_id": 13636,
+                "author": "Ru5tK1ng",
+                "text": "Closing due to no feedback in over 5 years.",
+                "created_at": "2015-10-10T01:40:38"
+            }
+        ]
+    },
+    {
+        "mantis_id": 2,
+        "project_id": 1,
+        "reporter": "Torr Samaho",
+        "handler": "Torr Samaho",
+        "priority": 20,
+        "status": 90,
+        "title": "Crouch Toggle doesn't work online",
+        "description": "ConflagratedCanine wrote:\r\nThis actually WAS reported before, but it was by Lord of Hell and everybody instantly flamed his one useful post.\r\n\r\nJust as the title says, using crouch toggle online does nothing at all.\r\nNormally this isn't a problem, but with more and more 'environmentally sensitive' wads floating around (Hide N' Seek, WDI, blah blah), I think it would be a nice feature to fix for players.",
+        "steps_to_reproduce": "Execute \"crouch\" in the console. Works offline, has no effect online.",
+        "additional_information": "The crouch console command doesn't work because it uses ZDoom's Net_WriteByte mechanism which isn't used in multiplayer in Skulltag at all. To fix this, additional net code needs to be written: CLIENTCOMMANDS_ToggleCrouch, etc.",
+        "created_at": "2010-08-23T19:09:09",
+        "updated_at": "2018-09-30T19:47:16",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 28,
+                "author": "Torr Samaho",
+                "text": "I think I found a way to let the client toggle crouch without writing any new net code (uses +crouch and +crouch internally). Can somebody test if this works sufficiently well:\r\n\r\nhttp://www.dailydoomer.com/tsst/misc/SkullDev98dCrouchToggleTest.7z",
+                "created_at": "2010-09-11T12:10:32"
+            },
+            {
+                "comment_id": 32,
+                "author": "unknownna",
+                "text": "It works, but there's a difference between online and offline behaviour.\r\n\r\nOffline, if in crouch mode, jumping doesn't alter your viewpoint and sprite, but online, if jumping while in crouch mode, your viewpoint and sprite changes back to the regular height and sprite until you release the jump button.\r\n\r\nOffline, while holding jump, you cannot toggle crouch until you release the jump button. Online you can.\r\n\r\nEdit:\r\n\r\nAnd BTW, can you enable client-side prediction for crouching? Offline, there's a smooth transition in the viewpoint from standing to crouching, but online it's fast and instant.\n\n",
+                "created_at": "2010-09-12T03:36:13"
+            },
+            {
+                "comment_id": 41,
+                "author": "Torr Samaho",
+                "text": "Since the online version is implemented very differently it's not surprising that it doesn't behave exactly the same. From what you report, I'd say it works sufficiently well though. Agreed?\r\n\r\nIIRC client side prediction for crouching isn't implemented. If you would like to have it, please make a feature request. I personally don't think that it's really necessary though.",
+                "created_at": "2010-09-12T19:40:59"
+            },
+            {
+                "comment_id": 50,
+                "author": "unknownna",
+                "text": "It works, but I really think that client-side prediction for crouching is crucial from a practical point of view. The instant transition also has some shakiness to it, so it can be quite disorienting if you use it a lot while aiming and such.\r\n\r\nIt'd be like not having jumping predicted.",
+                "created_at": "2010-09-13T02:33:39"
+            },
+            {
+                "comment_id": 76,
+                "author": "Torr Samaho",
+                "text": "Crouch toggling should now work sufficiently well. The fact that there is no client side prediction for crouching is a completely separate issue that it not only limited to toggling crouch.",
+                "created_at": "2010-09-18T18:01:24"
+            }
+        ]
+    },
+    {
+        "mantis_id": 34,
+        "project_id": 1,
+        "reporter": "Anonymous",
+        "handler": "Torr Samaho",
+        "priority": 30,
+        "status": 90,
+        "title": "Morphed player unable to crouch",
+        "description": "When morphing a player using PowerMorph, he/she won't be able to crouch until he/she gets unmorphed.\r\nIn other words, a morphed class cannot crouch.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-18T21:19:56",
+        "updated_at": "2018-09-30T19:47:21",
+        "attachments": [
+            {
+                "file_id": 8,
+                "filename": "morphtest.wad",
+                "local_path": "attachments/attachment_34_8_morphtest.wad",
+                "file_type": "application/octet-stream"
+            }
+        ],
+        "comments": [
+            {
+                "comment_id": 79,
+                "author": "Torr Samaho",
+                "text": "Since you didn't specify that it only happens online, I assume it also happens offline, right? Does it work in GZDoom 323, i.e. http://sp.drdteam.org/gzdoom-r322(323).zip ?\n\n",
+                "created_at": "2010-09-18T21:42:23"
+            },
+            {
+                "comment_id": 81,
+                "author": "Torr Samaho",
+                "text": "I still need to know whether it's the same in GZDoom 323.",
+                "created_at": "2010-09-19T07:12:10"
+            },
+            {
+                "comment_id": 114,
+                "author": "unknownna",
+                "text": "AFAICT, morphed players cannot crouch in 98c, GZDoom 323-ZDoom 2.5.0\r\n\r\nTesting indicates that morphed players cannot crouch, both online and offline. But I only had the 'MorphMe' command from the console and Cutman's GvH test actor as a base for my testing.\r\n\r\nI made a test WAD, in which you can compare the DoomPlayer, 'MorphMe' and Cutman's GvH class. 'Puke 1' morphs you into the GvH one.\r\n\r\nOn a side note, the 'MorphMe' behavior is bugged online. You keep your weapon when you morph and can use it, but if you stand still, it disappears. If you then morph back into the DoomPlayer class, the weapon is lost. You can repeat this cycle until all the weapons are gone, even the fist.",
+                "created_at": "2010-09-20T19:53:08"
+            },
+            {
+                "comment_id": 250,
+                "author": "Torr Samaho",
+                "text": "[url=http://www.dailydoomer.com/tsst/misc/SkullDev98d-2965windows.7z]This[/url] should fix the morphme issues.",
+                "created_at": "2010-10-03T16:24:17"
+            },
+            {
+                "comment_id": 259,
+                "author": "unknownna",
+                "text": "Looks like it's fixed. Spectators can also morph by using the command, but that's because spectators are allowed to use cheats if allowed on the server.\r\n\r\nhttp://www.skulltag.com/forum/viewtopic.php?f=33&t=22538",
+                "created_at": "2010-10-04T00:36:05"
+            }
+        ]
+    },
+    {
+        "mantis_id": 33,
+        "project_id": 1,
+        "reporter": "unknown_35",
+        "handler": "Torr Samaho",
+        "priority": 30,
+        "status": 90,
+        "title": "health bug",
+        "description": "when you die online and someone connects after you died, player will see the health 100 instead of 0",
+        "steps_to_reproduce": "Kill yourself or get killed by a monster in cooperative or invasion (But DON NOT respawn)\r\ntell someone to connect after this\r\ntell him to f12 you\r\nHe will see your health 100 instead of 0 but you will see 0\r\nafter you respawn, you will act normally\r\nthis bug only happends after you died and later someone connected and spying you",
+        "additional_information": "",
+        "created_at": "2010-09-18T10:40:54",
+        "updated_at": "2018-09-30T19:47:42",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 73,
+                "author": "unknownna",
+                "text": "Confirmed in 98c and r2914. The newly connected client spectating the dead client sees the dead client as if he/she is alive with a viewheight of 0, holding a weapon and everything.\r\n\r\nIf the dead client then respawns, the spectator can hear a death sound from the other client's player corpse.\r\n\r\nEdit:\r\n\r\nIf the other client's player corpse is in the newly connected spectator's LOS, a teleport fog can be seen spawned at the corpse.\n\n",
+                "created_at": "2010-09-18T14:37:17"
+            },
+            {
+                "comment_id": 74,
+                "author": "Anonymous",
+                "text": "thanks for feedback!\r\ni hope this gets fixed soon",
+                "created_at": "2010-09-18T16:14:51"
+            },
+            {
+                "comment_id": 84,
+                "author": "Torr Samaho",
+                "text": "The health issues should be fixed now. The teleport fog has nothing to do with player health though and has to be taken care of separately.",
+                "created_at": "2010-09-19T08:47:45"
+            }
+        ]
+    },
+    {
+        "mantis_id": 43,
+        "project_id": 1,
+        "reporter": "unknown_35",
+        "handler": "Torr Samaho",
+        "priority": 30,
+        "status": 90,
+        "title": "Bots are not dead in survival mode",
+        "description": "When bots are killed in survival mode, they go spect and then join game in same time.\r\nThis happens offline but I did not tried online yet\r\n",
+        "steps_to_reproduce": "Start a game with survival mode with some bots and then wait until they get killed by a monster. You will notice when they die, they will go spect and then join game automatly.",
+        "additional_information": "",
+        "created_at": "2010-09-21T12:10:48",
+        "updated_at": "2018-09-30T19:47:43",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 122,
+                "author": "unknownna",
+                "text": "Confirmed online. They don't go into spectator mode, though. They simply respawn again.",
+                "created_at": "2010-09-21T17:42:28"
+            },
+            {
+                "comment_id": 123,
+                "author": "Torr Samaho",
+                "text": "Well, since bots don't attack monsters they don't make any sense in survival anyway. So I see no point in fixing this in survival. I assume it works properly in (T)LMS, right?",
+                "created_at": "2010-09-21T19:51:46"
+            },
+            {
+                "comment_id": 128,
+                "author": "unknownna",
+                "text": "Did a quick test. Seems like it works properly in (T)LMS.\n\n",
+                "created_at": "2010-09-21T21:15:16"
+            },
+            {
+                "comment_id": 135,
+                "author": "Torr Samaho",
+                "text": "Why are you using bots in survival at all?",
+                "created_at": "2010-09-22T19:55:19"
+            },
+            {
+                "comment_id": 146,
+                "author": "Cutman",
+                "text": "To be fair, I did use bots to test Ghoul's Forest 3 survival online and did notice this bug so it does have a use (Although this bug did not interfere with what I was testing).",
+                "created_at": "2010-09-24T09:26:02"
+            },
+            {
+                "comment_id": 154,
+                "author": "Anonymous",
+                "text": "can you fix this please? this is like a bug that needs to be fixed.",
+                "created_at": "2010-09-25T10:44:41"
+            },
+            {
+                "comment_id": 158,
+                "author": "Torr Samaho",
+                "text": "The fix was trivial and so I just fixed it.\r\n\r\nI also agree that bots sometimes can be good for debugging (that's the only reason why I didn't remove them in coop modes yet). Still I'd like to know why anybody is using bots in survival at all (debugging aside).",
+                "created_at": "2010-09-25T18:56:59"
+            }
+        ]
+    },
+    {
+        "mantis_id": 32,
+        "project_id": 1,
+        "reporter": "TIHan",
+        "handler": "Spleen",
+        "priority": 20,
+        "status": 90,
+        "title": "Control Damage Dealt By Monsters (CVAR)",
+        "description": "This was in Hardcore suggestion a while back, yet that did not work out.\r\n\r\nI believe that just controlling damage from monsters would be enough to increase difficulty without having to modify anything else.\r\n\r\nI think a good name for the cvar would be sv_coop_damagefactor, of course you can call it whatever you want. Damage sectors and damage from other players are not affected by this at all.\r\n\r\nIt would work like this, sv_coop_damagefactor is a float with a default value of 1. This would mean that nothing is going to change in game.\r\nIf sv_coop_damagefactor was 0.5, that would mean players take half damage.\r\nIf sv_coop_damagefactor was 2, that would mean players take double damage, and so on.\r\n\r\nHere is the code. Make any changes you see fit.\r\nhttp://pastebin.com/maZ5M2bW",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-18T07:35:57",
+        "updated_at": "2018-09-30T19:48:04",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 125,
+                "author": "Torr Samaho",
+                "text": "Yes, that's better :).\r\n\r\nWe don't have strict naming conventions for helper functions, but I'd say we usually use camel case instead of underscores for function names.",
+                "created_at": "2010-09-21T20:28:02"
+            },
+            {
+                "comment_id": 75,
+                "author": "TIHan",
+                "text": "I forgot to talk about why SKILL Definitions would not work.\r\n\r\nExample: \"A mapper makes his own SKILL Definition that uses \"damagefactor\". \"damagefactor\" is set to 1.5. He sets this to 1.5 because he knows this would balance out the difficulty for his WAD.\r\n\r\nNow, I make a WAD that uses my own SKILL Definition. The purpose of my SKILL Definition is to increase player taken damage by 1.25 across any WAD. If I use my WAD with the other guy's WAD, it would overwrite his SKILL Definition. My purpose was not to overwrite someone's SKILL Definition.\"\r\n\r\nThat is just an example. Also, ZDoom's SKILL Defintion \"damagefactor\" scales the damage for other players and sectors, which is not what I want.",
+                "created_at": "2010-09-18T17:20:20"
+            },
+            {
+                "comment_id": 105,
+                "author": "LT-Fiend",
+                "text": "I actually like that idea so instead of needing to play Hard doom for some sort of challenge we could just set up a damage factor...\r\n\r\n\"but how ever with a wad like sunder we could set the damage factor to 0.2 so it would be some what enjoyable\"",
+                "created_at": "2010-09-20T08:00:13"
+            },
+            {
+                "comment_id": 106,
+                "author": "Shogun",
+                "text": "I really think this is useful & smart. Some megawads have some monsters who are overpowered & should be balanced. With this u can do just that! Or maybe you got some people who are noobies to a pretty hard wad & they want the damage to be lowered to balance their novice skill, now u can. I hope this will be implemented in the next version of Skulltag.",
+                "created_at": "2010-09-20T08:09:34"
+            },
+            {
+                "comment_id": 108,
+                "author": "Spleen",
+                "text": "TIHan and I changed it a bit last night, here is the new code if anyone is curious: http://pastebin.ca/1944903 (I'm reposting the changes I made on my end since pastebin.com seems to be down)\n\n",
+                "created_at": "2010-09-20T10:48:51"
+            },
+            {
+                "comment_id": 110,
+                "author": "Torr Samaho",
+                "text": "Since you are using\r\n\"if ((sv_coop_damagefactor != 1.0f) && (source != NULL) && (source->flags3 & MF3_ISMONSTER)) damage = int(damage * sv_coop_damagefactor);\" already at two places, you should encapsulate this in a helper function.",
+                "created_at": "2010-09-20T11:16:18"
+            },
+            {
+                "comment_id": 119,
+                "author": "Spleen",
+                "text": "Good idea.  Since you made your note private, I am making this note private too.  Is this better: http://pastebin.ca/1945484 ?  Apologies in advance for not being aware of helper function naming conventions.",
+                "created_at": "2010-09-21T00:52:27"
+            },
+            {
+                "comment_id": 178,
+                "author": "TIHan",
+                "text": "Not to seem to hasty, is there a chance this could in the next beta build? I have tested Spleen's binary on a couple wads with a few people and it works wonderfully.",
+                "created_at": "2010-09-26T01:08:29"
+            },
+            {
+                "comment_id": 201,
+                "author": "Torr Samaho",
+                "text": "I added Spleen's latest patch with a minor change in P_PoisonDamage in the latest beta build (2954).",
+                "created_at": "2010-09-27T20:50:26"
+            }
+        ]
+    },
+    {
+        "mantis_id": 44,
+        "project_id": 1,
+        "reporter": "unknownna",
+        "handler": "Torr Samaho",
+        "priority": 20,
+        "status": 90,
+        "title": "newly connected client sees teleport fogs spawned at each player in-game",
+        "description": "If players are in the newly connected client's LOS, the client will see a teleport fog spawned at each player in sight.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-21T17:15:27",
+        "updated_at": "2018-09-30T19:48:19",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 162,
+                "author": "Torr Samaho",
+                "text": "[url=http://www.dailydoomer.com/tsst/misc/SkullDev98d-2944windows.7z]This[/url] should fix the issue.",
+                "created_at": "2010-09-25T20:54:41"
+            },
+            {
+                "comment_id": 168,
+                "author": "unknownna",
+                "text": "It seems to have fixed the issue.",
+                "created_at": "2010-09-25T21:20:23"
+            },
+            {
+                "comment_id": 170,
+                "author": "Torr Samaho",
+                "text": "Thanks for testing!",
+                "created_at": "2010-09-25T21:27:59"
+            }
+        ]
+    },
+    {
+        "mantis_id": 41,
+        "project_id": 1,
+        "reporter": "Torr Samaho",
+        "handler": "Torr Samaho",
+        "priority": 40,
+        "status": 90,
+        "title": "\\n is displayed as a newline in chat messages",
+        "description": "\\ is no longer escaped in chat messages which reintroduces the old chat exploits.",
+        "steps_to_reproduce": "",
+        "additional_information": "Was introduced by the changes in revision 2831.",
+        "created_at": "2010-09-20T16:16:31",
+        "updated_at": "2018-09-30T19:48:24",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 157,
+                "author": "Torr Samaho",
+                "text": "Hopefully fixed now. Should be tested in the next beta release.",
+                "created_at": "2010-09-25T18:48:16"
+            }
+        ]
+    },
+    {
+        "mantis_id": 39,
+        "project_id": 1,
+        "reporter": "unknownna",
+        "handler": "Torr Samaho",
+        "priority": 20,
+        "status": 90,
+        "title": "the higher the ping, the more the viewpoint \"sinks down\" to the floor when landing from a higher one.",
+        "description": "If you jump down from a floor 16 map units+ higher than the floor you land on, the viewpoint sinks down to the floor like a spring, then raises back up again.\r\n\r\nIt happens in 98c and the 98d alpha/beta builds, but not in 96b or 97d-beta4.3.\r\n\r\nI've included an example WAD showcasing the height differences required for the effect to take place. For jumping, it is 16 map units. For falling, it is 48 map units.",
+        "steps_to_reproduce": "Load up my example WAD and emulate a ping.",
+        "additional_information": "",
+        "created_at": "2010-09-19T21:56:04",
+        "updated_at": "2018-09-30T19:48:25",
+        "attachments": [
+            {
+                "file_id": 7,
+                "filename": "viewpoint_sinking_test.wad",
+                "local_path": "attachments/attachment_39_7_viewpoint_sinking_test.wad",
+                "file_type": "application/octet-stream"
+            }
+        ],
+        "comments": [
+            {
+                "comment_id": 104,
+                "author": "Torr Samaho",
+                "text": "Commendable example wad :). http://www.dailydoomer.com/tsst/misc/SkullDev98d-2934windows.7z should fix the issue.",
+                "created_at": "2010-09-20T07:42:20"
+            },
+            {
+                "comment_id": 107,
+                "author": "unknownna",
+                "text": "Should be fixed now. AFAICT, The viewpoint \"sink\" threshold for jumping/dropping from heights is the same online as it is offline now.",
+                "created_at": "2010-09-20T09:51:38"
+            },
+            {
+                "comment_id": 109,
+                "author": "Torr Samaho",
+                "text": "Thanks for testing!",
+                "created_at": "2010-09-20T11:09:50"
+            }
+        ]
+    },
+    {
+        "mantis_id": 24,
+        "project_id": 1,
+        "reporter": "unknownna",
+        "handler": "Torr Samaho",
+        "priority": 20,
+        "status": 90,
+        "title": "client-side prediction of the viewpoint when transitioning from standing to crouching and vice versa",
+        "description": "Right now, the viewpoint transitions instantly from standing level to crouching level if you play with a ping of around 100ms+. And it also has some shakiness to it if you're running around while doing it. The higher your ping is, the more shaky your viewpoint will be.\r\n \r\nFrom a practical in-game POV perspective, this can actually be quite disorienting when you're aiming while constantly ducking and running.\r\n\r\nImagine not having jumping interpolated/predicted. They're probably not related to each other in terms of code and behavior, but they definitely are in terms of gameplay.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-13T03:10:29",
+        "updated_at": "2018-09-30T19:48:27",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 52,
+                "author": "unknownna",
+                "text": "While we're at it, it'd be very nice to have client-side prediction for action special 128: 'ThrustThingZ', as well. Jump-pads inside a room in D2DM2 and Arch-Vile attacks comes to mind.\r\n\r\nWith a ping of 300ms+, you don't visually see any thrusting at all, just lots of disorienting earthquake-like shaking.\r\n\r\nRequested here: http://www.skulltag.com/forum/viewtopic.php?f=33&t=14961\r\n\r\nEdit:\r\n\r\nhttp://www.sendspace.com/file/mqkoa2 - A demo demonstrating how it currently is.\n\n",
+                "created_at": "2010-09-13T06:24:16"
+            },
+            {
+                "comment_id": 58,
+                "author": "Torr Samaho",
+                "text": "Sounds like a reasonable request to me.",
+                "created_at": "2010-09-14T19:56:35"
+            },
+            {
+                "comment_id": 88,
+                "author": "Torr Samaho",
+                "text": "I looked into this and found out that it's a bug and not a missing feature: Crouching is predicted (you begin to crouch immediately after pressing the crouch key regardless of your ping), but the client reduces the view height too quickly.",
+                "created_at": "2010-09-19T12:51:11"
+            },
+            {
+                "comment_id": 89,
+                "author": "Torr Samaho",
+                "text": "I fixed some problems of the crouch prediction. Please test how well it works now: http://www.dailydoomer.com/tsst/misc/SkullDev98dCrouchPredictionFixTest.7z",
+                "created_at": "2010-09-19T13:11:02"
+            },
+            {
+                "comment_id": 93,
+                "author": "unknownna",
+                "text": "Yes, it works now. The viewpoint transitions smoothly from standing height to crouching height and vice versa.\r\n\r\nBut the movement, not the view, still seems to shake/lag when you crouch down or stand up from crouching while running compared to jumping at the same ping (300ms+). The movement while jumping is always smooth regardless of the ping.\r\n\r\nTapping the crouch button with an emulated ping of 500ms will definitely have you notice it.",
+                "created_at": "2010-09-19T14:38:19"
+            },
+            {
+                "comment_id": 99,
+                "author": "Torr Samaho",
+                "text": "Alright, took me most of the afternoon to figure out, but hopefully the crouch prediction works pretty well now. Please test: http://www.dailydoomer.com/tsst/misc/SkullDev98d-2933windows.7z",
+                "created_at": "2010-09-19T19:24:32"
+            },
+            {
+                "comment_id": 100,
+                "author": "unknownna",
+                "text": "Very nice. Even with a ping of 600ms it now feels local. Good job on this one, Torr.\r\n\r\nBut, as usual I noticed another thing, but it's not related to this since it happens in 98c as well. The higher your ping is, the more your viewpoint will \"sink down\" to the floor when you jump and land from a higher floor to a lower one. There has to be at least 16 map units+ difference between the two floors to get the effect.\n\n",
+                "created_at": "2010-09-19T20:15:01"
+            },
+            {
+                "comment_id": 101,
+                "author": "Torr Samaho",
+                "text": "Yeah, now that you mention it, I can confirm this floor sinking. Since this is a completely separate issue, it deserves a new report. Can you do me a favor and create one?\n\n",
+                "created_at": "2010-09-19T21:03:26"
+            }
+        ]
+    },
+    {
+        "mantis_id": 14,
+        "project_id": 1,
+        "reporter": "unknownna",
+        "handler": "Torr Samaho",
+        "priority": 30,
+        "status": 90,
+        "title": "[98c-2914 online] BFG 9000 doesn't switch to another weapon when the final BFG ball explodes and calls 'A_BFGSpray'",
+        "description": "The BFG doesn't switch to another weapon if the final BFG ball hits other bots/players and calls 'A_BFGSpray'. And if you then use 'Give Cell' in the console, the first BFG ball fired will not spawn.\r\n\r\nThe BFG lowers and switches to another weapon, but when 'A_BFGSpray' is called, it suddenly switches back to the BFG again.\r\n\r\nIt's definitely ping related, as it doesn't seem to happen if the ping is below 250ms.\r\n\r\nThis happens without any compatibility flags enabled.\r\n\r\nTake a look at the demo included in this report.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-10T09:39:06",
+        "updated_at": "2018-09-30T19:48:28",
+        "attachments": [
+            {
+                "file_id": 2,
+                "filename": "2010.09.10_11.09.56_dwango5.cld",
+                "local_path": "attachments/attachment_14_2_2010.09.10_11.09.56_dwango5.cld",
+                "file_type": "application/octet-stream"
+            }
+        ],
+        "comments": [
+            {
+                "comment_id": 22,
+                "author": "Torr Samaho",
+                "text": "Does this also happen in 98c? If so, did it ever work properly?",
+                "created_at": "2010-09-10T16:02:04"
+            },
+            {
+                "comment_id": 25,
+                "author": "unknownna",
+                "text": "It happens in 98c. Doesn't happen in 96b, probably due to the custom weapon preference order. Happens in 97d-beta4.3 as well.\r\n\r\nEdit:\r\n\r\nThis bug also occurs with the rocket launcher, both in 98c and 97d-beta4.3, but it's very difficult to reproduce it with it.\r\n\r\nAnd it seems to only occur if another bot/player dies by BFG rays or by a rocket explosion.\n\n",
+                "created_at": "2010-09-10T16:34:24"
+            },
+            {
+                "comment_id": 87,
+                "author": "Torr Samaho",
+                "text": "http://www.dailydoomer.com/tsst/misc/SkullDev98d-2931windows.7z should fix this. Please test.",
+                "created_at": "2010-09-19T12:01:28"
+            },
+            {
+                "comment_id": 92,
+                "author": "unknownna",
+                "text": "Seems to have fixed the issue with the sprite desync and the \"ghost\" BFG ball.\r\n\r\nBut I noticed another thing. If you fire a BFG ball at the bots/players and then switch to another weapon before the BFG ball explodes, the obituary will state that you fragged them with your selected weapon.\r\n\r\nThis happens both in 98c and r2931.\r\n\r\nhttp://www.sendspace.com/file/3tyv0u - Demo using r2931. For some reason, the ammo is displayed incorrectly in the demo.\r\n\r\nPerhaps this issue should have it's own report.\n\n",
+                "created_at": "2010-09-19T14:07:45"
+            },
+            {
+                "comment_id": 94,
+                "author": "Torr Samaho",
+                "text": "Yeah, that sounds like a different issues. Anyway, does the obituary work properly offline or in GZDoom 323?\n\n",
+                "created_at": "2010-09-19T14:38:41"
+            },
+            {
+                "comment_id": 95,
+                "author": "unknownna",
+                "text": "Confirmed offline in GZDoom 323, ZDoom 2.5.0 and 98c. With that I mean that it's broken in all three.\n\n",
+                "created_at": "2010-09-19T14:50:32"
+            },
+            {
+                "comment_id": 98,
+                "author": "Torr Samaho",
+                "text": "Alright, so the obituary problem is a ZDoom issue. Since the problem this report is about is fixed, I'll mark this issue as resolved.",
+                "created_at": "2010-09-19T16:26:32"
+            }
+        ]
+    },
+    {
+        "mantis_id": 16,
+        "project_id": 1,
+        "reporter": "Aenima_",
+        "handler": "Torr Samaho",
+        "priority": 30,
+        "status": 90,
+        "title": "Mapvoting (with intermission) during a Survival/LMS countdown results in failed map change",
+        "description": "In an online game, if you call a vote to change the map (with intermission) during the countdown before the round starts and the vote passes, the map will not successfully change, and the player will not be able to map vote again for another 10 minutes. However, this does not happen if a player votes to changemap WITHOUT intermission.",
+        "steps_to_reproduce": "Join any empty Survival Coop server with voting enabled. Join the game, and during the countdown, call a vote to change the map to MAP02 (for example) with intermission. Then vote yes. You'll see \"VOTE PASSED!\", but nothing happens. The countdown simply finishes and the round starts like it would as if no vote had ever been made. You'll still have to wait 10 minutes to vote again, though. \r\n\r\nReconnect to the server in 10 minutes, join the game, and during the countdown try calling a vote to change the map WITHOUT intermission. Vote yes, and the mapchange should be successful.",
+        "additional_information": "",
+        "created_at": "2010-09-11T17:02:46",
+        "updated_at": "2018-09-30T19:48:30",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 48,
+                "author": "DarkStone45",
+                "text": "I can confirm this it happens in my SST server every time.",
+                "created_at": "2010-09-12T22:30:39"
+            },
+            {
+                "comment_id": 54,
+                "author": "unknownna",
+                "text": "Confirmed.\r\n\r\nIt also ends up as a broken vote if you manage to pass a 'map change with intermission screen' vote before the survival countdown timer starts.\n\n",
+                "created_at": "2010-09-13T19:55:55"
+            },
+            {
+                "comment_id": 86,
+                "author": "Torr Samaho",
+                "text": "http://www.dailydoomer.com/tsst/misc/SkullDev98dChangeMapVoteSurvivalCountdownFixTest.7z should fix the problems when the vote is passed while the countdown is active. The map change then is supposed to be delayed till the countdown ends.\r\n\r\nThe only case where I know that it doesn't work yet is when the vote passes before the countdown starts and then someone joins the game starting the countdown after the vote passed but before the map is changed.\r\n\r\nEDIT: http://www.dailydoomer.com/tsst/misc/SkullDev98d-2931windows.7z should fix the issue completely. Please test.\n\n",
+                "created_at": "2010-09-19T09:35:48"
+            },
+            {
+                "comment_id": 90,
+                "author": "unknownna",
+                "text": "Seems to work now. If you manage to pass the vote before or in the middle of the countdown timer, The map change happens once the countdown has ended.",
+                "created_at": "2010-09-19T13:28:27"
+            },
+            {
+                "comment_id": 91,
+                "author": "Torr Samaho",
+                "text": "Thanks for testing! I'll consider this to be fixed then.",
+                "created_at": "2010-09-19T13:37:19"
+            }
+        ]
+    },
+    {
+        "mantis_id": 18,
+        "project_id": 1,
+        "reporter": "unknownna",
+        "handler": "Spleen",
+        "priority": 20,
+        "status": 90,
+        "title": "if 'sv_infiniteammo' is true, don't display ammo in coop info",
+        "description": "Right now, ammo is displayed in the coop info when 'sv_infiniteammo' is true. Since ammo has no relevance with infinite ammo enabled, it'd be better to only have it show the weapon used instead, or something like that.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-12T14:56:22",
+        "updated_at": "2018-09-30T19:48:33",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 34,
+                "author": "Spleen",
+                "text": "This was pretty trivial to add so here's a testing binary with this improvement added: http://www.sendspace.com/file/0e6h3p",
+                "created_at": "2010-09-12T15:02:31"
+            },
+            {
+                "comment_id": 36,
+                "author": "unknownna",
+                "text": "Yeah, it seems to work fine that way. Good job.",
+                "created_at": "2010-09-12T16:06:53"
+            }
+        ]
+    },
+    {
+        "mantis_id": 7,
+        "project_id": 1,
+        "reporter": "Anonymous",
+        "handler": "Torr Samaho",
+        "priority": 30,
+        "status": 90,
+        "title": "Copy + Paste basically freezes skulltag...",
+        "description": "Basically, on your name try pasting (ctrl + p), and it freezes...",
+        "steps_to_reproduce": "start skulltag\r\ngo to any server\r\nclear your name\r\ncope and paste something... ( I pasted a link)\r\n\r\nWallaa, you dont even need to hit enter, it'll auto freeze",
+        "additional_information": "Use task manager to X it out.",
+        "created_at": "2010-09-06T21:47:12",
+        "updated_at": "2018-09-30T19:48:35",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 8,
+                "author": "Torr Samaho",
+                "text": "Please elaborate: What do you mean by \"clear your name\"? And where shall something be pasted? Are you talking about the multiplayer options menu?",
+                "created_at": "2010-09-07T05:25:38"
+            },
+            {
+                "comment_id": 9,
+                "author": "Anonymous",
+                "text": "Meaning delete everything on your name, and paste a link, any link. Pasted on multiplayer > player setup > name. \r\n\r\nTo sum it up, when you are changing your name, pasting anything to your name freezes skulltag.",
+                "created_at": "2010-09-08T05:09:52"
+            },
+            {
+                "comment_id": 13,
+                "author": "Torr Samaho",
+                "text": "Does it also freeze in GZDoom 323 (http://sp.drdteam.org/gzdoom-r322(323).zip)? If so, does it freeze in the latest GZDoom version?",
+                "created_at": "2010-09-09T19:49:34"
+            },
+            {
+                "comment_id": 15,
+                "author": "Anonymous",
+                "text": "GZdoom doesn't work for me. So you'll have to test it. OR just give me another engine to test it with.",
+                "created_at": "2010-09-09T22:05:59"
+            },
+            {
+                "comment_id": 18,
+                "author": "Torr Samaho",
+                "text": "Did you try the special GZDoom version I linked? If Skulltag works, this GZDoom version should work too. Otherwise you can test ZDoom, preferably revision 1551.",
+                "created_at": "2010-09-10T06:35:56"
+            },
+            {
+                "comment_id": 27,
+                "author": "unknownna",
+                "text": "Confirmed in 98c, 96b and 97d-beta4.3, but it has nothing to do with the actual link you copy-paste, but the length of the string you paste into the nameplate. Testing indicates that it takes exactly 63 letters copy-pasted into the nameplate to make it freeze.\r\n\r\nYou cannot copy-paste or make your name blank in (G)ZDoom, it seems. So there's no way to make it occur there, AFAIK. Tested with GZDoom 323 and ZDoom 2.5.0",
+                "created_at": "2010-09-11T07:34:31"
+            }
+        ]
+    },
+    {
+        "mantis_id": 3,
+        "project_id": 1,
+        "reporter": "Anonymous",
+        "handler": "Torr Samaho",
+        "priority": 20,
+        "status": 90,
+        "title": "Ghost items appear on drop",
+        "description": "When a player gets rid of a weapon/inventory item via the 'drop' console command, \r\na duplicate of the object that cannot be picked up appears at 0,0 on the map grid.",
+        "steps_to_reproduce": "1. Host a server using the attached .wad with sv_nodrop set to 0. Use Map01 for this test.\r\n2. Connect to the server.\r\n3. Pick up any of the weapons in front of the spawns\r\n4. Drop the weapons. The dropped item's duplicate will appear on the black pad, which is positioned at 0,0 on the map grid.",
+        "additional_information": "",
+        "created_at": "2010-09-05T11:04:51",
+        "updated_at": "2018-09-30T19:48:38",
+        "attachments": [
+            {
+                "file_id": 1,
+                "filename": "Dropbugtest.wad",
+                "local_path": "attachments/attachment_3_1_Dropbugtest.wad",
+                "file_type": "application/octet-stream"
+            }
+        ],
+        "comments": [
+            {
+                "comment_id": 1,
+                "author": "Anonymous",
+                "text": "When a client reconnects, the ghost items dissapear for them. I assume this means the problem is on the client's side.",
+                "created_at": "2010-09-05T11:39:42"
+            },
+            {
+                "comment_id": 3,
+                "author": "Torr Samaho",
+                "text": "Now that's a commendable example wad! Fixed in revision 2911.\n\n",
+                "created_at": "2010-09-05T17:28:02"
+            }
+        ]
+    },
+    {
+        "mantis_id": 5,
+        "project_id": 1,
+        "reporter": "unknownna",
+        "handler": "Spleen",
+        "priority": 30,
+        "status": 90,
+        "title": "[98d - 2914] online, bots attack in LMS, but not in DM",
+        "description": "Bots will not attack anyone in DM, but they do it in LMS.",
+        "steps_to_reproduce": "Start a DM/LMS server with bots.",
+        "additional_information": "",
+        "created_at": "2010-09-06T06:05:07",
+        "updated_at": "2018-09-30T19:48:41",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 4,
+                "author": "Spleen",
+                "text": "The issue was introduced in r2893, when I supposedly \"fixed\" weapon switching with compat_oldweaponswitch.  Unlike human weapon switching, bot weapon switching is done server-side, and I didn't think of that. :(\n\n",
+                "created_at": "2010-09-06T06:50:02"
+            }
+        ]
+    },
+    {
+        "mantis_id": 29,
+        "project_id": 1,
+        "reporter": "TIHan",
+        "handler": "Torr Samaho",
+        "priority": 20,
+        "status": 90,
+        "title": "Noclip for Spectating",
+        "description": "I am just curious why spectators don't have the ability to go through walls. This feature is very helpful especially if spectators want to move into a certain area that either takes a while to go under all the doors/platforms or can't go anywhere as they are trapped. Does this seem like a reasonable suggestion?",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-16T07:25:36",
+        "updated_at": "2018-09-30T20:49:19",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 184,
+                "author": "Frits",
+                "text": "Yeah, this would be real good for coop and survival games. This would finally allow players to go up and down a lift or trough specific doors.",
+                "created_at": "2010-09-26T15:28:26"
+            },
+            {
+                "comment_id": 195,
+                "author": "Edward-san",
+                "text": "It would be funny to 'escape' from the map and navigating through the 'empty', if it's approved. Or there will be an 'outbound limit' to stop that?",
+                "created_at": "2010-09-26T20:33:29"
+            },
+            {
+                "comment_id": 1134,
+                "author": "Mister Nobody",
+                "text": "I have been waiting for this feature forever, but was always to lazy to submit a request. Also, it should probably be a sever flag to enable or disable clipping for spectators.",
+                "created_at": "2011-02-28T03:02:39"
+            },
+            {
+                "comment_id": 1241,
+                "author": "kgsws",
+                "text": "not only noclip, viewheight 0 will also be good",
+                "created_at": "2011-03-31T17:48:45"
+            },
+            {
+                "comment_id": 1251,
+                "author": "Mati",
+                "text": "If you like mass HOM on software mode... then why not?",
+                "created_at": "2011-04-02T16:51:09"
+            },
+            {
+                "comment_id": 3772,
+                "author": "Devon",
+                "text": "That's a cracking idea, I don't know why it hasn't been done already.",
+                "created_at": "2012-06-14T18:06:55"
+            },
+            {
+                "comment_id": 3775,
+                "author": "Qent",
+                "text": "Make it toggleable please. I use the spectator cam all the time for testing line passability.",
+                "created_at": "2012-06-14T20:45:37"
+            },
+            {
+                "comment_id": 3778,
+                "author": "ZzZombo",
+                "text": "I didn't find how one can mark a bug as duplicate so I just leave it here: bug #273.",
+                "created_at": "2012-06-15T00:34:40"
+            },
+            {
+                "comment_id": 3781,
+                "author": "Dusk",
+                "text": "Only developers can mark tickets as duplicates.\r\n\r\nI marked this as related, though, I'd myself see the other ticket be about cl_spectatormove and this about noclip - that way we'd have one idea per ticket and thus have things better organized.\n\n",
+                "created_at": "2012-06-15T10:38:20"
+            },
+            {
+                "comment_id": 4438,
+                "author": "katZune",
+                "text": "this was with the kgs version and was so useful",
+                "created_at": "2012-08-24T21:15:59"
+            },
+            {
+                "comment_id": 4443,
+                "author": "ZzZombo",
+                "text": "One question: if a spectator would try to move from one sector to another and they aren't overlapping in Z axis will the move success? In Master of Puppets it's impossible, there are players on monster side that can pass through walls but they stack in such occasions.",
+                "created_at": "2012-08-25T00:24:36"
+            },
+            {
+                "comment_id": 4449,
+                "author": "Neewbie",
+                "text": "ALSO i would really like to see the fly cheat being able to be disabled because i would like to run the maps when i die (:.\r\nAnd the new noclip2 cheat when zandro come to it",
+                "created_at": "2012-08-25T18:43:08"
+            },
+            {
+                "comment_id": 5832,
+                "author": "Torr Samaho",
+                "text": "[url=http://www.mediafire.com/?7z1f2cd26v0t48d]This[/url] should allow spectators to use the noclip cheat. Please test if it works as intended.",
+                "created_at": "2013-01-27T09:52:34"
+            },
+            {
+                "comment_id": 5839,
+                "author": "Neewbie",
+                "text": "Tested it locally in single player and with bots with multiplayer emulation and it worked fine using the noclip command while spectating.\r\nNo crash or anything.",
+                "created_at": "2013-01-27T13:18:11"
+            },
+            {
+                "comment_id": 5889,
+                "author": "Mobius",
+                "text": "This was tried in multiplayer with Bluewizard and it works as intended.",
+                "created_at": "2013-01-31T06:34:07"
+            }
+        ]
+    },
+    {
+        "mantis_id": 8,
+        "project_id": 1,
+        "reporter": "Anonymous",
+        "handler": "Torr Samaho",
+        "priority": 20,
+        "status": 90,
+        "title": "Add a menu option to enable models",
+        "description": "Just a little option which can be added to the GL Prefrences in the options menu to enable/disable models. I keep having people asking and all that stuff. It can get annoying. Anyway, it will make it much simpler for everyone.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-07T10:28:22",
+        "updated_at": "2018-09-30T21:25:47",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 31,
+                "author": "Konda",
+                "text": "gl_use_models. And yeah this can be useful for the newbies.",
+                "created_at": "2010-09-11T20:04:14"
+            },
+            {
+                "comment_id": 4551,
+                "author": "Torr Samaho",
+                "text": "Added. Please test in the next beta build.",
+                "created_at": "2012-09-01T15:11:20"
+            },
+            {
+                "comment_id": 4780,
+                "author": "unknownna",
+                "text": "[code]Options -> Display Options -> OpenGL Options -> Preferences -> Use Models[/code]\r\nIt seems to work as intended.",
+                "created_at": "2012-09-23T20:22:44"
+            }
+        ]
+    },
+    {
+        "mantis_id": 2938,
+        "project_id": 1,
+        "reporter": "Zalewa",
+        "handler": "Edward-san",
+        "priority": 30,
+        "status": 90,
+        "title": "/MP compilation not supported for Debug builds in Visual Studio 2015",
+        "description": "Multi-process compilation is not supported in Visual Studio 2015. This is the warning message that is printed out when compiling:\r\n\r\ncl : Command line warning D9030: '/Gm' is incompatible with multiprocessing; ignoring /MP switch [N:\\dev\\zandronum\\vs2015\\src\\zdoom.vcxproj]\r\n\r\nZDoom doesn't have this problem. Tested with ZDoom commit  0488b18f8f1d381e49105256727d02abe7ed2c4e.",
+        "steps_to_reproduce": "1. Configure Visual Studio 2015 project with CMake (I'm using 3.7.0-rc1).\r\n2. Use v140_xp toolset.\r\n3. Configure ZLib, FMOD, SSL libs, NASM path.\r\n4. Add /MP switch to CMAKE_CXX_FLAGS and CMAKE_C_FLAGS.\r\n5. Open cmd.exe and `cd` to the directory where the Visual Studio 2015 solution was created.\r\n6. Run command `cmake --build . --config Debug`\r\n",
+        "additional_information": "",
+        "created_at": "2016-11-30T16:39:29",
+        "updated_at": "2018-09-30T21:49:27",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 16397,
+                "author": "Edward-san",
+                "text": "I suppose it's a merge error when there was the 3.0 code upgrade. Should be fixed with this changeset: https://bitbucket.org/zandronum/zandronum-sandbox/commits/6b711f117081b37fd4ca270c38058087459077c0 .\r\n\r\n[edit] Whoops forgot to write `(fixes 2938)` in the commit and I don't want to redo the same commit unless I could strip the old change.\n\n",
+                "created_at": "2016-11-30T17:30:51"
+            },
+            {
+                "comment_id": 16529,
+                "author": "Zalewa",
+                "text": "Is there any reason why the fix isn't merged with the main repo yet? I keep shuffling my CMakeLists.txt between the working directory and the shelve.",
+                "created_at": "2016-12-18T19:26:06"
+            },
+            {
+                "comment_id": 16530,
+                "author": "Torr Samaho",
+                "text": "[quote=Zalewa]Is there any reason why the fix isn't merged with the main repo yet?[/quote]\r\nSince there was no pull request, I didn't notice this till now. Added.",
+                "created_at": "2016-12-18T20:15:50"
+            },
+            {
+                "comment_id": 16531,
+                "author": "Zalewa",
+                "text": "Thanks.",
+                "created_at": "2016-12-18T20:16:48"
+            }
+        ]
+    },
+    {
+        "mantis_id": 1517,
+        "project_id": 1,
+        "reporter": "Dusk",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 90,
+        "title": "improving outlook of network errors",
+        "description": "- main point of this: the client processes auth failure wad data further and shows what wads differ (a bit like how this stuff is dealt with demos)\r\n- making network errors appear separate and orange to make the error clearer (and cleaned up the code a teeny bit while at that)",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2013-09-23T16:22:27",
+        "updated_at": "2019-06-04T21:59:49",
+        "attachments": [
+            {
+                "file_id": 1069,
+                "filename": "neterrors.diff",
+                "local_path": "attachments/attachment_1517_1069_neterrors.diff",
+                "file_type": "application/octet-stream"
+            }
+        ],
+        "comments": [
+            {
+                "comment_id": 7273,
+                "author": "Dusk",
+                "text": "I got this actually working now. I attached a diff of what I have right now though I'm still performing testing on this.\r\n\r\n[img]https://dl.dropboxusercontent.com/u/66055976/neterror-3.png[/img]\n\n",
+                "created_at": "2013-09-23T17:44:45"
+            },
+            {
+                "comment_id": 7274,
+                "author": "Arco",
+                "text": "Would it be possible to also show the hashes for the wads loaded?",
+                "created_at": "2013-09-23T18:35:22"
+            },
+            {
+                "comment_id": 7275,
+                "author": "Dusk",
+                "text": "I guess.. not sure if they should show though.",
+                "created_at": "2013-09-23T18:52:13"
+            },
+            {
+                "comment_id": 7280,
+                "author": "Torr Samaho",
+                "text": "It should definitely show the md5sums of conflicting wads.\r\n\r\nOne thing your check doesn't cover is the correct order of the wads. From a quick glance at the diff it looks to me as if your patch will output that everything matches if client and server load exactly the same wads, but in a different order. In the old raw output you could see whether the order was correct.",
+                "created_at": "2013-09-26T19:54:59"
+            },
+            {
+                "comment_id": 7284,
+                "author": "Dusk",
+                "text": "Guess I will have to rethink this one then.",
+                "created_at": "2013-09-27T10:33:13"
+            },
+            {
+                "comment_id": 7297,
+                "author": "Torr Samaho",
+                "text": "You could also leave it as it is and just re-add the full dump at the end. This way the client still get's all the information.",
+                "created_at": "2013-09-29T07:30:14"
+            }
+        ]
+    },
+    {
+        "mantis_id": 75,
+        "project_id": 1,
+        "reporter": "CorpseGr1nder",
+        "handler": "Torr Samaho",
+        "priority": 30,
+        "status": 90,
+        "title": "LMS Spectator Settings",
+        "description": "When hosting a LMS server, it has a default setting that prevents spectators from talking to players. I really don't see any use for this feature, especially considering it's only for lms... But my main issue is, I'm kind of tired of having to notice this every time I host a server and having to take it down manually. So I was wondering... Would it be possible to make it so the option is automatically set on disabled when someone hosts a server, but can be turned on if the server host wishes to? Just a suggestion...",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-10-03T12:02:53",
+        "updated_at": "2018-09-30T22:52:20",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 251,
+                "author": "Eruanna",
+                "text": "You could use autoexec.cfg to set lmsspectatorsettings to 3. Otherwise, I really don't know what you want here. I'm leaning towards \"it was done that way for a reason,\" though I was not around for LMS's initial implementation.",
+                "created_at": "2010-10-03T17:07:43"
+            },
+            {
+                "comment_id": 328,
+                "author": "Torr Samaho",
+                "text": "Changing the default behavior would confuse or annoy everybody who is used to it. If you don't want it on your server, just turn it off.\r\n\r\nBTW: With sv_applylmsspectatorsettings you can use lmsspectatorsettings in all game modes.",
+                "created_at": "2010-10-10T19:22:41"
+            }
+        ]
+    },
+    {
+        "mantis_id": 50,
+        "project_id": 1,
+        "reporter": "TIHan",
+        "handler": "Torr Samaho",
+        "priority": 60,
+        "status": 90,
+        "title": "[98d-2937] Box of Shotgun Shells not getting ammo updated to clients",
+        "description": "Just as the title of the bugs says. Clients are not informed about the ammo picked up from Box of Shotgun Shells. I haven't tested other ammo, but this sure doesn't work for Box of Shotgun Shells. This did not happen in 2914.",
+        "steps_to_reproduce": "Join a online game in 98d-2937. Pick up Box of Shotgun Shells.",
+        "additional_information": "I think it might have to do with this in 2937: \"Fixed: When picking up a weapon that uses some special type of ammo online for the first time, a client didn't get the correct ammo type the weapon was supposed to give.\"",
+        "created_at": "2010-09-22T05:50:45",
+        "updated_at": "2018-09-30T22:52:29",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 130,
+                "author": "unknownna",
+                "text": "Confirmed. Same goes for Cell/CellPack for plasma rifle/BFG 9000, Clip/ClipBox for pistol/chaingun, Shell/ShellBox for shotgun/SSG and RocketAmmo/RocketBox for RL/GL.\r\n\r\nExample, if you pick up a box of shells, the ammo isn't updated and if you fire all your pellers, the weapon switches to the next one with ammo. But if you then pick up shells, your shell ammo will be 24 instead of 4.",
+                "created_at": "2010-09-22T11:45:13"
+            },
+            {
+                "comment_id": 137,
+                "author": "Torr Samaho",
+                "text": "You are right, this is caused by the change you mentioned. I looked further into the issue and found out that the bug this change was meant to fix is not a Skulltag bug at all, but a bug in the example wad.",
+                "created_at": "2010-09-22T20:28:40"
+            },
+            {
+                "comment_id": 139,
+                "author": "Torr Samaho",
+                "text": "[url=http://www.dailydoomer.com/tsst/misc/SkullDev98d-2938windows.7z]This[/url] should fix the problem.",
+                "created_at": "2010-09-22T20:43:23"
+            }
+        ]
+    },
+    {
+        "mantis_id": 1371,
+        "project_id": 1,
+        "reporter": "TribeamAgain",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 90,
+        "title": "GL/fog/water/nowork",
+        "description": "When a fade is applied to a dummy sector for 3d water(not sure on any other cases) the fog is not transfered to the control.\r\n\r\nWorks in gzdoom.\r\n\r\nscreen: https://dl.dropboxusercontent.com/u/49758621/Screenshot_Doom_20130618_152215.png\r\n\r\nwad:\r\nhttps://dl.dropboxusercontent.com/u/49758621/fogbug.wad",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2013-06-18T20:28:14",
+        "updated_at": "2018-09-30T23:13:43",
+        "attachments": [
+            {
+                "file_id": 1167,
+                "filename": "test_3dfog.wad",
+                "local_path": "attachments/attachment_1371_1167_test_3dfog.wad",
+                "file_type": "application/octet-stream"
+            }
+        ],
+        "comments": [
+            {
+                "comment_id": 8284,
+                "author": "Qent",
+                "text": "I tested this and it works in GZDoom r880 but not Zandronum 2.0-140112. There's a new example WAD containing a pool, half of which should have fade FFFFFF.",
+                "created_at": "2014-02-26T19:37:47"
+            },
+            {
+                "comment_id": 8285,
+                "author": "Leonard",
+                "text": "That's weird does it mean that some revisions can just be forgotten ?\r\nOr is it because it needed some modification from GZDoom ?\r\nAnyway there can't be fog in 3D floors instead it's just like a palette flash.",
+                "created_at": "2014-02-26T19:44:08"
+            },
+            {
+                "comment_id": 10038,
+                "author": "Arco",
+                "text": "Issue fixed in v2.0 140720-1542.",
+                "created_at": "2014-07-22T21:22:11"
+            }
+        ]
+    },
+    {
+        "mantis_id": 60,
+        "project_id": 1,
+        "reporter": "Anonymous",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 90,
+        "title": "Right clicking skulltag freezes it and gets connection interrupted",
+        "description": "^",
+        "steps_to_reproduce": "Open skulltag in software, not full screen. Open console. Use your mouse and right click skulltag at the bottom.",
+        "additional_information": "",
+        "created_at": "2010-09-26T14:49:27",
+        "updated_at": "2011-02-06T18:21:41",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 185,
+                "author": "unknownna",
+                "text": "Can't reproduce.",
+                "created_at": "2010-09-26T16:28:51"
+            },
+            {
+                "comment_id": 193,
+                "author": "unknownna",
+                "text": "The taskbar? Still nothing.",
+                "created_at": "2010-09-26T19:31:53"
+            },
+            {
+                "comment_id": 247,
+                "author": "Torr Samaho",
+                "text": "I can't reproduce this either.",
+                "created_at": "2010-10-03T14:55:59"
+            },
+            {
+                "comment_id": 474,
+                "author": "unknownna",
+                "text": "Now I see it. If you click and hold the title bar with the left/right mouse button while in windowed mode, Skulltag \"freezes\" until you release the button. If you hold the title bar for 30-35 seconds, your client will time out from the server. You don't get kicked from the server though. There's simply a \"waiting for server...\" message displayed.\r\n\r\nHowever, this also happens in OpenGL mode. And I'm not so sure if this is a bug. It also \"freezes\" in GZDoom 323, both online and offline. But you don't time out in GZDoom though.\n\n",
+                "created_at": "2010-10-26T23:12:14"
+            },
+            {
+                "comment_id": 987,
+                "author": "Torr Samaho",
+                "text": "I assume that this is not a bug then.",
+                "created_at": "2011-02-06T18:21:16"
+            }
+        ]
+    },
+    {
+        "mantis_id": 1705,
+        "project_id": 1,
+        "reporter": "AlexMax",
+        "handler": "Watermelon",
+        "priority": 30,
+        "status": 90,
+        "title": "Gametic-based unlagged",
+        "description": "I have implemented a very rough form of gametic-based unlagged.\n\n- The server's gametic is sent to the client, either in a truncated form (at the same time player positions are sent), or the whole thing (during a full update).\n- The client gets this message concerning the gametic and saves said gametic, as well as the \"local\" gametic it got the message on.\n- When sending out player movement commands, the client also sends the 'predicted' server gametic that it thinks it is looking at.  This is the last server gametic it received from the server plus any difference between the current \"local\" gametic and the local gametic it got the last server gametic on.\n- When the server gets the client's move command, it takes the predicted gametic it was sent and puts it in the player struct for future reference.\n- Finally, the unlagged function that determines how far back to do backwards-reconciliation uses the player's predicted server gametic instead of ping.\n\nNote that I did run into an assertion crash yesterday when I first this patch out that only manifested itself when players disconnected (not quit), but I have not been able to replicate it since then and I might have even stomped out the problem (as I had made a few tiny changes since I first got it working until the final commit c1c8539), but please do a quick double-check over the patch to make sure I'm not forgetting about something.\n\nPotential improvements:\n- Better clientside prediction of serverside gametic?\n- Is always accepting the server's gametic a good idea?  Perhaps it would be a better idea to ignore the server's gametic in cases where the server -> client gametic is less than the client's stored server gametic, but is not big enough to warrant a wraparound...that way out of order packets don't have an effect on the client.\n- Perhaps the client's predicted gametic sent to the server could be packed into a byte or short in much the same way that the server sends the client its gametic.\n- Could the client's predicted gametic also be used as a replacement for the sequence number or other instances where gametics are passed around?",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2014-02-13T02:34:58",
+        "updated_at": "2018-09-30T23:26:49",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 8191,
+                "author": "AlexMax",
+                "text": "The pull request is located here:\r\n\r\nhttps://bitbucket.org/Torr_Samaho/zandronum/pull-request/32/gametic-based-unlagged/diff\r\n\r\nAlso note that my pull request has a serverside debug flag that toggles between the old ping-based unlagged and new gametic-based unlagged.  Before 2.0 is released, we should remove that flag, so server owners don't have yet another poorly-understood toggle to deal with.\r\n\r\nThe patch _has_ been tested with players, but not extensively so.\n\n",
+                "created_at": "2014-02-13T02:36:30"
+            },
+            {
+                "comment_id": 8192,
+                "author": "AlexMax",
+                "text": "Some observations from more testing:\r\n\r\n- I did a few blind tests, and in blind tests players could either not tell the difference between ping-based and gametic-based unlagged or they preferred the gametic-based unlagged.\r\n- Players observed that other players with high ping or unstable connections were MUCH easier to hit with gametic-based unlagged compared to ping-based unlagged.\r\n- With gametic-based unlagged, players sometimes observed that they could kill people 'around corners' in some situations (in that their perception was that they JUST missed someone going around a corner, but the server registered a hit anyway).  Perhaps it might be a good idea to experiment with blanketly offsetting unlagged tics by some amount to see if that makes things better, but that also runs the risk of making accurate shots miss more often.  The complaints weren't bad in any case.\r\n- Also, there were slightly more occurrences of players saying that their point-blank shots were missing with gametic-based unlagged, but only slightly, and only by one or two players.\n\n",
+                "created_at": "2014-02-13T04:53:37"
+            },
+            {
+                "comment_id": 8195,
+                "author": "ZzZombo",
+                "text": "Why not the other way around? The client sends its own gametic, that on arrive will be used by server to calculate the difference with currently simulating gametic while processing the command thus knowing how far move players back. Look at https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking#Lag_compensation.\n\n",
+                "created_at": "2014-02-13T12:49:15"
+            },
+            {
+                "comment_id": 8196,
+                "author": "ibm5155",
+                "text": "hmm so with that a mod like \"flappy lost soul\" where players control a projectile with their movements would get a smooth projectile on the right position?",
+                "created_at": "2014-02-13T16:36:33"
+            },
+            {
+                "comment_id": 8200,
+                "author": "AlexMax",
+                "text": "Zombo: To my knowledge, the client's gametic and servers gametic are completely disjointed.  However the client DOES use its own gametic to predict the server's gametic when sending movement commands.  The formula looks something like\r\n\r\nPredicted Server Gametic (sent to the server by the client) = (Current local gametic - Last local gametic that we got a server gametic) + Last server gametic we got.\r\n\r\nPretty simple.",
+                "created_at": "2014-02-13T22:45:53"
+            },
+            {
+                "comment_id": 8201,
+                "author": "ZzZombo",
+                "text": "It can be solved by synchronizing them upon client connection can't it?",
+                "created_at": "2014-02-13T22:54:47"
+            },
+            {
+                "comment_id": 8202,
+                "author": "AlexMax",
+                "text": "I already tell the client what the server's gametic is on full update (which you get on connect), and a truncated single-byte representation is sent to the client with every opponent movement command to ensure the client always has the latest server gametic - this would be necessary in any case to ensure the client and server do not drift out of sync.",
+                "created_at": "2014-02-13T23:29:36"
+            },
+            {
+                "comment_id": 8219,
+                "author": "AlexMax",
+                "text": "This is something that has already happened with the ping-based unlagged.  In fact, the source of this patch is me looking into the causes of what caused the ping-based exploit to work and realizing how inaccurate the unlagged calculation was in the first place by relying on the ping.\r\n\r\nThe aim of the patch was to improve the unlagged experience, not fix a fundamental problem with unlagged implementations. :)\n\n",
+                "created_at": "2014-02-15T19:18:33"
+            },
+            {
+                "comment_id": 8208,
+                "author": "Torr Samaho",
+                "text": "I didn't have a chance to look at the patch in detail yet, but I see one design problem: You are putting much more trust into what the client is sending to the server. How do you prevent client side hacks that would allow to shoot people around corners by just asking the server to use an older position of the opponent?",
+                "created_at": "2014-02-15T13:39:43"
+            },
+            {
+                "comment_id": 8220,
+                "author": "Torr Samaho",
+                "text": "The ping is averaged over many measurements. Surely, you can manipulate it, but you cannot change it instantly. With your proposed implementation, the client can just freely pick the tic of which it wants the player positions to be used, can't it?",
+                "created_at": "2014-02-15T19:53:40"
+            },
+            {
+                "comment_id": 8221,
+                "author": "AlexMax",
+                "text": "It can.  However, the same thing that makes the unlagged tic measurement less malleable makes it less accurate in general.  I'm not sure that is possible to resolve, but I do know that competitive players have complained about Zandronum's whiffing issues for some time now.\r\n\r\nFor what it's worth, Odamex uses tic-accurate unlagged.",
+                "created_at": "2014-02-15T20:34:18"
+            },
+            {
+                "comment_id": 8235,
+                "author": "Torr Samaho",
+                "text": "I think it would be a good start to check that the client only sends one movement command per server tic. And if the client for whatever reasons sends multiple commands for a single server tic, just don't do the reconcilliation for anything but the first command for this tic.",
+                "created_at": "2014-02-17T20:02:41"
+            },
+            {
+                "comment_id": 8236,
+                "author": "AlexMax",
+                "text": "Wouldn't that similarly punish people with unstable connections, much like we do now?  The client's sending of the gametic is only a prediction, after all, and the client's base gametic (on which their prediction is based) can be corrected at any point in either direction, meaning that duplicate predicted server gametics are not only possible, but likely.  Any jitter in the connection would cause an unlag desync.\r\n\r\nEDIT: Verified with a lag proxy that yes, mispredictions can be common going both ways.\n\n",
+                "created_at": "2014-02-17T23:17:45"
+            },
+            {
+                "comment_id": 8240,
+                "author": "Torr Samaho",
+                "text": "Of course any sanity checks should not cause disadvantages for honest clients. But there are some things honest clients will never do (unless something is bugged), for instance sending more than one movement command per tic. Surely the commands don't need to arrive in order, some may be lost and sometimes they may arrive in bursts, so any sanity checks have to take this into account. I guess I have to look at your patch in detail to figure out what kind of things the server can expect honest clients to do always.",
+                "created_at": "2014-02-18T20:47:04"
+            },
+            {
+                "comment_id": 8243,
+                "author": "AlexMax",
+                "text": "It is possible for two movement commands to legitimately have the same predicted tic on them.\r\n\r\nPicture a jittery connection.  Server Tic 123 and player positions arrives at the client right on time.  The client sends off a movement command with a server tic of 123 attached.  The next clientside gametic happens, but there's no Server Tic 124 with player updates, so the client sends off its next movement command with server tic 123 + 1 additional gametic of prediction, so 124.  The next clientside gametic happens and Server Tic 124 with player positions finally shows up, but 125 hasn't arrived yet for some reason so the client sends off its next movement command with server tic 124.\r\n\r\nAnd that's how you get two movement commands with the same predicted gametic.",
+                "created_at": "2014-02-19T01:13:11"
+            },
+            {
+                "comment_id": 8267,
+                "author": "Torr Samaho",
+                "text": "I finally had a chance to look at the patch in more detail. I think it could be better to do what SERVERCOMMANDS_ServerGametic does in the existing SERVERCOMMANDS_MoveLocalPlayer function instead. I'm not even sure if it's necessary to send the server tic at all. Could the number of tics the client has to predict be exactly the delay you are looking for (see ulPredictionTicks in CLIENT_PREDICT_PlayerPredict)? If that's the case, you'd just need to send this number instead of the predicted server tic in CLIENTCOMMANDS_ClientMove and get rid of all code that submits the server tic to the client.",
+                "created_at": "2014-02-22T16:42:21"
+            },
+            {
+                "comment_id": 8270,
+                "author": "ZzZombo",
+                "text": "Also about that shoot-behind-corner-and-hit: isn't it normal in the sense it represents what attacker saw when he fired the weapon?",
+                "created_at": "2014-02-23T05:49:26"
+            },
+            {
+                "comment_id": 8271,
+                "author": "AlexMax",
+                "text": "Thanks for giving me the pointer.  I took a gander at it, and my conclusions are as follows:\r\n\r\nIn the prediction amount calculation, the client compares the current client gametic with the last client gametic it got from the server.  Importantly, this offset is calculated and used almost immediately thereafter in order to predict.  Likewise, with my unlagged implementation, the server compares the current server gametic with the last server gametic it got from the given client, and this offset is also calculated and used almost immediately thereafter.\r\n\r\nSending the clientside offset to the server is not necessarily wrong, but by the time the offset gets to the server network conditions might have changed and the offset might not be correct, and the backwards reconciliation might mispredict.  Likewise, if we ripped out the clientside tic prediction out entirely and sent the serverside offset, clientside movement predictions would mispredict more often because the offset would again be stale.\r\n\r\nBy limiting ourselves to only one 'offset' prediction on one side of the connection, this means that any prediction or backwards reconciliation on the other side of the connection is not using the absolute most up-to-date latency data possible.  Therefore, I must conclude that offset calculations done independently on either side of the connection is the better option.  Precisely, it is better by the length of time an offset calculation would take to go from one side to the other.\r\n\r\nHowever, I only conclude that it would be best if latency offsets were calculated on either side on the connection using some form of time taken on the other side.  I should emphasize that I do not claim that my proposed implementation is the best possible, or even particularly good. :)",
+                "created_at": "2014-02-23T06:20:44"
+            },
+            {
+                "comment_id": 8276,
+                "author": "AlexMax",
+                "text": "After our conversation in IRC, I will move serverside gametic updates to SERVERCOMMANDS_MoveLocalPlayer.  I also believe that I need to ensure that the 'partial gametic' is not out of date if the player waits more than 255 tics to join the server.",
+                "created_at": "2014-02-23T20:46:51"
+            },
+            {
+                "comment_id": 8277,
+                "author": "AlexMax",
+                "text": "I put all of my changes into one commit.\r\n\r\nhttps://bitbucket.org/alexmax2742/zandronum/commits/6ed4ec0b085007eb09cff8a5a9ba5b7d78d2a85b\r\n\r\nHowever, tonight I've been testing my implementation against the ping-based implementation on a stable connection with latency using a lag proxy.  With low pings, there is a 1 tic discrepancy between the ping measurement and the gametic measurement, and with high pings there can be 2 or sometimes even 3 tics discrepancy.  The gametic-based measurement is always the 'lesser' of the two, which means that the gametic-based measurement grabs 1-2 more tics of backwards reconciliation than the ping-based measurement.  It doesn't sound like a lot, but 2 tics is 57ms difference.\r\n\r\nThe problem is that I'm not entirely sure which one is 'correct'.  Using the gamer proxy, the \"ping\" that Zandronum seems to generate looks correct, so at least on paper it seems like I'm going back in time \"too much\" with gametic-based unlagged.  With the ping-based unlagged, a loopback server looks like it uses the current gametic, while there's always at least one tic of unlagged used with gametic-based unlagged.\r\n\r\nBut let's think about this.  If the client is getting updates from the server about the servers gametic and the positions of players, and all the client is doing is sending that, plus accounting for any additional time that elapsed on the client since it last got a server update...wouldn't that make the gametic-generated unlagged tic more accurate to what the player was actually seeing at the time, regardless of if it matches up with the ping or not?\r\n\r\nMore thoughts.  In the loopback situation above, the server first reads tics off the wire with everybody's packets, and then does gameloop logic and sends out messages.  If a client has tics that apply to that gamestate, by definition it can't arrive on that tic, it has to arrive on the next tic.  Which means perhaps that the original ping-based logic:\r\n\r\n    unlaggedGametic = ( gametic - ( player->ulPing * TICRATE / 1000 ) )\r\n\r\nwas _always_ at least one tic off because it would always round down, instead of always rounding up.\r\n\r\nI don't know..that only accounts for one of the tics, it still doesn't explain why there's sometimes a 2-3 tic difference with higher pings.  Maybe my way is more accurate to what the player is actually seeing, or maybe we're losing a tic somewhere.  Any ideas on how to verify that my measurement is accurate?  Am I totally off base somewhere?\n\n",
+                "created_at": "2014-02-24T04:38:08"
+            },
+            {
+                "comment_id": 8281,
+                "author": "Xsnake",
+                "text": "I've played ZDaemon for many years and I could never get used to Zandronum's unlagged, having the feeling that, even though it was on, I had to slightly aim at where the player was going to be rather than where they actually were in order to perform a successful hit.\r\n\r\nCorrect me if I'm wrong, but ZDaemon has a tick-based unlagged implementation (I'm not sure where I heard that, though). That one tick difference you're referring to could well explain the difference I've always felt between these two ports. So, I'm tempted to say your implementation is more accurate than the ping-based one (regardless of that 2-3 tick difference with high pings).\r\n\r\nBut once again, this is just me speaking with my own experience of the game. Those who do not come from ZDaemon probably think the current ping-based unlagged is just fine.",
+                "created_at": "2014-02-25T13:11:09"
+            },
+            {
+                "comment_id": 8286,
+                "author": "AlexMax",
+                "text": "Actually, I have changed my mind on this.  Here's why:\r\n\r\nNormal Doom game loop goes like this:\r\n\r\n- Handle Events (Keyboard, Mouse, etc.)\r\n- Do game logic\r\n- Render frame\r\n- Goto first step\r\n\r\nLet's say rendering the frame shows an opponent who is ready to kill you.  You press +attack, but because event handling happens at the beginning of the gametic, any reaction you have to the opponent must happen on the NEXT gametic.\r\n\r\nNow, with the way I have things set up, the client movement command sends the server gametic that it thinks it is SEEING.  However, the server then takes this gametic and uses that as the server gametic to backwards reconcile to.  This violates the laws of causality, because if you see something on a gametic, your reaction to it cannot be taken into account until gametic + 1.\r\n\r\nThus, on my local repository, I add one to the predicted serverside gametic when reconciling.\r\n\r\n    int unlaggedGametic = player->lPredictedServerTick + 1;\r\n\r\nThis accounts for one of the tics of difference.  However, it does not account for the others.  I will let you know if I have anything concrete to add to that issue.",
+                "created_at": "2014-02-26T23:06:05"
+            },
+            {
+                "comment_id": 8564,
+                "author": "Torr Samaho",
+                "text": "I thought about your implementation a bit more and think I found one inaccuracy: It doesn't handle the effect of cl_ticsperupdate: The client does not predict the movement of the other players, so on a client the other players are always at the last position the server told. A client does predict its own position, so the following part of your patch\r\n[code]\r\n\t// [AM] Also send the predicted server gametic we think we're on.\r\n\tconst LONG lPredictedServerGametic = g_lLastServerGametic + ( gametic - g_lTimeOfLastServerGametic );\r\n\tPrintf(\"CLIENT_SendCmd: I predict we're on gametic %d\\n\", lPredictedServerGametic);\r\n\tCLIENTCOMMANDS_ClientMove( lPredictedServerGametic );\r\n[/code]\r\nwill properly handle the position of the moving client, put will look for the position of the other players at a wrong tic.",
+                "created_at": "2014-04-13T15:46:55"
+            },
+            {
+                "comment_id": 10276,
+                "author": "StrikerMan780",
+                "text": "Any headway with this? This has to be one of the things I'm looking most forward to in Zan 2.0.\n\n",
+                "created_at": "2014-09-19T14:47:57"
+            },
+            {
+                "comment_id": 10410,
+                "author": "Watermelon",
+                "text": "StrikerMan I'm going to be working on this and pushing it through to Zan 2.0",
+                "created_at": "2014-10-09T03:35:22"
+            },
+            {
+                "comment_id": 10440,
+                "author": "Watermelon",
+                "text": "I implemented the gametic module the way Alex did it with integration into USERINFO so players can select what kind of unlagged they want (Ping or Gametic, both are functional and I don't intend on removing one that has stood the test of time).\r\n\r\nThe gametic unlagged is always 1, sometimes 2 or even 3 tics ahead.\r\n\r\nI'll try to test this again with people I know.",
+                "created_at": "2014-10-09T22:06:31"
+            },
+            {
+                "comment_id": 10450,
+                "author": "Watermelon",
+                "text": "This should be operational:\r\n\r\nhttps://bitbucket.org/ChrisKOmg/zandronum-stable/commits/b085844c4e773364710939920064e14654c491dd\r\n\r\nhttps://bitbucket.org/ChrisKOmg/zandronum-stable/commits/46a2efa181781947b6b730e09ec7fa63400d3304\r\n\r\nhttps://bitbucket.org/ChrisKOmg/zandronum-stable/commits/2fdbc74c84bbb8b3f3f38860d99d6d618ced908b\r\n\r\nhttps://bitbucket.org/ChrisKOmg/zandronum-stable/commits/2ab22941c2b533147a56629c725d33631650afe9\r\n\r\nhttps://bitbucket.org/ChrisKOmg/zandronum-stable/commits/aa0fed27f18a104a44f59bf6c0a21585c014ab08\r\n\r\n\r\n[b][u]NOTES:[/u][/b]\r\n\r\n- [b]Takes into account cl_ticsperupdate[/b]\r\nThe user can change their ticsperupdate at any time and it will work just as it should. This is due to it being bundled with the movelocalplayer command, the client gets the server gametic as needed.\r\n\r\n- [b]Gametic bundled with SVC_MOVELOCALPLAYER[/b]\r\nThis packet is sent to the client always as the most up-to-date thing. If this is lost, the client will be in trouble regardless, so putting it here saves on another header, and allows it to work with cl_ticsperupdate flawlessly.\r\n\r\n- [b]Sanity checks prevent exploitation[/b]\r\nThe full gametic is sent, so the server checks to see if it's either > than it's gametic (indicating a corrupt client), or if its less than the last received update. If it's less, we're getting stale data which we don't care about and will ignore. This keeps the client in an honest range, if they decide to send an old gametic to attempt to exploit this, they will struggle because of the constraints put on it. It'd be pretty obvious too since the only way such an exploit could be successful is if they rigged the client to not send any updates and freeze everything in place. By the time they'd line up the shot, the gametic it sends might already be stale due to clamping done in unlagged.cpp. Plus they'd lag out every time they tried to shoot, so it'd be pretty obvious (easy ban).\r\n\r\n- [b]Gametic base sent in authentication[/b]\r\nThis way, the clients will never have an erroneous value.\r\n\r\n- [b]Clients accidentally sending the same gametic won't change anything[/b]\r\nThe worst that will happen is they will be reconciled to that gametic. Therefore an honest client won't get screwed over in any shape or form if they happen to lag or send the same gametic for any reason.\r\n\r\n\r\nI have tested all the above as well with high ping, different cl_ticsperupdate values...etc, and it all was working good.\n\n",
+                "created_at": "2014-10-10T14:07:18"
+            },
+            {
+                "comment_id": 10464,
+                "author": "StrikerMan780",
+                "text": "Is the new unlagged the default setting? If so, awesome. Epic either way though... got tired of how unreliable the ping-based unlagged can be. (Shooting ethereal pellets that do nothing, woo!)\n\n",
+                "created_at": "2014-10-11T06:00:44"
+            },
+            {
+                "comment_id": 10477,
+                "author": "Torr Samaho",
+                "text": "Can you collect all necessary changes in a single changeset?\r\n\r\n[quote=Watermelon]The gametic unlagged is always 1, sometimes 2 or even 3 tics ahead.[/quote]\r\nYou mean compared to the ping based unlagged? Did you check that it's not overcompensating? For clients with a LAN connection, the unlagged shouldn't do anything. In particular, it's important to take into account ~8286.\r\n\r\n[quote=Watermelon]The full gametic is sent, so the server checks to see if it's either > than it's gametic (indicating a corrupt client), or if its less than the last received update. If it's less, we're getting stale data which we don't care about and will ignore.[/quote]It's very likely that client movement commands sometimes will arrive in the wrong order. I don't think that dropping those is a good idea. If you are walking in a straight line for instance, the old handling will work perfectly, but if you drop some of the packets the movement will get choppy.",
+                "created_at": "2014-10-11T11:48:52"
+            },
+            {
+                "comment_id": 10483,
+                "author": "Watermelon",
+                "text": "[quote]You mean compared to the ping based unlagged? Did you check that it's not overcompensating? For clients with a LAN connection, the unlagged shouldn't do anything. In particular, it's important to take into account 0001705:0008286.[/quote]\r\n\r\nThinking on this further, it would make sense to do Alex's suggestion since I believe the server does (with my own reasoning):\r\n- SERVER_GetPackets() (at least once)\r\nthen\r\n- G_Ticker() // Send out gametic X\r\nthen\r\n- gametic++ // Now X + 1\r\nthen start again\r\n- SERVER_GetPackets() (at least once) // Getting X when it's X + 1\r\n\r\nTherefore any packets received have to be at least 1 gametic old. Does this make sense?\r\n\r\n\r\n[quote]It's very likely that client movement commands sometimes will arrive in the wrong order. I don't think that dropping those is a good idea. If you are walking in a straight line for instance, the old handling will work perfectly, but if you drop some of the packets the movement will get choppy. [/quote]\r\n\r\nMy wording was bad: Packets aren't actually dropped, it just only uses the latest server-gametic because it can't guarantee the previous ones have been spoofed or not. The downside is out of order packets might use a later gametic if it arrives after a later one. Is this okay? I can make it so it blindly trusts the client on this, but that's when we get into the possibility of some nasty hacks.\r\n\r\n\r\n\r\nIf all is good after the comment you give back, I'll compress the changeset.\n\n",
+                "created_at": "2014-10-11T13:30:19"
+            },
+            {
+                "comment_id": 10490,
+                "author": "Torr Samaho",
+                "text": "[quote=Watermelon]\r\nTherefore any packets received have to be at least 1 gametic old. Does this make sense?[/quote]\r\nI'm not sure what this has to do with ~8286. Also keep in mind that SERVER_GetPackets() is called more than once per tic to allow for ping measurements that are not a multiple of the ticrate. The essence of ~8286 is: Movement commands generated at tic X are a reaction to the gamestate at tic X and need to be processed at tic X + 1, not any earlier.\r\n\r\n[quote=Watermelon]\r\nThe downside is out of order packets might use a later gametic if it arrives after a later one. Is this okay?[/quote]That should be fine.\n\n",
+                "created_at": "2014-10-11T15:42:15"
+            },
+            {
+                "comment_id": 10493,
+                "author": "Watermelon",
+                "text": "[quote]I'm not sure what this has to do with 0001705:0008286. Also keep in mind that SERVER_GetPackets() is called more than once per tic to allow for ping measurements that are not a multiple of the ticrate. The essence of 0001705:0008286 is: Movement commands generated at tic X are a reaction to the gamestate at tic X and need to be processed at tic X + 1, not any earlier.[/quote]\r\n\r\nMisunderstanding on my part (for some reason I thought it'd cache the packets and process them all at once in the main loop, which is wrong).\r\n\r\n\r\nTherefore, if changing the code to this (with the +1):\r\n\r\n[quote]unlaggedGametic = pClient->lLastServerGametic + 1;[/quote]\r\n\r\nIs fine with you, I will compile the changeset.",
+                "created_at": "2014-10-11T15:56:11"
+            },
+            {
+                "comment_id": 10498,
+                "author": "Torr Samaho",
+                "text": "Sounds good to get started! Without seeing the full patch, I can't say this for sure though.",
+                "created_at": "2014-10-11T16:35:38"
+            },
+            {
+                "comment_id": 10585,
+                "author": "Watermelon",
+                "text": "Pull request sent.\r\n\r\nI expect there to be changes you may request, but I sent a pull request anyways so you can code review/comment there.\r\n\r\n\r\nI tested this online and under ridiculous situations (300 ping w/ insane jitter) it performed slightly nicer for me than the ping based unlagged did. So far I am happy with it.",
+                "created_at": "2014-10-14T18:48:47"
+            },
+            {
+                "comment_id": 10795,
+                "author": "Watermelon",
+                "text": "https://bitbucket.org/Torr_Samaho/zandronum-stable/pull-request/95/added-in-new-gametic-unlagged-to-replace/diff\r\n\r\nI need discussion at the dev meeting about this.",
+                "created_at": "2014-11-02T18:47:25"
+            },
+            {
+                "comment_id": 10852,
+                "author": "Watermelon",
+                "text": "Tested on LAN, worked just fine as expected (no gametic ahead of the server). Pull req updated.",
+                "created_at": "2014-11-10T16:06:30"
+            },
+            {
+                "comment_id": 10937,
+                "author": "Torr Samaho",
+                "text": "You may have overlooked my question in the pull request:\r\n[quote=Torr Samaho]\r\nHmm, you are already so confident in this implementation that everybody will prefer it in its current form over the old ping based version?[/quote]",
+                "created_at": "2014-11-23T11:10:00"
+            },
+            {
+                "comment_id": 10948,
+                "author": "Watermelon",
+                "text": "We discussed on IRC about having a flag to enable/disable it. Did you want it to be a serverside flag? Or a clientside one?\r\n\r\nI was thinking of adding in a serverside boolean that could allow them to switch between ping/gametic when releasing, so we can get testing done.\r\nThoughts?",
+                "created_at": "2014-11-24T12:30:10"
+            },
+            {
+                "comment_id": 10953,
+                "author": "StrikerMan780",
+                "text": "A serverside bool would be good. Last thing we need is to have a testing session, and some people going \"This sucks!\" or \"What's the Difference?\" only to realize after the session they had Ping-based unlagged enabled, and not Gametic-based.\n\n",
+                "created_at": "2014-11-24T15:30:35"
+            },
+            {
+                "comment_id": 10960,
+                "author": "Torr Samaho",
+                "text": "I would strongly prefer a client side flag. Your original patches had this and that's one of the reasons why we introduced cl_clientflags :P. This way everybody can compare the difference between the two methods.\r\n[quote=StrikerMan780]\r\nLast thing we need is to have a testing session, and some people going \"This sucks!\" or \"What's the Difference?\" only to realize after the session they had Ping-based unlagged enabled, and not Gametic-based.[/quote]People just need to be informed what exactly is supposed to be tested and how to do so. Those who are actually interested in this kind of difference should have no problem toggling this on their own.",
+                "created_at": "2014-11-24T19:47:26"
+            },
+            {
+                "comment_id": 10962,
+                "author": "Watermelon",
+                "text": "Ok I'll update to clientflags.\r\n",
+                "created_at": "2014-11-24T21:33:11"
+            },
+            {
+                "comment_id": 10966,
+                "author": "Watermelon",
+                "text": "Update complete",
+                "created_at": "2014-11-24T23:14:07"
+            },
+            {
+                "comment_id": 11047,
+                "author": "Watermelon",
+                "text": "Updates ready.",
+                "created_at": "2014-12-08T15:23:01"
+            },
+            {
+                "comment_id": 11365,
+                "author": "Torr Samaho",
+                "text": "I changed how the sorting of the movement buffer is done and merged everything with the stable head. Currently, a testing session is run to get an idea how well the latest implementation works.",
+                "created_at": "2015-01-11T21:32:43"
+            },
+            {
+                "comment_id": 11406,
+                "author": "cobalt",
+                "text": "Issue addressed by commit 8e43651ce72a: [b][url=https://bitbucket.org/Torr_Samaho/zandronum-stable/commits/8e43651ce72a][Water, AlexMax, Torr Samaho] Added gametic unlagged which should perform better under varying net conditions compared to ping-based unlagged (addresses 1705).[/url][/b]\nCommitted by Benjamin Berkels [Torr Samaho] on Saturday 17 January 2015 12:12:48\n\nChanges in files:\n docs/zandronum-history.txt |   1 [color=#5F7]+[/color]\n src/cl_commands.cpp        |   2 [color=#5F7]++[/color]\n src/cl_main.cpp            |  34 [color=#5F7]++++++++++++++++++++++++++++++++++[/color]\n src/cl_main.h              |   2 [color=#5F7]++[/color]\n src/d_netinf.h             |   1 [color=#5F7]+[/color]\n src/d_netinfo.cpp          |   2 [color=#5F7]++[/color]\n src/m_options.cpp          |   8 [color=#5F7]+++++++[/color][color=#F53]-[/color]\n src/sv_commands.cpp        |   3 [color=#5F7]+++[/color]\n src/sv_main.cpp            |  22 [color=#5F7]++++++++++++++++++++++[/color]\n src/sv_main.h              |   4 [color=#5F7]++++[/color]\n src/unlagged.cpp           |  24 [color=#5F7]+++++++++++++++++++++++[/color][color=#F53]-[/color]\n 11 files changed, 101 insertions(+), 2 deletions(-)",
+                "created_at": "2015-01-17T13:14:38"
+            },
+            {
+                "comment_id": 11409,
+                "author": "Dusk",
+                "text": "This was tested rather extensively so I think we can close this now.",
+                "created_at": "2015-01-17T16:45:50"
+            }
+        ]
+    },
+    {
+        "mantis_id": 2108,
+        "project_id": 1,
+        "reporter": "Stall",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 90,
+        "title": "Fullscreen display ends up on the wrong monitor",
+        "description": "I'm using a two monitor set up.  Trying to play full screen and it goes to my 2nd monitor.",
+        "steps_to_reproduce": "Enable full screen on two monitor set up.",
+        "additional_information": "Main desktop is set to the one I want it to run full screen on.  But it goes to my secondary.",
+        "created_at": "2015-02-19T23:34:00",
+        "updated_at": "2024-03-02T07:11:34",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 11743,
+                "author": "Stall",
+                "text": "I tried the unplugging and re-plugging suggestion, and it worked.  Even though I didn't really think it would.  It did....  But Watakid also brought to my attention these two commands to consider next time if this problem comes up.  \r\n\r\nvid_listadapters\r\nvid_adapter",
+                "created_at": "2015-02-23T04:02:04"
+            },
+            {
+                "comment_id": 11722,
+                "author": "Edward-san",
+                "text": "Does this happen in [url=http://zandronum.com/downloads/upstream/gzdoom-r900windows.7z]GZDoom 900[/url]?",
+                "created_at": "2015-02-19T23:53:42"
+            },
+            {
+                "comment_id": 11723,
+                "author": "Stall",
+                "text": "Yup, does the exact same thing.",
+                "created_at": "2015-02-20T00:26:46"
+            },
+            {
+                "comment_id": 11724,
+                "author": "Edward-san",
+                "text": "Can you check if this happens also in the following versions of GZDoom:\r\n\r\n- [url=http://sourceforge.net/projects/zdoom/files/gzdoom/1.6.00/gzdoom-1.6.00-win32.zip/download]1.6.00[/url];\r\n- [url=http://sourceforge.net/projects/zdoom/files/gzdoom/1.7.00/gzdoom-1.7.00-win32.zip/download]1.7.0[/url];\r\n- [url=http://sourceforge.net/projects/zdoom/files/gzdoom/1.8.00/]1.8.0[/url];\r\n- [url=http://forum.drdteam.org/download/file.php?id=2699]1.8.10[/url];\r\n- [url=http://forum.drdteam.org/download/file.php?id=2700]2.0.5[/url].\r\n\r\n? If it doesn't happen for example in 1.7.0, you don't need to test the other ones.\n\n",
+                "created_at": "2015-02-20T11:34:19"
+            },
+            {
+                "comment_id": 11729,
+                "author": "ibm5155",
+                "text": "Well, this doesn't happen with me here using W8.1..\r\nI know it's weird, but I sugest you to unplug the monitors while windows is running, and then plug it again, and check if the primary monitor is on the right place.\r\nSome weird bug with two monitors happened with me on w8.1, it's not the same, but the \"fix\" may work with you too",
+                "created_at": "2015-02-20T21:20:51"
+            },
+            {
+                "comment_id": 11733,
+                "author": "Stall",
+                "text": "Tried all of those and they reproduce the bug.  I just tried 1.3 just to make sure it wasn't something weird on my end, and it was fine.  Playing on my main monitor.",
+                "created_at": "2015-02-22T07:46:43"
+            },
+            {
+                "comment_id": 11734,
+                "author": "Edward-san",
+                "text": "[quote]\r\nTried all of those and they reproduce the bug.\r\n[/quote]\r\n\r\nInteresting. What about this [url=http://devbuilds.drdteam.org/gzdoom/gzdoom-g2.1.pre-671-gac352dc.7z]recent build[/url] of gzdoom? If you can reproduce this, then you should report in the gzdoom bug forum, [url=http://forum.drdteam.org/viewforum.php?f=24]here[/url].",
+                "created_at": "2015-02-22T10:15:59"
+            },
+            {
+                "comment_id": 11736,
+                "author": "Hypnotoad",
+                "text": "Are you using Windows? This probably isn't important but, are you able to check your screen resolution settings (in win7, right click on desktop and click screen resolution) and then check if your first monitor says \"This is currently your main display\" or if it has a checkbox which says \"Make this my main display\"?",
+                "created_at": "2015-02-22T16:46:01"
+            },
+            {
+                "comment_id": 23229,
+                "author": "Ru5tK1ng",
+                "text": "If you are still having this issue with 3.1 or 3.2 please reopen this ticket.",
+                "created_at": "2024-03-02T07:11:34"
+            }
+        ]
+    },
+    {
+        "mantis_id": 1166,
+        "project_id": 1,
+        "reporter": "unknownna",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 30,
+        "title": "Make TERRAIN sounds client-side when player lands on floors since DSOOF is client-side",
+        "description": "If you have some latency and land on floors with sounds attached to them through the TERRAIN lump, the client will play the regular DSOOF sound first, then the TERRAIN sounds will play.",
+        "steps_to_reproduce": "1. zandronum -file terrain_splash_03.wad -host\r\n2. Connect a client to the server with an emulated ping of 300 and join the game.\r\n3. Jump to the lower floors from the higher floors.",
+        "additional_information": "",
+        "created_at": "2012-11-04T11:44:21",
+        "updated_at": "2014-06-12T20:39:09",
+        "attachments": [
+            {
+                "file_id": 875,
+                "filename": "terrain_splash_03.wad",
+                "local_path": "attachments/attachment_1166_875_terrain_splash_03.wad",
+                "file_type": "application/octet-stream"
+            }
+        ],
+        "comments": []
+    },
+    {
+        "mantis_id": 871,
+        "project_id": 1,
+        "reporter": "Dusk",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 90,
+        "title": "RCON users get SERVER_Printf'd messages twice",
+        "description": "If a client with rcon access issues an rcon command that ends up calling SERVER_Printf to broadcast a message to clients, he'll get the message twice - once from the verbose output and another from the real broadcast.\r\n\r\nFix here:\r\nhttps://bitbucket.org/CrimsonDusk/neurosphere/changeset/9bbf7257d865\r\nhttps://bitbucket.org/CrimsonDusk/neurosphere/changeset/6e34d2e66647",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2012-06-10T18:48:43",
+        "updated_at": "2024-03-14T05:08:34",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 3835,
+                "author": "Torr Samaho",
+                "text": "For the sake of consistency (CONSOLE_SetRCONPlayer already exists), instead of exporting g_ulRCONPlayer, the access function CONSOLE_GetRCONPlayer should be introduced.\r\n\r\nAnyway, the whole constructing gets weird: We already have\r\n[code]SERVER_RCON_Printf( outlinecopy );\r\nif ( g_ulRCONPlayer != MAXPLAYERS )\r\n  SERVER_PrintfPlayer( printlevel, g_ulRCONPlayer, outlinecopy );\r\n[/code]and now you add an additional construction in SERVER_Printf to counter this. The existing construction deliberately prints messages twice for the RCON player, once with SERVER_RCON_Printf and once with SERVER_PrintfPlayer. So to me this behavior seems to be intentional and not a bug. Possibly I'm overlooking something here.\n\n",
+                "created_at": "2012-06-24T10:31:34"
+            },
+            {
+                "comment_id": 3837,
+                "author": "Dusk",
+                "text": ".. WTF?\r\n\r\nHow can something like this be intentional? I'm confused now.",
+                "created_at": "2012-06-24T11:00:46"
+            },
+            {
+                "comment_id": 3838,
+                "author": "Torr Samaho",
+                "text": "I didn't write any of this code, so I can just speculate about its intentions. The fragment from c_console.cpp I posted above apparently prints the messages twice, once with SERVER_RCON_Printf and once with SERVER_PrintfPlayer. I'd guess it makes a difference which of these functions is used to print a message.\r\n\r\nIf we come to the conclusion that this is wrong, we should fix it in that fragment. Since SERVER_RCON_Printf is only called once, we could move the ( g_ulRCONPlayer != MAXPLAYERS ) part into SERVER_RCON_Printf along with the logic you added at two other places.",
+                "created_at": "2012-06-24T11:47:47"
+            },
+            {
+                "comment_id": 5872,
+                "author": "Dusk",
+                "text": "I think I might've been a bit vague with this: with RCON user I mean a client logged into RCON access with send_password and is issuing commands with the rcon command.\r\n\r\nI also took a closer look into this now and I think SERVER_RCON_Printf has nothing to do with this. The code fragment in the first reply is in PrintString which is executed by all Printfs on the server, including SERVER_Printf. So if an RCON user sends a command to for instance change dmflags, SERVER_Printf broadcasts it to clients (including the RCON user) and logs it to the server console - which is then tee'd to the RCON user, thus he's getting it twice.",
+                "created_at": "2013-01-30T14:14:08"
+            },
+            {
+                "comment_id": 23391,
+                "author": "Ru5tK1ng",
+                "text": "I can't seem to reproduce this with puking or changing dmflags with 3.1. Closing ticket as a result of my findings. Feel free to reopen this if it's still an issue.",
+                "created_at": "2024-03-14T05:08:34"
+            }
+        ]
+    },
+    {
+        "mantis_id": 63,
+        "project_id": 1,
+        "reporter": "unknownna",
+        "handler": "Torr Samaho",
+        "priority": 30,
+        "status": 80,
+        "title": "Skulltag freezes when you start a skirmish with \"server picks teams (ST/CTF)\" flag",
+        "description": "Start a ST/CTF/TeamGame(ACS)/Domination skirmish with the \"server picks teams (ST/CTF)\" flag enabled. Make sure that you're not already in a multiplayer emulation before doing so, though.\r\n\r\nSkulltag will simply freeze.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2010-09-26T22:30:43",
+        "updated_at": "2024-03-22T01:23:35",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 229,
+                "author": "Torr Samaho",
+                "text": "[url=http://www.dailydoomer.com/tsst/misc/SkullDev98d-2959windows.7z]This[/url] should fix the issue. Unfortunately, the fix required changes in the basic team selection code. Thus, all of the team selection stuff should be tested again offline and online in the next beta release.\n\n",
+                "created_at": "2010-10-03T10:34:20"
+            },
+            {
+                "comment_id": 232,
+                "author": "unknownna",
+                "text": "Looks like it doesn't crash anymore.\r\nBut there's a message printed on-screen that says: \"Please select a team.\".\r\n\r\nWith the flag enabled in a team based game, joining the game after spectating doesn't give you the option to select which team you want to join. If you then join the game, you won't be on any team, which means that the bots on both teams will attempt to frag you. Only with the flag enabled does this happen.\r\n\r\nThe same thing happens without the flag enabled if you spectate, then join a team that is not existing in-game, e.g. joining a green team when there only is red/blue in-game. The \"Please select a team.\" message is also displayed. But this seems to happen in 98c as well.\r\n\r\nThe 'No team switching (ST/CTF)' flag doesn't seem to have the intended effect, but instead, each time you try change teams through the console, you respawn on the same team and a dummy player of your former self spawns at the position you tried to change teams from. The dummy is not solid, but shootable. This happens in 98c as well.\r\n\r\nAlso, 'Player Team' in \"Offline Skirmish -> Bot Setup\" doesn't seem to have any effect. And some features are missing (e.g. 'Allow Crouch') in \"Offline Skirmish -> Gameplay Options\".\r\n\r\nWhat is the point of having 2 separate, but bound 'BotSkill' options? One in \"Offline Skirmish\" and another one in \"Offline Skirmish -> Bot Setup\".\r\n\r\nAnd the \"How To Play\" help-screen needs 2 enter key clicks to get away, and instead of escaping from the \"Join Team\" menu, it should return to it. But that's another issue.\r\n\r\nI only tested offline.",
+                "created_at": "2010-10-03T12:08:54"
+            },
+            {
+                "comment_id": 233,
+                "author": "Torr Samaho",
+                "text": "I'm pretty sure that the \"Please select a team.\" message is a bug of the maps: The team selection rooms were removed from the maps, but I think the enter scripts that display the message were not.",
+                "created_at": "2010-10-03T12:26:44"
+            },
+            {
+                "comment_id": 235,
+                "author": "unknownna",
+                "text": "Another thing; with the 'server picks teams (ST/CTF)' flag enabled, the first time you spawn, you spawn at the opposite team's spawn spots. You respawn correctly, though.",
+                "created_at": "2010-10-03T13:06:14"
+            },
+            {
+                "comment_id": 236,
+                "author": "Torr Samaho",
+                "text": "I couldn't reproduce problems with \"No team switching (ST/CTF)\". Any team change requests in the console with \"team teamname\" was properly denied.\r\n\r\n[url=http://www.dailydoomer.com/tsst/misc/SkullDev98d-2961windows.7z]This[/url] should fix several issues with the join command (like not being put on a team or leaving a dummy player when joining while already in the game).",
+                "created_at": "2010-10-03T13:06:53"
+            },
+            {
+                "comment_id": 237,
+                "author": "unknownna",
+                "text": "Of course, I used \"Join Green\" instead of \"Team Green\". But you can still spectate and then join the other team, though. But that's not a bug, AFAIK.",
+                "created_at": "2010-10-03T13:28:30"
+            },
+            {
+                "comment_id": 238,
+                "author": "Torr Samaho",
+                "text": "FYI, the argument of join is completely ignored. It makes absolutely no difference whether you execute \"join\", \"join red\" or \"join whatever fhsdjfh hgfsjd\".",
+                "created_at": "2010-10-03T13:45:08"
+            },
+            {
+                "comment_id": 243,
+                "author": "unknownna",
+                "text": "Yeah, I noticed now. The problems were tied to the 'join' command.\r\n\r\nBut what I said in my former note happens;\r\nwith the 'server picks teams (ST/CTF)' flag enabled, the first time you spawn, you spawn at the opposite team's spawn spots. You respawn correctly, though.\r\n\r\nIt doesn't happen all the time for some reason. If you keep restarting ST/CTF skirmishes, at some point it'll occur.\n\n",
+                "created_at": "2010-10-03T14:15:00"
+            },
+            {
+                "comment_id": 245,
+                "author": "Torr Samaho",
+                "text": "[url=http://www.dailydoomer.com/tsst/misc/SkullDev98d-2964windows.7z]This[/url] should fix the spawning at the wrong positions. Furthermore, I made changes to the bot setup menu according to your previous note:\r\n\r\n- Removed the \"Player team\" option from the offline skirmish team bot setup menu. This didn't have any effect and the player is supposed to select the team from the in game join menu anyway.\r\n- Removed the \"Botskill\" option from the offline skirmish bot setup menus. This already can be configured in the main offline skirmish menu.\r\n",
+                "created_at": "2010-10-03T14:51:25"
+            },
+            {
+                "comment_id": 246,
+                "author": "Torr Samaho",
+                "text": "Regarding that \"How To Play\" screen issue, I'm not sure if this is a bug or not. Nevertheless, this is a completely different issue than this report is about. So if you think it's a bug, please make a new report for this.",
+                "created_at": "2010-10-03T14:53:53"
+            },
+            {
+                "comment_id": 258,
+                "author": "unknownna",
+                "text": "Thanks. AFAICT, it works correctly now. The problems in this report have been fixed.\r\n\r\nAnd is it a bug or a missing feature that bots on a third/fourth team in \"Bot Setup\" simply join red/blue instead of a third/fourth team (tested with TDM)?\r\n\r\nWould it be possible to synchronize the \"Gameplay Options\" between:\r\n\"Options -> Gameplay Options\"\r\n\"Multiplater -> Offline Skirmish -> Gameplay Options\"\r\n\r\nAs for the \"How To Play\" screen. It's not really a bug, but the custom screens are currently simply replacing the vanilla controls/credits screens. The first time you press use, you can even see the controls screen flashing before being replaced by the custom one.\n\n",
+                "created_at": "2010-10-04T00:24:36"
+            },
+            {
+                "comment_id": 263,
+                "author": "Torr Samaho",
+                "text": "Regarding bots on the third/fourth team: Bots can only join available teams and you need to increase sv_maxteams (default 2) to make the third and forth team available. I have to admit that this is not evident from the menu though. Probably I should increase sv_maxteams automatically if a user wants bots on teams currently not available because of the sv_maxteams setting.\r\n\r\nI'll comment on the other things later.",
+                "created_at": "2010-10-04T18:55:30"
+            },
+            {
+                "comment_id": 2929,
+                "author": "unknownna",
+                "text": "> Would it be possible to synchronize the \"Gameplay Options\" between:\r\n\"Options -> Gameplay Options\"\r\n\"Multiplater -> Offline Skirmish -> Gameplay Options\"\r\n\r\n[url=http://skulltag.net/tracker/view.php?id=263]0000263: Some menu issues || Skulltag 98x versus GZDoom 323[/url]\r\n\r\n> As for the \"How To Play\" screen. It's not really a bug, but the custom screens are currently simply replacing the vanilla controls/credits screens. The first time you press use, you can even see the controls screen flashing before being replaced by the custom one.\r\n\r\n[url=http://skulltag.net/tracker/view.php?id=322]0000322: Wrong F1 help during TeamGames[/url]\r\n\r\n> Probably I should increase sv_maxteams automatically if a user wants bots on teams currently not available because of the sv_maxteams setting.\r\n\r\nYes.\n\n",
+                "created_at": "2012-03-27T19:41:40"
+            },
+            {
+                "comment_id": 23455,
+                "author": "Ru5tK1ng",
+                "text": "Since the original issue wad resolved and additional tickets were made regarding other suggestions, this one will be closed",
+                "created_at": "2024-03-22T01:23:35"
+            }
+        ]
+    },
+    {
+        "mantis_id": 2475,
+        "project_id": 1,
+        "reporter": "Marcaek",
+        "handler": "Kaminsky",
+        "priority": 30,
+        "status": 80,
+        "title": "Voting options for changing DMFlags\\svars",
+        "description": "I think a feature to allow voting of flags on or off would be handy. Something like:\r\n\r\ncallvote svar sv_norocketjumping 0\r\n\r\nmaybe even extending to compat flags. Would this be a reasonable request?",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2015-10-03T03:02:43",
+        "updated_at": "2021-07-31T00:50:37",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 17380,
+                "author": "Marcaek",
+                "text": "I seem to recall this was addressed elsewhere, should this ticket remain open?",
+                "created_at": "2017-04-27T22:07:36"
+            },
+            {
+                "comment_id": 21645,
+                "author": "Kaminsky",
+                "text": "3.1 now supports voting for changing the value of dmflags and compatflags, which is done by typing \"callvote <flagname> <value> [reason]\" into the console, or from the vote menu. The server can enable or disable these kind of votes with the CVar \"sv_noflagvote\".",
+                "created_at": "2021-07-26T21:29:04"
+            },
+            {
+                "comment_id": 21646,
+                "author": "doomjoshuaboy",
+                "text": "call voting to change dmflags tested on server and works",
+                "created_at": "2021-07-31T00:45:10"
+            }
+        ]
+    },
+    {
+        "mantis_id": 82,
+        "project_id": 1,
+        "reporter": "Empyre",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 90,
+        "title": "Monsters telefrag players",
+        "description": "When monsters teleport, or are spawned, they telefrag any unfortunate player (or another monster) who is standing in the wrong spot. I first noticed this problem in 98c.",
+        "steps_to_reproduce": "Stand in a spot where a monster will teleport to or spawn.",
+        "additional_information": "",
+        "created_at": "2010-10-06T05:48:58",
+        "updated_at": "2012-02-18T03:41:31",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 280,
+                "author": "Frits",
+                "text": "Always is not true, I played sunder yesterday and blocked imps from teleporting in, did it a few times and never got telefragged.Neither do i get telefragged when blocking monsters in hr2\\hr map31.\r\nI haven't encountered said bug yet.\n\n",
+                "created_at": "2010-10-06T18:05:43"
+            },
+            {
+                "comment_id": 282,
+                "author": "Empyre",
+                "text": "It has happened to me when I was playing on the LAN with my own server, or even in single-player. I'll try to find a way to reliably reproduce it, and post it here.\r\n\r\nIf it is something I am doing wrong, what do I do to stop it?",
+                "created_at": "2010-10-07T01:50:11"
+            },
+            {
+                "comment_id": 290,
+                "author": "Torr Samaho",
+                "text": "Does it happen without any custom wads loaded? Does it happen in [url=http://sp.drdteam.org/gzdoom-r322(323).zip]GZDoom 323[/url]?",
+                "created_at": "2010-10-08T06:35:11"
+            },
+            {
+                "comment_id": 2623,
+                "author": "Dusk",
+                "text": "Now that this was bumped, I'd like to note that SVDoom is bugged in this regard - it extends the map30 exception of monster telefrags to all maps. Maybe it is what's causing this?\n\n",
+                "created_at": "2012-02-17T16:16:42"
+            },
+            {
+                "comment_id": 2627,
+                "author": "Torr Samaho",
+                "text": "> Now that this was bumped\r\n\r\nNote that the rules for bug reports are very different than for forum posts. Adding new information to an open bug is always possible, no matter how old that bug is.\r\n\r\n> I'd like to note that SVDoom is bugged in this regard - it extends the map30 exception of monster telefrags to all maps.\r\n\r\nSounds like this is the issue. I'm closing this. If it still happens without any custom wads loaded, please create a new report.",
+                "created_at": "2012-02-18T03:40:58"
+            }
+        ]
+    }
+]
