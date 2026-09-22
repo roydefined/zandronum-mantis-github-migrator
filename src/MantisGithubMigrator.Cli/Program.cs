@@ -9,7 +9,7 @@ if (args.Length == 0)
 switch (args[0])
 {
     case "normalize":
-        new NormalizeCommand().Run();
+        new NormalizeCommand().Run("samples/mantis_export_sample.json", "output/normalized-issues.json");
         break;
     case "migrate":
         new MigrateCommand().Run();
