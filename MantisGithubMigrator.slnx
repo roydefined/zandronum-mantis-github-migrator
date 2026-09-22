@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MantisGithubMigrator.Cli/MantisGithubMigrator.Cli.csproj" />
+    <Project Path="src/MantisGithubMigrator.Core/MantisGithubMigrator.Core.csproj" />
+    <Project Path="src/MantisGithubMigrator.GitHub/MantisGithubMigrator.GitHub.csproj" />
+  </Folder>
+</Solution>
