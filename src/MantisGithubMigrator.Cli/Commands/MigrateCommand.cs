@@ -18,7 +18,7 @@ public class MigrateCommand
         var issues = JsonSerializer.Deserialize<List<NormalizedIssue>>(json, InputJsonOptions)
             ?? throw new InvalidDataException($"'{inputPath}' did not contain normalized issues.");
 
-        var client = new GitHubClient(options);
+        var client = await GitHubClient.CreateAsync(options);
 
         Console.WriteLine($"Ensuring labels on {options.Owner}/{options.Repo}...");
         await client.EnsureLabelsAsync(IssueUtil.AllLabels);
