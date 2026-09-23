@@ -55,4 +55,22 @@ public sealed class GitHubClient
     {
         await _client.Issue.Comment.Create(_owner, _repo, issueNumber, body);
     }
+
+    public async Task<IReadOnlyList<int>> ListIssueNumbersByLabelAsync(string labelName)
+    {
+        var request = new RepositoryIssueRequest
+        {
+            Filter = IssueFilter.All,
+            State = ItemStateFilter.All,
+        };
+        request.Labels.Add(labelName);
+
+        var issues = await _client.Issue.GetAllForRepository(_owner, _repo, request);
+        return issues.Select(i => i.Number).ToList();
+    }
+
+    public async Task CloseIssueAsync(int issueNumber)
+    {
+        await _client.Issue.Update(_owner, _repo, issueNumber, new IssueUpdate { State = ItemState.Closed });
+    }
 }

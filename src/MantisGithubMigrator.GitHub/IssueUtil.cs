@@ -5,6 +5,11 @@ namespace MantisGithubMigrator.GitHub;
 
 public static class IssueUtil
 {
+    public const string ImportLabelName = "mantis-import";
+
+    private static readonly LabelDefinition ImportLabel =
+        new(ImportLabelName, "6E5494", "Applied to every issue migrated from the Zandronum MantisBT tracker.");
+
     private static readonly Dictionary<IssueStatus, LabelDefinition> StatusLabels = new()
     {
         [IssueStatus.New] = new("status/new", "58A6FF", "Mantis status: new"),
@@ -29,10 +34,10 @@ public static class IssueUtil
     private static readonly HashSet<IssueStatus> ClosedStatuses = [IssueStatus.Resolved, IssueStatus.Closed];
 
     public static IReadOnlyList<LabelDefinition> AllLabels =>
-        [.. StatusLabels.Values, .. PriorityLabels.Values];
+        [.. StatusLabels.Values, .. PriorityLabels.Values, ImportLabel];
 
     public static IReadOnlyList<string> GetLabelNames(NormalizedIssue issue) =>
-        [StatusLabels[issue.Status].Name, PriorityLabels[issue.Priority].Name];
+        [StatusLabels[issue.Status].Name, PriorityLabels[issue.Priority].Name, ImportLabelName];
 
     public static bool IsClosed(NormalizedIssue issue) => ClosedStatuses.Contains(issue.Status);
 

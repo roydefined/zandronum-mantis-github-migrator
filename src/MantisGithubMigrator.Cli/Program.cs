@@ -22,7 +22,8 @@ switch (args[0])
         await new MigrateCommand().RunAsync("output/normalized-issues.json", options);
         break;
     case "close":
-        new CloseCommand().Run();
+        var closeOptions = GitHubClientOptions.FromConfiguration(configuration);
+        await new CloseCommand().RunAsync(closeOptions);
         break;
     default:
         PrintUsage();
