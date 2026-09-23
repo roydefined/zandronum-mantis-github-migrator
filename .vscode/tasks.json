@@ -1,0 +1,58 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["build", "${workspaceFolder}/MantisGithubMigrator.slnx"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "run: normalize",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "${workspaceFolder}/src/MantisGithubMigrator.Cli/MantisGithubMigrator.Cli.csproj",
+        "--",
+        "normalize"
+      ],
+      "group": "none",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "run: migrate",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "${workspaceFolder}/src/MantisGithubMigrator.Cli/MantisGithubMigrator.Cli.csproj",
+        "--",
+        "migrate"
+      ],
+      "group": "none",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "run: close",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "${workspaceFolder}/src/MantisGithubMigrator.Cli/MantisGithubMigrator.Cli.csproj",
+        "--",
+        "close"
+      ],
+      "group": "none",
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}

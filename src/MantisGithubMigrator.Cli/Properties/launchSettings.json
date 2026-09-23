@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "normalize": {
+      "commandName": "Project",
+      "commandLineArgs": "normalize"
+    },
+    "migrate": {
+      "commandName": "Project",
+      "commandLineArgs": "migrate"
+    },
+    "close": {
+      "commandName": "Project",
+      "commandLineArgs": "close"
+    }
+  }
+}

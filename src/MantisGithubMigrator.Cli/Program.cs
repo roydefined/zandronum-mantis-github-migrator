@@ -9,6 +9,7 @@ if (args.Length == 0)
 }
 
 var configuration = new ConfigurationBuilder()
+    .AddUserSecrets<Program>()
     .AddEnvironmentVariables()
     .Build();
 
