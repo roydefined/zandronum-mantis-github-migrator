@@ -1,9 +1,10 @@
+using System.Text.RegularExpressions;
 using MantisGithubMigrator.Core.MantisExport;
 using MantisGithubMigrator.Core.Normalized;
 
 namespace MantisGithubMigrator.Core;
 
-public class Normalizer
+public partial class Normalizer
 {
     private static readonly Dictionary<int, IssuePriority> PriorityByMantisCode = new()
     {
@@ -26,35 +27,54 @@ public class Normalizer
         [90] = IssueStatus.Closed,
     };
 
-    public List<NormalizedIssue> Normalize(IEnumerable<MantisIssue> issues)
-        => issues.Select(Normalize).ToList();
+    // GitHub allows at most 1000 assets per release, each under 2 GiB
+    // See https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
+    private const int MaxAssetsPerRelease = 1000;
+    private const long MaxAssetSizeBytes = 2L * 1024 * 1024 * 1024;
 
-    private static NormalizedIssue Normalize(MantisIssue issue)
+    public List<NormalizedIssue> Normalize(IEnumerable<MantisIssue> issues, string exportDirectory)
     {
-        if (string.IsNullOrWhiteSpace(issue.Title))
-            throw new InvalidDataException($"Mantis issue #{issue.MantisId} has no title.");
+        var normalizedIssues = new List<NormalizedIssue>();
+        var attachmentCount = 0;
 
-        if (!StatusByMantisCode.TryGetValue(issue.Status, out var status))
-            throw new InvalidDataException($"Mantis issue #{issue.MantisId} has an unrecognized status code {issue.Status}.");
-
-        if (!PriorityByMantisCode.TryGetValue(issue.Priority, out var priority))
-            throw new InvalidDataException($"Mantis issue #{issue.MantisId} has an unrecognized priority code {issue.Priority}.");
-
-        return new NormalizedIssue
+        foreach (var issue in issues)
         {
-            MantisId = issue.MantisId,
-            Title = issue.Title,
-            Description = issue.Description,
-            StepsToReproduce = issue.StepsToReproduce,
-            AdditionalInformation = issue.AdditionalInformation,
-            Author = issue.Reporter,
-            CreatedAt = issue.CreatedAt,
-            UpdatedAt = issue.UpdatedAt,
-            Status = status,
-            Priority = priority,
-            Comments = issue.Comments.Select(NormalizeComment).ToList(),
-            Attachments = issue.Attachments.Select(NormalizeAttachment).ToList(),
-        };
+            if (string.IsNullOrWhiteSpace(issue.Title))
+                throw new InvalidDataException($"Mantis issue #{issue.MantisId} has no title.");
+
+            if (!StatusByMantisCode.TryGetValue(issue.Status, out var status))
+                throw new InvalidDataException($"Mantis issue #{issue.MantisId} has an unrecognized status code {issue.Status}.");
+
+            if (!PriorityByMantisCode.TryGetValue(issue.Priority, out var priority))
+                throw new InvalidDataException($"Mantis issue #{issue.MantisId} has an unrecognized priority code {issue.Priority}.");
+
+            var attachments = new List<NormalizedAttachment>();
+            foreach (var attachment in issue.Attachments)
+            {
+                // Fill up a release with attachments, then move on to the next one
+                var releaseTag = $"mantis-attachments-{attachmentCount / MaxAssetsPerRelease + 1}";
+                attachments.Add(NormalizeAttachment(issue.MantisId, attachment, releaseTag, exportDirectory));
+                attachmentCount++;
+            }
+
+            normalizedIssues.Add(new NormalizedIssue
+            {
+                MantisId = issue.MantisId,
+                Title = issue.Title,
+                Description = issue.Description,
+                StepsToReproduce = issue.StepsToReproduce,
+                AdditionalInformation = issue.AdditionalInformation,
+                Author = issue.Reporter,
+                CreatedAt = issue.CreatedAt,
+                UpdatedAt = issue.UpdatedAt,
+                Status = status,
+                Priority = priority,
+                Comments = issue.Comments.Select(NormalizeComment).ToList(),
+                Attachments = attachments,
+            });
+        }
+
+        return normalizedIssues;
     }
 
     private static NormalizedComment NormalizeComment(MantisComment comment) => new()
@@ -64,10 +84,37 @@ public class Normalizer
         CreatedAt = comment.CreatedAt,
     };
 
-    private static NormalizedAttachment NormalizeAttachment(MantisAttachment attachment) => new()
+    private static NormalizedAttachment NormalizeAttachment(int mantisId, MantisAttachment attachment, string releaseTag, string exportDirectory)
     {
-        Filename = attachment.Filename,
-        LocalPath = attachment.LocalPath,
-        FileType = attachment.FileType,
-    };
+        var fullPath = Path.GetFullPath(Path.Combine(exportDirectory, attachment.LocalPath));
+        if (!File.Exists(fullPath))
+            throw new InvalidDataException($"Mantis issue #{mantisId} attachment {attachment.FileId} ('{attachment.Filename}') was not found at '{fullPath}'.");
+
+        var sizeBytes = new FileInfo(fullPath).Length;
+        if (sizeBytes >= MaxAssetSizeBytes)
+            throw new InvalidDataException($"Mantis issue #{mantisId} attachment {attachment.FileId} ('{attachment.Filename}') is {sizeBytes} bytes, over GitHub's release asset limit.");
+
+        return new NormalizedAttachment
+        {
+            Filename = attachment.Filename,
+
+            // Full path, since migrate reads the normalized output without knowing where the export is
+            LocalPath = fullPath,
+            FileType = attachment.FileType,
+            SizeBytes = sizeBytes,
+            AssetName = BuildAssetName(mantisId, attachment),
+            ReleaseTag = releaseTag,
+        };
+    }
+
+    // GitHub renames assets with special characters on upload, so replace them ourselves to know the final name.
+    // Mantis file IDs are unique, which keeps the asset names unique within a release.
+    private static string BuildAssetName(int mantisId, MantisAttachment attachment)
+    {
+        var safeFilename = SafeFileNameRegex().Replace(attachment.Filename, "-").Trim('.', '-');
+        return $"{mantisId}-{attachment.FileId}-{safeFilename}";
+    }
+
+    [GeneratedRegex("[^A-Za-z0-9._-]+")]
+    private static partial Regex SafeFileNameRegex();
 }
