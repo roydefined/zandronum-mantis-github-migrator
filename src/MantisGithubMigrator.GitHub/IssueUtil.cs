@@ -41,7 +41,7 @@ public static class IssueUtil
 
     public static bool IsClosed(NormalizedIssue issue) => ClosedStatuses.Contains(issue.Status);
 
-    public static string BuildBody(NormalizedIssue issue)
+    public static string BuildBody(NormalizedIssue issue, IReadOnlyDictionary<string, string> attachmentUrls)
     {
         var sb = new StringBuilder();
 
@@ -51,6 +51,7 @@ public static class IssueUtil
 
         AppendSection(sb, "Steps to Reproduce", issue.StepsToReproduce);
         AppendSection(sb, "Additional Information", issue.AdditionalInformation);
+        AppendSection(sb, "Attachments", string.Join("\n", issue.Attachments.Select(a => $"- [{a.Filename}]({attachmentUrls[a.AssetName]})")));
 
         return sb.ToString().TrimEnd();
     }

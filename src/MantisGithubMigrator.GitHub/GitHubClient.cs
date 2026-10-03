@@ -13,6 +13,9 @@ public sealed class GitHubClient : ICredentialStore
     // Refresh the installation token once it's within this long of expiring
     private static readonly TimeSpan InstallationTokenRefreshMargin = TimeSpan.FromMinutes(2);
 
+    // Octokit's default 100 seconds is too short for large attachments.
+    private static readonly TimeSpan AssetUploadTimeout = TimeSpan.FromMinutes(30);
+
     private readonly OctokitClient _client;
     private readonly RateLimiter _rateLimiter;
     private readonly string _owner;
@@ -109,6 +112,51 @@ public sealed class GitHubClient : ICredentialStore
     public async Task CloseIssueAsync(int issueNumber)
     {
         await _rateLimiter.RunAsync(() => _client.Issue.Update(_owner, _repo, issueNumber, new IssueUpdate { State = ItemState.Closed }), true);
+    }
+
+    // Ensures releases are ready with their attachments included.
+    public async Task<Release> EnsureReleaseAsync(string tag, string body)
+    {
+        try
+        {
+            return await _rateLimiter.RunAsync(() => _client.Repository.Release.Get(_owner, _repo, tag), false);
+        }
+        catch (NotFoundException)
+        {
+            // Marked as pre-release so it never shows up as the project's latest release.
+            var newRelease = new NewRelease(tag)
+            {
+                Name = tag,
+                Body = body,
+                Prerelease = true,
+            };
+            return await _rateLimiter.RunAsync(() => _client.Repository.Release.Create(_owner, _repo, newRelease), true);
+        }
+    }
+
+    // Maps each fully uploaded asset name to its download URL.
+    public async Task<Dictionary<string, string>> ListAssetUrlsAsync(Release release)
+    {
+        var assets = await _rateLimiter.RunAsync(() => _client.Repository.Release.GetAllAssets(_owner, _repo, release.Id), false);
+
+        // An interrupted upload leaves an empty asset behind, which should never be linked to.
+        return assets
+            .Where(a => a.State == "uploaded")
+            .ToDictionary(a => a.Name, a => a.BrowserDownloadUrl);
+    }
+
+    // Returns the download URL GitHub gave the asset, so links stay correct even if GitHub changed the name.
+    public async Task<string> UploadAssetAsync(Release release, string assetName, string contentType, string path)
+    {
+        var asset = await _rateLimiter.RunAsync(async () =>
+        {
+            // Opened per attempt, a retry needs the stream from the start again.
+            await using var stream = File.OpenRead(path);
+            var upload = new ReleaseAssetUpload(assetName, contentType, stream, AssetUploadTimeout);
+            return await _client.Repository.Release.UploadAsset(release, upload);
+        }, true);
+
+        return asset.BrowserDownloadUrl;
     }
 
     // Octokit asks for credentials on every request, so an installation token that expired during a long rate limit wait gets refreshed here
