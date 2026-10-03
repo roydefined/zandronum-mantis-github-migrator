@@ -6,7 +6,7 @@ public class CloseCommand
 {
     public async Task RunAsync(GitHubClientOptions options)
     {
-        var client = await GitHubClient.CreateAsync(options);
+        var client = await GitHubClient.CreateAsync(options, Console.WriteLine);
 
         var issueNumbers = await client.ListIssueNumbersByLabelAsync(IssueUtil.ImportLabelName);
 

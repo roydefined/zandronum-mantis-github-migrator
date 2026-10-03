@@ -6,48 +6,46 @@ using OctokitClient = Octokit.GitHubClient;
 
 namespace MantisGithubMigrator.GitHub;
 
-public sealed class GitHubClient
+public sealed class GitHubClient : ICredentialStore
 {
     private static readonly ProductHeaderValue ProductHeader = new("MantisGithubMigrator");
 
-    // refresh the installation token once it's within this long of expiring
+    // Refresh the installation token once it's within this long of expiring
     private static readonly TimeSpan InstallationTokenRefreshMargin = TimeSpan.FromMinutes(2);
 
     private readonly OctokitClient _client;
+    private readonly RateLimiter _rateLimiter;
     private readonly string _owner;
     private readonly string _repo;
 
-    // set for a GitHub App, null for a plain PAT
+    // Set for a plain PAT, null for a GitHub App
+    private readonly string? _token;
+
+    // Set for a GitHub App, null for a plain PAT
     private readonly string? _appId;
     private readonly string? _appPrivateKeyPem;
     private readonly long _installationId;
-    private DateTimeOffset _installationTokenExpiresAt = DateTimeOffset.MaxValue;
+    private Credentials? _installationCredentials;
+    private DateTimeOffset _installationTokenExpiresAt;
 
-    private GitHubClient(string owner, string repo, OctokitClient client)
+    private GitHubClient(GitHubClientOptions options, RateLimiter rateLimiter, long installationId = 0)
     {
-        _owner = owner;
-        _repo = repo;
-        _client = client;
-    }
-
-    private GitHubClient(string owner, string repo, string appId, string appPrivateKeyPem, long installationId)
-        : this(owner, repo, new OctokitClient(ProductHeader))
-    {
-        _appId = appId;
-        _appPrivateKeyPem = appPrivateKeyPem;
+        _owner = options.Owner;
+        _repo = options.Repo;
+        _token = options.Token;
+        _appId = options.AppId;
+        _appPrivateKeyPem = options.AppPrivateKey;
         _installationId = installationId;
+        _rateLimiter = rateLimiter;
+        _client = new OctokitClient(ProductHeader, this);
     }
 
-    public static async Task<GitHubClient> CreateAsync(GitHubClientOptions options)
+    public static async Task<GitHubClient> CreateAsync(GitHubClientOptions options, Action<string> log)
     {
+        var rateLimiter = new RateLimiter(log);
+
         if (options.AppId is null)
-        {
-            var client = new OctokitClient(ProductHeader)
-            {
-                Credentials = new Credentials(options.Token!),
-            };
-            return new GitHubClient(options.Owner, options.Repo, client);
-        }
+            return new GitHubClient(options, rateLimiter);
 
         var appClient = new OctokitClient(ProductHeader)
         {
@@ -55,16 +53,12 @@ public sealed class GitHubClient
         };
         var installation = await appClient.GitHubApps.GetRepositoryInstallationForCurrent(options.Owner, options.Repo);
 
-        var result = new GitHubClient(options.Owner, options.Repo, options.AppId, options.AppPrivateKey!, installation.Id);
-        await result.RefreshInstallationTokenAsync();
-        return result;
+        return new GitHubClient(options, rateLimiter, installation.Id);
     }
 
     public async Task EnsureLabelsAsync(IEnumerable<LabelDefinition> labels)
     {
-        await EnsureFreshTokenAsync();
-
-        var existing = await _client.Issue.Labels.GetAllForRepository(_owner, _repo);
+        var existing = await _rateLimiter.RunAsync(() => _client.Issue.Labels.GetAllForRepository(_owner, _repo), false);
         var existingNames = existing.Select(l => l.Name).ToHashSet();
 
         foreach (var label in labels)
@@ -72,39 +66,35 @@ public sealed class GitHubClient
             if (existingNames.Contains(label.Name))
                 continue;
 
-            await _client.Issue.Labels.Create(_owner, _repo, new NewLabel(label.Name, label.Color)
+            var newLabel = new NewLabel(label.Name, label.Color)
             {
                 Description = label.Description,
-            });
+            };
+            await _rateLimiter.RunAsync(() => _client.Issue.Labels.Create(_owner, _repo, newLabel), true);
         }
     }
 
     public async Task<int> CreateIssueAsync(string title, string body, IReadOnlyList<string> labelNames, bool closed)
     {
-        await EnsureFreshTokenAsync();
-
         var newIssue = new NewIssue(title) { Body = body };
         foreach (var name in labelNames)
             newIssue.Labels.Add(name);
 
-        var issue = await _client.Issue.Create(_owner, _repo, newIssue);
+        var issue = await _rateLimiter.RunAsync(() => _client.Issue.Create(_owner, _repo, newIssue), true);
 
         if (closed)
-            await _client.Issue.Update(_owner, _repo, issue.Number, new IssueUpdate { State = ItemState.Closed });
+            await _rateLimiter.RunAsync(() => _client.Issue.Update(_owner, _repo, issue.Number, new IssueUpdate { State = ItemState.Closed }), true);
 
         return issue.Number;
     }
 
     public async Task CreateCommentAsync(int issueNumber, string body)
     {
-        await EnsureFreshTokenAsync();
-        await _client.Issue.Comment.Create(_owner, _repo, issueNumber, body);
+        await _rateLimiter.RunAsync(() => _client.Issue.Comment.Create(_owner, _repo, issueNumber, body), true);
     }
 
     public async Task<IReadOnlyList<int>> ListIssueNumbersByLabelAsync(string labelName)
     {
-        await EnsureFreshTokenAsync();
-
         var request = new RepositoryIssueRequest
         {
             Filter = IssueFilter.All,
@@ -112,38 +102,34 @@ public sealed class GitHubClient
         };
         request.Labels.Add(labelName);
 
-        var issues = await _client.Issue.GetAllForRepository(_owner, _repo, request);
+        var issues = await _rateLimiter.RunAsync(() => _client.Issue.GetAllForRepository(_owner, _repo, request), false);
         return issues.Select(i => i.Number).ToList();
     }
 
     public async Task CloseIssueAsync(int issueNumber)
     {
-        await EnsureFreshTokenAsync();
-        await _client.Issue.Update(_owner, _repo, issueNumber, new IssueUpdate { State = ItemState.Closed });
+        await _rateLimiter.RunAsync(() => _client.Issue.Update(_owner, _repo, issueNumber, new IssueUpdate { State = ItemState.Closed }), true);
     }
 
-    private async Task EnsureFreshTokenAsync()
+    // Octokit asks for credentials on every request, so an installation token that expired during a long rate limit wait gets refreshed here
+    async Task<Credentials> ICredentialStore.GetCredentials()
     {
         // PATs don't expire mid-run, nothing to refresh
         if (_appId is null)
-            return;
+            return new Credentials(_token);
 
-        if (DateTimeOffset.UtcNow < _installationTokenExpiresAt - InstallationTokenRefreshMargin)
-            return;
+        if (_installationCredentials is not null && DateTimeOffset.UtcNow < _installationTokenExpiresAt - InstallationTokenRefreshMargin)
+            return _installationCredentials;
 
-        await RefreshInstallationTokenAsync();
-    }
-
-    private async Task RefreshInstallationTokenAsync()
-    {
         var appClient = new OctokitClient(ProductHeader)
         {
-            Credentials = new Credentials(BuildAppJwt(_appId!, _appPrivateKeyPem!), AuthenticationType.Bearer),
+            Credentials = new Credentials(BuildAppJwt(_appId, _appPrivateKeyPem!), AuthenticationType.Bearer),
         };
 
         var token = await appClient.GitHubApps.CreateInstallationToken(_installationId);
-        _client.Credentials = new Credentials(token.Token);
+        _installationCredentials = new Credentials(token.Token);
         _installationTokenExpiresAt = token.ExpiresAt;
+        return _installationCredentials;
     }
 
     // GitHub caps app JWTs at 10 minutes and wants iss = app id, RS256-signed. Backdating iat by 60s covers clock drift between this machine and GitHub's.
