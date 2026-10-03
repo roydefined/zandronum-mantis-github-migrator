@@ -77,17 +77,13 @@ public sealed class GitHubClient : ICredentialStore
         }
     }
 
-    public async Task<int> CreateIssueAsync(string title, string body, IReadOnlyList<string> labelNames, bool closed)
+    public async Task<int> CreateIssueAsync(string title, string body, IReadOnlyList<string> labelNames)
     {
         var newIssue = new NewIssue(title) { Body = body };
         foreach (var name in labelNames)
             newIssue.Labels.Add(name);
 
         var issue = await _rateLimiter.RunAsync(() => _client.Issue.Create(_owner, _repo, newIssue), true);
-
-        if (closed)
-            await _rateLimiter.RunAsync(() => _client.Issue.Update(_owner, _repo, issue.Number, new IssueUpdate { State = ItemState.Closed }), true);
-
         return issue.Number;
     }
 
@@ -107,6 +103,30 @@ public sealed class GitHubClient : ICredentialStore
 
         var issues = await _rateLimiter.RunAsync(() => _client.Issue.GetAllForRepository(_owner, _repo, request), false);
         return issues.Select(i => i.Number).ToList();
+    }
+
+    // Lists every issue that carries the import label and a tracking marker, open or closed.
+    public async Task<IReadOnlyList<MigratedIssue>> ListMigratedIssuesAsync()
+    {
+        var request = new RepositoryIssueRequest
+        {
+            Filter = IssueFilter.All,
+            State = ItemStateFilter.All,
+        };
+
+        // Searching for this label always yield back the relevant issues as they are always provided with it.
+        request.Labels.Add(IssueUtil.ImportLabelName);
+
+        var issues = await _rateLimiter.RunAsync(() => _client.Issue.GetAllForRepository(_owner, _repo, request), false);
+
+        var migratedIssues = new List<MigratedIssue>();
+        foreach (var issue in issues)
+        {
+            if (IssueUtil.GetMantisId(issue.Body) is { } mantisId)
+                migratedIssues.Add(new MigratedIssue(issue.Number, mantisId, issue.Comments, issue.State.Value == ItemState.Closed));
+        }
+
+        return migratedIssues;
     }
 
     public async Task CloseIssueAsync(int issueNumber)

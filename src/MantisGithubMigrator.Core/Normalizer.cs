@@ -71,6 +71,9 @@ public partial class Normalizer
                 Priority = priority,
                 Comments = issue.Comments.Select(NormalizeComment).ToList(),
                 Attachments = attachments,
+
+                // Hidden in the rendered issue, migrate uses it to find issues that already exist.
+                TrackingMarker = $"<!-- mantis-issue-id: {issue.MantisId} -->",
             });
         }
 

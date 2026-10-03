@@ -25,4 +25,6 @@ public sealed class NormalizedIssue
     public List<NormalizedComment> Comments { get; set; } = [];
 
     public List<NormalizedAttachment> Attachments { get; set; } = [];
+
+    public string TrackingMarker { get; set; } = string.Empty;
 }

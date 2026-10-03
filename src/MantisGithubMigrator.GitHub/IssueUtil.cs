@@ -1,9 +1,10 @@
 using System.Text;
+using System.Text.RegularExpressions;
 using MantisGithubMigrator.Core.Normalized;
 
 namespace MantisGithubMigrator.GitHub;
 
-public static class IssueUtil
+public static partial class IssueUtil
 {
     public const string ImportLabelName = "mantis-import";
 
@@ -53,8 +54,21 @@ public static class IssueUtil
         AppendSection(sb, "Additional Information", issue.AdditionalInformation);
         AppendSection(sb, "Attachments", string.Join("\n", issue.Attachments.Select(a => $"- [{a.Filename}]({attachmentUrls[a.AssetName]})")));
 
+        sb.AppendLine();
+        sb.AppendLine(issue.TrackingMarker);
+
         return sb.ToString().TrimEnd();
     }
+
+    // Reads back the Mantis ID from the tracking marker that normalize puts at the bottom of every issue.
+    public static int? GetMantisId(string? body)
+    {
+        var match = TrackingMarkerRegex().Match(body ?? string.Empty);
+        return match.Success ? int.Parse(match.Groups[1].Value) : null;
+    }
+
+    [GeneratedRegex(@"<!-- mantis-issue-id: (\d+) -->")]
+    private static partial Regex TrackingMarkerRegex();
 
     public static string BuildCommentBody(NormalizedComment comment)
     {

@@ -22,9 +22,43 @@ public class MigrateCommand
 
         var client = await GitHubClient.CreateAsync(options, Console.WriteLine);
 
+        var migratedIssues = await FindMigratedIssuesAsync(client, options);
+        var remainingIssues = issues.Where(issue => !IsComplete(issue, migratedIssues)).ToList();
+        Console.WriteLine($"{issues.Count - remainingIssues.Count} issue(s) already migrated, {remainingIssues.Count} to go.");
+
         await EnsureLabelsAsync(client, options);
-        var attachmentUrls = await EnsureReleasesAsync(client, options, issues);
-        await MigrateIssuesAsync(client, options, issues, attachmentUrls);
+        var attachmentUrls = await EnsureReleasesAsync(client, options, remainingIssues);
+        await MigrateIssuesAsync(client, options, remainingIssues, migratedIssues, attachmentUrls);
+    }
+
+    // Finds what's already on GitHub through the tracking marker, so a rerun doesn't create duplicates.
+    private static async Task<Dictionary<int, MigratedIssue>> FindMigratedIssuesAsync(GitHubClient client, GitHubClientOptions options)
+    {
+        Console.WriteLine($"Checking for issues already migrated to {options.Owner}/{options.Repo}...");
+
+        // As a failsafe we filter out duplicates that have the lesser amount of comments.
+        // As we migrate in order these issues should not be relevant; only one needs to continue and have its comments filled in when incomplete.
+        var migratedIssues = await client.ListMigratedIssuesAsync();
+        return migratedIssues
+            .GroupBy(issue => issue.MantisId)
+            .ToDictionary(group => group.Key, group => group.MaxBy(issue => issue.CommentCount)!);
+    }
+
+    // Tells whether an issue was fully migrated by an earlier run, so it can be skipped entirely.
+    // A run can be cut off at any point, which leaves an issue that exists but misses comments or wasn't closed yet.
+    // Comments are posted in order and the issue is closed last, so comparing those two is enough to spot that.
+    private static bool IsComplete(NormalizedIssue issue, Dictionary<int, MigratedIssue> migratedIssues)
+    {
+        // Not on GitHub at all yet.
+        if (!migratedIssues.TryGetValue(issue.MantisId, out var migratedIssue))
+            return false;
+
+        var hasAllComments = migratedIssue.CommentCount >= issue.Comments.Count;
+
+        // Only a missing close counts. An issue that should stay open but was closed by hand on GitHub is left alone.
+        var hasCorrectState = migratedIssue.IsClosed || !IssueUtil.IsClosed(issue);
+
+        return hasAllComments && hasCorrectState;
     }
 
     private static async Task EnsureLabelsAsync(GitHubClient client, GitHubClientOptions options)
@@ -68,20 +102,25 @@ public class MigrateCommand
         return attachmentUrls;
     }
 
-    private static async Task MigrateIssuesAsync(GitHubClient client, GitHubClientOptions options, List<NormalizedIssue> issues, Dictionary<string, string> attachmentUrls)
+    private static async Task MigrateIssuesAsync(
+        GitHubClient client, GitHubClientOptions options, List<NormalizedIssue> issues, Dictionary<int, MigratedIssue> migratedIssues, Dictionary<string, string> attachmentUrls)
     {
         foreach (var issue in issues)
         {
-            var labelNames = IssueUtil.GetLabelNames(issue);
+            // Set when an earlier run was cut off halfway through this issue.
+            var migratedIssue = migratedIssues.GetValueOrDefault(issue.MantisId);
 
-            var issueNumber = await client.CreateIssueAsync(
-                issue.Title,
-                IssueUtil.BuildBody(issue, attachmentUrls),
-                labelNames,
-                IssueUtil.IsClosed(issue));
+            // Step 1: create the issue, unless an earlier run already did.
+            var issueNumber = migratedIssue?.Number
+                ?? await client.CreateIssueAsync(issue.Title, IssueUtil.BuildBody(issue, attachmentUrls), IssueUtil.GetLabelNames(issue));
 
-            foreach (var comment in issue.Comments)
+            // Step 2: post the comments that aren't on GitHub yet. They're posted in order, so those are the last ones.
+            foreach (var comment in issue.Comments.Skip(migratedIssue?.CommentCount ?? 0))
                 await client.CreateCommentAsync(issueNumber, IssueUtil.BuildCommentBody(comment));
+
+            // Step 3: close the issue last, so a closed issue always has all its comments.
+            if (IssueUtil.IsClosed(issue) && migratedIssue?.IsClosed != true)
+                await client.CloseIssueAsync(issueNumber);
 
             Console.WriteLine(
                 $"Migrated Mantis #{issue.MantisId} -> {options.Owner}/{options.Repo}#{issueNumber} " +
