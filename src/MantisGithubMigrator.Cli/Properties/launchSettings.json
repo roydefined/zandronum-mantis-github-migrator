@@ -8,9 +8,9 @@
       "commandName": "Project",
       "commandLineArgs": "migrate"
     },
-    "close": {
+    "discard": {
       "commandName": "Project",
-      "commandLineArgs": "close"
+      "commandLineArgs": "discard"
     }
   }
 }

@@ -31,9 +31,9 @@ switch (args[0])
         var options = GitHubClientOptions.FromConfiguration(configuration);
         await new MigrateCommand(loggerFactory).RunAsync("output/normalized-issues.json", options);
         break;
-    case "close":
-        var closeOptions = GitHubClientOptions.FromConfiguration(configuration);
-        await new CloseCommand(loggerFactory).RunAsync(closeOptions);
+    case "discard":
+        var discardOptions = GitHubClientOptions.FromConfiguration(configuration);
+        await new DiscardCommand(loggerFactory).RunAsync(discardOptions);
         break;
     default:
         PrintUsage();
@@ -44,5 +44,5 @@ return 0;
 
 void PrintUsage()
 {
-    Console.WriteLine("Usage: migrator <normalize|migrate|close>");
+    Console.WriteLine("Usage: migrator <normalize|migrate|discard>");
 }

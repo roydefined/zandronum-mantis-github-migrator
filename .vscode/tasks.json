@@ -41,7 +41,7 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "run: close",
+      "label": "run: discard",
       "type": "shell",
       "command": "dotnet",
       "args": [
@@ -49,7 +49,7 @@
         "--project",
         "${workspaceFolder}/src/MantisGithubMigrator.Cli/MantisGithubMigrator.Cli.csproj",
         "--",
-        "close"
+        "discard"
       ],
       "group": "none",
       "problemMatcher": "$msCompile"

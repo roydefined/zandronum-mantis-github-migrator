@@ -3,15 +3,15 @@ using Microsoft.Extensions.Logging;
 
 namespace MantisGithubMigrator.Cli.Commands;
 
-public class CloseCommand
+public class DiscardCommand
 {
     private readonly ILoggerFactory _loggerFactory;
-    private readonly ILogger<CloseCommand> _logger;
+    private readonly ILogger<DiscardCommand> _logger;
 
-    public CloseCommand(ILoggerFactory loggerFactory)
+    public DiscardCommand(ILoggerFactory loggerFactory)
     {
         _loggerFactory = loggerFactory;
-        _logger = loggerFactory.CreateLogger<CloseCommand>();
+        _logger = loggerFactory.CreateLogger<DiscardCommand>();
     }
 
     public async Task RunAsync(GitHubClientOptions options)
@@ -27,6 +27,6 @@ public class CloseCommand
             _logger.LogInformation("Closed #{IssueNumber}.", number);
         }
 
-        _logger.LogInformation("Close complete: closed {IssueCount} migrated issue(s).", issueNumbers.Count);
+        _logger.LogInformation("Discard complete: closed {IssueCount} migrated issue(s).", issueNumbers.Count);
     }
 }
