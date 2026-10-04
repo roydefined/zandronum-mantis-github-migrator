@@ -143,6 +143,26 @@ public sealed class GitHubClient : ICredentialStore
         await _rateLimiter.RunAsync(() => _client.Issue.Update(_owner, _repo, issueNumber, new IssueUpdate { State = ItemState.Closed }), true);
     }
 
+    // Issues can't be deleted through the REST API, so a discarded issue is stripped of everything that marks it as migrated instead.
+    // Returns the new title.
+    public async Task<string> DiscardIssueAsync(int issueNumber)
+    {
+        var issue = await _rateLimiter.RunAsync(() => _client.Issue.Get(_owner, _repo, issueNumber), false);
+
+        var update = new IssueUpdate
+        {
+            Title = IssueUtil.BuildDiscardedTitle(issue.Title),
+            Body = IssueUtil.RemoveTrackingMarker(issue.Body),
+            State = ItemState.Closed,
+            StateReason = ItemStateReason.NotPlanned,
+        };
+
+        update.ClearLabels();
+
+        await _rateLimiter.RunAsync(() => _client.Issue.Update(_owner, _repo, issueNumber, update), true);
+        return update.Title;
+    }
+
     // Ensures releases are ready with their attachments included.
     public async Task<Release> EnsureReleaseAsync(string tag, string body)
     {

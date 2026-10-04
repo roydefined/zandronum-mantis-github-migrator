@@ -67,6 +67,15 @@ public static partial class IssueUtil
         return match.Success ? int.Parse(match.Groups[1].Value) : null;
     }
 
+    // Without the marker an issue has no Mantis ID anymore, so migrate can never pick it up again.
+    public static string? RemoveTrackingMarker(string? body)
+        => body is null ? null : TrackingMarkerRegex().Replace(body, string.Empty).TrimEnd();
+
+    public static string BuildDiscardedTitle(string title)
+        => title.StartsWith(DiscardedTitlePrefix) ? title : DiscardedTitlePrefix + title;
+
+    private const string DiscardedTitlePrefix = "[Discarded] ";
+
     [GeneratedRegex(@"<!-- mantis-issue-id: (\d+) -->")]
     private static partial Regex TrackingMarkerRegex();
 

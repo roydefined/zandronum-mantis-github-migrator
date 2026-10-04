@@ -18,15 +18,17 @@ public class DiscardCommand
     {
         var client = await GitHubClient.CreateAsync(options, _loggerFactory);
 
+        // Lists by label rather than by tracking marker, so issues from before the marker existed are discarded too.
+        // A discarded issue loses the label, so it's never listed or discarded twice.
         var issueNumbers = await client.ListIssueNumbersByLabelAsync(IssueUtil.ImportLabelName);
-        _logger.LogInformation("Found {IssueCount} migrated issue(s) on {Owner}/{Repo}.", issueNumbers.Count, options.Owner, options.Repo);
+        _logger.LogInformation("Found {IssueCount} migrated issue(s) to discard on {Owner}/{Repo}.", issueNumbers.Count, options.Owner, options.Repo);
 
-        foreach (var number in issueNumbers)
+        for (var index = 0; index < issueNumbers.Count; index++)
         {
-            await client.CloseIssueAsync(number);
-            _logger.LogInformation("Closed #{IssueNumber}.", number);
+            var title = await client.DiscardIssueAsync(issueNumbers[index]);
+            _logger.LogInformation("[{Index}/{Total}] Discarded #{IssueNumber} \"{Title}\".", index + 1, issueNumbers.Count, issueNumbers[index], title);
         }
 
-        _logger.LogInformation("Discard complete: closed {IssueCount} migrated issue(s).", issueNumbers.Count);
+        _logger.LogInformation("Discard complete: discarded {IssueCount} migrated issue(s).", issueNumbers.Count);
     }
 }
