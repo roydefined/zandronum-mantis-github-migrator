@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using MantisGithubMigrator.Core;
 using MantisGithubMigrator.Core.MantisExport;
+using Microsoft.Extensions.Logging;
 
 namespace MantisGithubMigrator.Cli.Commands;
 
@@ -14,6 +15,13 @@ public class NormalizeCommand
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         Converters = { new JsonStringEnumConverter() },
     };
+
+    private readonly ILogger<NormalizeCommand> _logger;
+
+    public NormalizeCommand(ILoggerFactory loggerFactory)
+    {
+        _logger = loggerFactory.CreateLogger<NormalizeCommand>();
+    }
 
     public void Run(string inputPath, string outputPath)
     {
@@ -31,7 +39,9 @@ public class NormalizeCommand
         var releaseCount = attachments.Select(attachment => attachment.ReleaseTag).Distinct().Count();
         var totalMegabytes = attachments.Sum(attachment => attachment.SizeBytes) / (1024.0 * 1024.0);
 
-        Console.WriteLine($"Normalized {normalizedIssues.Count} issue(s) from '{inputPath}' to '{outputPath}'.");
-        Console.WriteLine($"Attachments: {attachments.Count} file(s), {totalMegabytes:F1} MB, spread over {releaseCount} release(s).");
+        _logger.LogInformation("Normalized {IssueCount} issue(s) with {CommentCount} comment(s) from {InputPath} to {OutputPath}.",
+            normalizedIssues.Count, normalizedIssues.Sum(issue => issue.Comments.Count), inputPath, outputPath);
+        _logger.LogInformation("Attachments: {AttachmentCount} file(s), {TotalMegabytes:F1} MB, spread over {ReleaseCount} release(s).",
+            attachments.Count, totalMegabytes, releaseCount);
     }
 }

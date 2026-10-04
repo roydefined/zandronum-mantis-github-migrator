@@ -1,6 +1,9 @@
+using MantisGithubMigrator.Cli;
 using MantisGithubMigrator.Cli.Commands;
 using MantisGithubMigrator.GitHub;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 if (args.Length == 0)
 {
@@ -13,18 +16,24 @@ var configuration = new ConfigurationBuilder()
     .AddEnvironmentVariables()
     .Build();
 
+using var loggerFactory = LoggerFactory.Create(builder => builder
+    .SetMinimumLevel(LogLevel.Information)
+    .AddConfiguration(configuration.GetSection("Logging"))
+    .AddConsole(console => console.FormatterName = CompactConsoleFormatter.Name)
+    .AddConsoleFormatter<CompactConsoleFormatter, ConsoleFormatterOptions>());
+
 switch (args[0])
 {
     case "normalize":
-        new NormalizeCommand().Run("samples/mantis_export_sample.json", "output/normalized-issues.json");
+        new NormalizeCommand(loggerFactory).Run("samples/mantis_export_sample.json", "output/normalized-issues.json");
         break;
     case "migrate":
         var options = GitHubClientOptions.FromConfiguration(configuration);
-        await new MigrateCommand().RunAsync("output/normalized-issues.json", options);
+        await new MigrateCommand(loggerFactory).RunAsync("output/normalized-issues.json", options);
         break;
     case "close":
         var closeOptions = GitHubClientOptions.FromConfiguration(configuration);
-        await new CloseCommand().RunAsync(closeOptions);
+        await new CloseCommand(loggerFactory).RunAsync(closeOptions);
         break;
     default:
         PrintUsage();

@@ -1,4 +1,5 @@
 using System.Net;
+using Microsoft.Extensions.Logging;
 using Octokit;
 
 namespace MantisGithubMigrator.GitHub;
@@ -14,11 +15,11 @@ public sealed class RateLimiter
     private static readonly TimeSpan RetryBuffer = TimeSpan.FromSeconds(5);
 
     private readonly List<DateTimeOffset> _writes = [];
-    private readonly Action<string> _log;
+    private readonly ILogger<RateLimiter> _logger;
 
-    public RateLimiter(Action<string> log)
+    public RateLimiter(ILogger<RateLimiter> logger)
     {
-        _log = log;
+        _logger = logger;
     }
 
     // Any request that hits a rate limit (primary or secondary) is retried once the limit allows it again.
@@ -39,7 +40,8 @@ public sealed class RateLimiter
             catch (ApiException ex) when (attempt <= MaxRetries && GetRetryDelay(ex, attempt) is { } delay)
             {
                 // A rate limited request is never processed, so it's safe to send it again
-                _log($"Rate limited, retrying in {delay:hh\\:mm\\:ss} (attempt {attempt}/{MaxRetries}).");
+                _logger.LogWarning("Rate limited ({StatusCode}), retrying in {Delay:hh\\:mm\\:ss} (attempt {Attempt}/{MaxRetries}).",
+                    (int)ex.StatusCode, delay, attempt, MaxRetries);
                 await Task.Delay(delay);
             }
         }
@@ -56,7 +58,7 @@ public sealed class RateLimiter
         {
             // Wait until the oldest write we still count drops out of the hour
             waitUntil = _writes[^MaxWritesPerHour].AddHours(1);
-            _log($"Hourly write limit reached, waiting {waitUntil - now:hh\\:mm\\:ss}.");
+            _logger.LogInformation("Hourly write limit of {MaxWritesPerHour} reached, waiting {Delay:hh\\:mm\\:ss}.", MaxWritesPerHour, waitUntil - now);
         }
 
         if (waitUntil > now)

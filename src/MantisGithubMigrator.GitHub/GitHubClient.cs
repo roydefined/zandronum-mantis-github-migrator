@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Octokit;
 using OctokitClient = Octokit.GitHubClient;
@@ -18,6 +19,7 @@ public sealed class GitHubClient : ICredentialStore
 
     private readonly OctokitClient _client;
     private readonly RateLimiter _rateLimiter;
+    private readonly ILogger<GitHubClient> _logger;
     private readonly string _owner;
     private readonly string _repo;
 
@@ -31,7 +33,7 @@ public sealed class GitHubClient : ICredentialStore
     private Credentials? _installationCredentials;
     private DateTimeOffset _installationTokenExpiresAt;
 
-    private GitHubClient(GitHubClientOptions options, RateLimiter rateLimiter, long installationId = 0)
+    private GitHubClient(GitHubClientOptions options, ILoggerFactory loggerFactory, long installationId = 0)
     {
         _owner = options.Owner;
         _repo = options.Repo;
@@ -39,24 +41,30 @@ public sealed class GitHubClient : ICredentialStore
         _appId = options.AppId;
         _appPrivateKeyPem = options.AppPrivateKey;
         _installationId = installationId;
-        _rateLimiter = rateLimiter;
+        _rateLimiter = new RateLimiter(loggerFactory.CreateLogger<RateLimiter>());
+        _logger = loggerFactory.CreateLogger<GitHubClient>();
         _client = new OctokitClient(ProductHeader, this);
     }
 
-    public static async Task<GitHubClient> CreateAsync(GitHubClientOptions options, Action<string> log)
+    public static async Task<GitHubClient> CreateAsync(GitHubClientOptions options, ILoggerFactory loggerFactory)
     {
-        var rateLimiter = new RateLimiter(log);
+        var logger = loggerFactory.CreateLogger<GitHubClient>();
 
         if (options.AppId is null)
-            return new GitHubClient(options, rateLimiter);
+        {
+            logger.LogInformation("Connecting to {Owner}/{Repo} with a personal access token.", options.Owner, options.Repo);
+            return new GitHubClient(options, loggerFactory);
+        }
 
         var appClient = new OctokitClient(ProductHeader)
         {
             Credentials = new Credentials(BuildAppJwt(options.AppId, options.AppPrivateKey!), AuthenticationType.Bearer),
         };
         var installation = await appClient.GitHubApps.GetRepositoryInstallationForCurrent(options.Owner, options.Repo);
+        logger.LogInformation("Connecting to {Owner}/{Repo} as GitHub App {AppId} (installation {InstallationId}).",
+            options.Owner, options.Repo, options.AppId, installation.Id);
 
-        return new GitHubClient(options, rateLimiter, installation.Id);
+        return new GitHubClient(options, loggerFactory, installation.Id);
     }
 
     public async Task EnsureLabelsAsync(IEnumerable<LabelDefinition> labels)
@@ -74,6 +82,7 @@ public sealed class GitHubClient : ICredentialStore
                 Description = label.Description,
             };
             await _rateLimiter.RunAsync(() => _client.Issue.Labels.Create(_owner, _repo, newLabel), true);
+            _logger.LogInformation("Created label {LabelName}.", label.Name);
         }
     }
 
@@ -150,7 +159,9 @@ public sealed class GitHubClient : ICredentialStore
                 Body = body,
                 Prerelease = true,
             };
-            return await _rateLimiter.RunAsync(() => _client.Repository.Release.Create(_owner, _repo, newRelease), true);
+            var release = await _rateLimiter.RunAsync(() => _client.Repository.Release.Create(_owner, _repo, newRelease), true);
+            _logger.LogInformation("Created release {Tag}.", tag);
+            return release;
         }
     }
 
@@ -197,6 +208,7 @@ public sealed class GitHubClient : ICredentialStore
         var token = await appClient.GitHubApps.CreateInstallationToken(_installationId);
         _installationCredentials = new Credentials(token.Token);
         _installationTokenExpiresAt = token.ExpiresAt;
+        _logger.LogDebug("Refreshed installation token, valid until {ExpiresAt:HH:mm:ss}.", token.ExpiresAt.ToLocalTime());
         return _installationCredentials;
     }
 
