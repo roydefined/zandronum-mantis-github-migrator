@@ -29,16 +29,21 @@ public class MigrateCommand
         var json = File.ReadAllText(inputPath);
         var issues = JsonSerializer.Deserialize<List<NormalizedIssue>>(json, InputJsonOptions)
             ?? throw new InvalidDataException($"'{inputPath}' did not contain normalized issues.");
-        _logger.LogInformation("Loaded {IssueCount} issue(s) from {InputPath}.", issues.Count, inputPath);
+        _logger.LogInformation("Loaded {InputPath}: {IssueCount} issue(s), {CommentCount} comment(s), {AttachmentCount} attachment(s), {CloseCount} to close.",
+            inputPath, issues.Count, issues.Sum(issue => issue.Comments.Count), issues.Sum(issue => issue.Attachments.Count), issues.Count(IssueUtil.IsClosed));
 
         var client = await GitHubClient.CreateAsync(options, _loggerFactory);
 
+        // For the sake of clarification everything is put into a context that clarifies what is left for an issue.
         var migratedIssues = await FindMigratedIssuesAsync(client);
-        var remainingIssues = SelectRemainingIssues(issues, migratedIssues);
+        var todos = issues.Select(issue => new IssueCompareContext(issue, migratedIssues.GetValueOrDefault(issue.MantisId))).ToList();
+        LogTodos(todos);
 
+        var remainingTodos = todos.Where(todo => !todo.IsDone).ToList();
         await EnsureLabelsAsync(client);
-        var attachmentUrls = await EnsureReleasesAsync(client, remainingIssues);
-        await MigrateIssuesAsync(client, remainingIssues, migratedIssues, attachmentUrls);
+
+        var attachmentUrls = await EnsureReleasesAsync(client, remainingTodos);
+        await MigrateIssuesAsync(client, remainingTodos, attachmentUrls);
     }
 
     // Finds what's already on GitHub through the tracking marker, so a rerun doesn't create duplicates.
@@ -59,53 +64,22 @@ public class MigrateCommand
         return issuesByMantisId.ToDictionary(group => group.Key, group => group.MaxBy(issue => issue.CommentCount)!);
     }
 
-    // Leaves out every issue that's fully migrated already, and tells which ones were cut off halfway.
-    private List<NormalizedIssue> SelectRemainingIssues(List<NormalizedIssue> issues, Dictionary<int, MigratedIssue> migratedIssues)
+    private void LogTodos(List<IssueCompareContext> todos)
     {
-        var remainingIssues = new List<NormalizedIssue>();
-        var skippedCount = 0;
-        var incompleteCount = 0;
-
-        foreach (var issue in issues)
+        // An earlier run can be cut off at any point, which leaves an issue that misses comments or wasn't closed yet.
+        foreach (var todo in todos.Where(todo => !todo.NeedsCreate && !todo.IsDone))
         {
-            if (IsComplete(issue, migratedIssues))
-            {
-                _logger.LogDebug("Skipping Mantis #{MantisId}, fully migrated as #{IssueNumber}.", issue.MantisId, migratedIssues[issue.MantisId].Number);
-                skippedCount++;
-                continue;
-            }
-
-            if (migratedIssues.TryGetValue(issue.MantisId, out var migratedIssue))
-            {
-                _logger.LogInformation("Mantis #{MantisId} was cut off halfway as #{IssueNumber}: {PostedCount}/{CommentCount} comment(s) posted{Closing}.",
-                    issue.MantisId, migratedIssue.Number, migratedIssue.CommentCount, issue.Comments.Count,
-                    IssueUtil.IsClosed(issue) && !migratedIssue.IsClosed ? " and still needs closing" : "");
-                incompleteCount++;
-            }
-
-            remainingIssues.Add(issue);
+            _logger.LogInformation("Mantis #{MantisId} was cut off halfway as #{IssueNumber}: {PostedCount}/{CommentCount} comment(s) posted{Closing}.",
+                todo.Issue.MantisId, todo.MigratedIssue!.Number, todo.PostedCommentCount, todo.Issue.Comments.Count, todo.NeedsClose ? " and still needs closing" : "");
         }
 
-        _logger.LogInformation("{SkippedCount} issue(s) already migrated, {IncompleteCount} to finish, {NewCount} to create.",
-            skippedCount, incompleteCount, remainingIssues.Count - incompleteCount);
-        return remainingIssues;
-    }
+        _logger.LogInformation("Done: {CreatedCount} issue(s) created of which {CompleteCount} complete, {CommentCount} comment(s) posted, {ClosedCount} closed.",
+            todos.Count(todo => !todo.NeedsCreate), todos.Count(todo => todo.IsDone), todos.Sum(todo => todo.PostedCommentCount),
+            todos.Count(todo => IssueUtil.IsClosed(todo.Issue) && !todo.NeedsClose));
 
-    // Tells whether an issue was fully migrated by an earlier run, so it can be skipped entirely.
-    // A run can be cut off at any point, which leaves an issue that exists but misses comments or wasn't closed yet.
-    // Comments are posted in order and the issue is closed last, so comparing those two is enough to spot that.
-    private static bool IsComplete(NormalizedIssue issue, Dictionary<int, MigratedIssue> migratedIssues)
-    {
-        // Not on GitHub at all yet.
-        if (!migratedIssues.TryGetValue(issue.MantisId, out var migratedIssue))
-            return false;
-
-        var hasAllComments = migratedIssue.CommentCount >= issue.Comments.Count;
-
-        // Only a missing close counts. An issue that should stay open but was closed by hand on GitHub is left alone.
-        var hasCorrectState = migratedIssue.IsClosed || !IssueUtil.IsClosed(issue);
-
-        return hasAllComments && hasCorrectState;
+        _logger.LogInformation("To do: create {CreateCount} issue(s), finish {FinishCount}, post {CommentCount} comment(s), close {CloseCount} and upload up to {UploadCount} attachment(s).",
+            todos.Count(todo => todo.NeedsCreate), todos.Count(todo => !todo.NeedsCreate && !todo.IsDone), todos.Sum(todo => todo.CommentsToPost.Count),
+            todos.Count(todo => todo.NeedsClose), todos.Sum(todo => todo.AttachmentsToUpload.Count));
     }
 
     private async Task EnsureLabelsAsync(GitHubClient client)
@@ -115,11 +89,11 @@ public class MigrateCommand
     }
 
     // Returns the download URL of every attachment by asset name, as GitHub reports it.
-    private async Task<Dictionary<string, string>> EnsureReleasesAsync(GitHubClient client, List<NormalizedIssue> issues)
+    private async Task<Dictionary<string, string>> EnsureReleasesAsync(GitHubClient client, List<IssueCompareContext> todos)
     {
         var attachmentUrls = new Dictionary<string, string>();
-        var attachmentsByRelease = issues
-            .SelectMany(issue => issue.Attachments)
+        var attachmentsByRelease = todos
+            .SelectMany(todo => todo.AttachmentsToUpload)
             .GroupBy(attachment => attachment.ReleaseTag)
             .ToList();
 
@@ -158,48 +132,45 @@ public class MigrateCommand
         return attachmentUrls;
     }
 
-    private async Task MigrateIssuesAsync(
-        GitHubClient client, List<NormalizedIssue> issues, Dictionary<int, MigratedIssue> migratedIssues, Dictionary<string, string> attachmentUrls)
+    private async Task MigrateIssuesAsync(GitHubClient client, List<IssueCompareContext> todos, Dictionary<string, string> attachmentUrls)
     {
         var createdCount = 0;
         var finishedCount = 0;
 
-        for (var index = 0; index < issues.Count; index++)
+        for (var index = 0; index < todos.Count; index++)
         {
-            var issue = issues[index];
-
-            // Set when an earlier run was cut off halfway through this issue.
-            var migratedIssue = migratedIssues.GetValueOrDefault(issue.MantisId);
-            var postedCount = migratedIssue?.CommentCount ?? 0;
+            var todo = todos[index];
+            var issue = todo.Issue;
+            var commentsToPost = todo.CommentsToPost;
 
             // Step 1: create the issue, unless an earlier run already did.
             int issueNumber;
-            if (migratedIssue is null)
+            if (todo.NeedsCreate)
             {
                 issueNumber = await client.CreateIssueAsync(issue.Title, IssueUtil.BuildBody(issue, attachmentUrls), IssueUtil.GetLabelNames(issue));
                 createdCount++;
                 _logger.LogInformation("[{Index}/{Total}] Created #{IssueNumber} for Mantis #{MantisId} \"{Title}\", posting {CommentCount} comment(s).",
-                    index + 1, issues.Count, issueNumber, issue.MantisId, issue.Title, issue.Comments.Count);
+                    index + 1, todos.Count, issueNumber, issue.MantisId, issue.Title, commentsToPost.Count);
             }
             else
             {
-                issueNumber = migratedIssue.Number;
+                issueNumber = todo.MigratedIssue!.Number;
                 finishedCount++;
                 _logger.LogInformation("[{Index}/{Total}] Finishing #{IssueNumber} for Mantis #{MantisId}, posting the last {MissingCount} of {CommentCount} comment(s).",
-                    index + 1, issues.Count, issueNumber, issue.MantisId, Math.Max(0, issue.Comments.Count - postedCount), issue.Comments.Count);
+                    index + 1, todos.Count, issueNumber, issue.MantisId, commentsToPost.Count, issue.Comments.Count);
             }
 
-            // Step 2: post the comments that aren't on GitHub yet. They're posted in order, so those are the last ones.
-            for (var commentIndex = postedCount; commentIndex < issue.Comments.Count; commentIndex++)
+            // Step 2: post the comments that aren't on GitHub yet.
+            for (var i = 0; i < commentsToPost.Count; i++)
             {
-                var comment = issue.Comments[commentIndex];
+                var comment = commentsToPost[i];
                 await client.CreateCommentAsync(issueNumber, IssueUtil.BuildCommentBody(comment));
                 _logger.LogInformation("Posted comment {CommentIndex}/{CommentCount} by {Author} from {CreatedAt:yyyy-MM-dd} on #{IssueNumber}.",
-                    commentIndex + 1, issue.Comments.Count, comment.Author, comment.CreatedAt, issueNumber);
+                    todo.PostedCommentCount + i + 1, issue.Comments.Count, comment.Author, comment.CreatedAt, issueNumber);
             }
 
             // Step 3: close the issue last, so a closed issue always has all its comments.
-            if (IssueUtil.IsClosed(issue) && migratedIssue?.IsClosed != true)
+            if (todo.NeedsClose)
             {
                 await client.CloseIssueAsync(issueNumber);
                 _logger.LogDebug("Closed #{IssueNumber}, Mantis status is {Status}.", issueNumber, issue.Status);
