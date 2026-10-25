@@ -61,9 +61,9 @@ public partial class Normalizer
             {
                 MantisId = issue.MantisId,
                 Title = issue.Title,
-                Description = issue.Description,
-                StepsToReproduce = issue.StepsToReproduce,
-                AdditionalInformation = issue.AdditionalInformation,
+                Description = MantisText.ToMarkdown(issue.Description),
+                StepsToReproduce = MantisText.ToMarkdown(issue.StepsToReproduce),
+                AdditionalInformation = MantisText.ToMarkdown(issue.AdditionalInformation),
                 Author = issue.Reporter,
                 CreatedAt = issue.CreatedAt,
                 UpdatedAt = issue.UpdatedAt,
@@ -83,7 +83,7 @@ public partial class Normalizer
     private static NormalizedComment NormalizeComment(MantisComment comment) => new()
     {
         Author = comment.Author,
-        Text = comment.Text,
+        Text = MantisText.ToMarkdown(comment.Text),
         CreatedAt = comment.CreatedAt,
     };
 

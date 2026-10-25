@@ -1,0 +1,99 @@
+[
+    {
+        "mantis_id": 9001,
+        "project_id": 1,
+        "reporter": "Alice",
+        "handler": "unassigned_0",
+        "priority": 10,
+        "status": 10,
+        "title": "Formatting: BBCode",
+        "description": "[b]Bold text[/b] and [B]bold in capitals[/B].\n[i]Italic text[/i] and [u]underlined text[/u].\n[color=#123456]Colored text[/color] without the color.\n\nA [url=https://example.com/download]named link[/url] and a plain one: [url]https://example.com/plain[/url]\n\n[img]https://example.com/image.png[/img]",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2020-01-01T10:00:00",
+        "updated_at": "2020-01-01T10:00:00",
+        "attachments": [],
+        "comments": []
+    },
+    {
+        "mantis_id": 9002,
+        "project_id": 1,
+        "reporter": "Bob",
+        "handler": "Alice",
+        "priority": 20,
+        "status": 80,
+        "title": "Formatting: references and mentions",
+        "description": "#1 at the start of the text, and see #2 in the middle.\n\nNot references: https://example.com/page#3, word#4, &#5; and # without a number.\n\nMentions: @user and @another-user. Not mentions: name@example.com and https://name@example.com/path\n\nAngle brackets stay visible: <placeholder> and <@user> said something.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2020-01-02T10:00:00",
+        "updated_at": "2020-01-03T10:00:00",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 9001,
+                "author": "Alice",
+                "text": "Thanks @user, this looks like a duplicate of #1.",
+                "created_at": "2020-01-02T11:00:00"
+            },
+            {
+                "comment_id": 9002,
+                "author": "Bob",
+                "text": "Fixed, resolving.",
+                "created_at": "2020-01-03T10:00:00"
+            }
+        ]
+    },
+    {
+        "mantis_id": 9003,
+        "project_id": 1,
+        "reporter": "Carol",
+        "handler": "unassigned_0",
+        "priority": 30,
+        "status": 30,
+        "title": "Formatting: quotes",
+        "description": "Text before a quote.\n[quote=Alice]A quote with an author.\nIt spans two lines.[/quote]\nText after the quote, which must not end up inside it.",
+        "steps_to_reproduce": "",
+        "additional_information": "",
+        "created_at": "2020-01-04T10:00:00",
+        "updated_at": "2020-01-04T10:00:00",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 9003,
+                "author": "Bob",
+                "text": "[quote]A quote without an author.[/quote]\nReply below it.",
+                "created_at": "2020-01-04T11:00:00"
+            },
+            {
+                "comment_id": 9004,
+                "author": "Carol",
+                "text": "[quote=Bob]Outer quote [quote=Alice]inner quote[/quote] back in the outer quote.[/quote]\nReply to both.",
+                "created_at": "2020-01-04T12:00:00"
+            }
+        ]
+    },
+    {
+        "mantis_id": 9004,
+        "project_id": 1,
+        "reporter": "Alice",
+        "handler": "Bob",
+        "priority": 40,
+        "status": 90,
+        "title": "Formatting: code blocks and plain text",
+        "description": "Text before the code with #1 and @user.\r\n[code]\r\n// Left exactly as it is: [b]not bold[/b] #1 @user <tag>\r\nint value = 1;\r\n[/code]\r\nText after the code with #2.",
+        "steps_to_reproduce": "1. Run the command.\r\n2. Look at the changed files:\r\n[code]\r\n file.txt | 3 [color=#00FF00]++[/color][color=#FF0000]-[/color]\r\n[/code]",
+        "additional_information": "Plain text that only looks like markup: [note] this stays, 0000001:0000002 and ~1.",
+        "created_at": "2020-01-05T10:00:00",
+        "updated_at": "2020-01-06T10:00:00",
+        "attachments": [],
+        "comments": [
+            {
+                "comment_id": 9005,
+                "author": "Bob",
+                "text": "Closing this one.",
+                "created_at": "2020-01-06T10:00:00"
+            }
+        ]
+    }
+]

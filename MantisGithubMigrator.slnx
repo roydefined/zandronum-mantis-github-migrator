@@ -4,4 +4,7 @@
     <Project Path="src/MantisGithubMigrator.Core/MantisGithubMigrator.Core.csproj" />
     <Project Path="src/MantisGithubMigrator.GitHub/MantisGithubMigrator.GitHub.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MantisGithubMigrator.Core.Tests/MantisGithubMigrator.Core.Tests.csproj" />
+  </Folder>
 </Solution>
