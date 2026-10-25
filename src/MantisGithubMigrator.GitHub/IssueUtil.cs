@@ -46,7 +46,7 @@ public static partial class IssueUtil
     {
         var sb = new StringBuilder();
 
-        sb.AppendLine($"> Migrated from MantisBT issue #{issue.MantisId}, originally reported by **{issue.Author}** on {FormatTimestamp(issue.CreatedAt)}.");
+        sb.AppendLine($"> Migrated from MantisBT issue `#{issue.MantisId}`, originally reported by **{issue.Author}** on {FormatTimestamp(issue.CreatedAt)}.");
         sb.AppendLine();
         sb.AppendLine(issue.Description);
 
