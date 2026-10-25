@@ -21,7 +21,8 @@
         "--project",
         "${workspaceFolder}/src/MantisGithubMigrator.Cli/MantisGithubMigrator.Cli.csproj",
         "--",
-        "normalize"
+        "normalize",
+        "${input:exportFile}"
       ],
       "group": "none",
       "problemMatcher": "$msCompile"
@@ -53,6 +54,18 @@
       ],
       "group": "none",
       "problemMatcher": "$msCompile"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "exportFile",
+      "type": "pickString",
+      "description": "Mantis export to normalize",
+      "options": [
+        "samples/mantis_export_sample.json",
+        "samples/mantis_export_formatting.json"
+      ],
+      "default": "samples/mantis_export_sample.json"
     }
   ]
 }
