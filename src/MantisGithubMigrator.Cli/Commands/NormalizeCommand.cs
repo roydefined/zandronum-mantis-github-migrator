@@ -30,7 +30,7 @@ public class NormalizeCommand
             ?? throw new InvalidDataException($"'{inputPath}' did not contain a valid MantisBT export.");
 
         var exportDirectory = Path.GetDirectoryName(Path.GetFullPath(inputPath))!;
-        var normalizedIssues = new Normalizer().Normalize(mantisIssues, exportDirectory);
+        var normalizedIssues = new Normalizer().Normalize(mantisIssues, exportDirectory, AppContext.BaseDirectory);
 
         Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
         File.WriteAllText(outputPath, JsonSerializer.Serialize(normalizedIssues, OutputJsonOptions));

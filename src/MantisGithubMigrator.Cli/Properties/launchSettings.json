@@ -10,7 +10,7 @@
     },
     "migrate": {
       "commandName": "Project",
-      "commandLineArgs": "migrate"
+      "commandLineArgs": "migrate output/normalized-issues.json"
     },
     "discard": {
       "commandName": "Project",
