@@ -32,7 +32,7 @@ public partial class Normalizer
     private const int MaxAssetsPerRelease = 1000;
     private const long MaxAssetSizeBytes = 2L * 1024 * 1024 * 1024;
 
-    public List<NormalizedIssue> Normalize(IEnumerable<MantisIssue> issues, string exportDirectory, string baseDirectory)
+    public List<NormalizedIssue> Normalize(IEnumerable<MantisIssue> issues, string exportDirectory)
     {
         var normalizedIssues = new List<NormalizedIssue>();
         var attachmentCount = 0;
@@ -53,7 +53,7 @@ public partial class Normalizer
             {
                 // Fill up a release with attachments, then move on to the next one
                 var releaseTag = $"mantis-attachments-{attachmentCount / MaxAssetsPerRelease + 1}";
-                attachments.Add(NormalizeAttachment(issue.MantisId, attachment, releaseTag, exportDirectory, baseDirectory));
+                attachments.Add(NormalizeAttachment(issue.MantisId, attachment, releaseTag, exportDirectory));
                 attachmentCount++;
             }
 
@@ -87,7 +87,7 @@ public partial class Normalizer
         CreatedAt = comment.CreatedAt,
     };
 
-    private static NormalizedAttachment NormalizeAttachment(int mantisId, MantisAttachment attachment, string releaseTag, string exportDirectory, string baseDirectory)
+    private static NormalizedAttachment NormalizeAttachment(int mantisId, MantisAttachment attachment, string releaseTag, string exportDirectory)
     {
         var fullPath = Path.GetFullPath(Path.Combine(exportDirectory, attachment.LocalPath));
         if (!File.Exists(fullPath))
@@ -101,7 +101,8 @@ public partial class Normalizer
         {
             Filename = attachment.Filename,
 
-            LocalPath = Path.GetRelativePath(baseDirectory, fullPath).Replace('\\', '/'),
+            // Full path, since migrate reads the normalized output without knowing where the export is
+            LocalPath = fullPath,
             FileType = attachment.FileType,
             SizeBytes = sizeBytes,
             AssetName = BuildAssetName(mantisId, attachment),

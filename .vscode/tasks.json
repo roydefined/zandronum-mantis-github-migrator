@@ -22,7 +22,8 @@
         "${workspaceFolder}/src/MantisGithubMigrator.Cli/MantisGithubMigrator.Cli.csproj",
         "--",
         "normalize",
-        "${input:exportFile}"
+        "${input:exportFile}",
+        "output/normalized-issues.json"
       ],
       "group": "none",
       "problemMatcher": "$msCompile"

@@ -25,11 +25,12 @@ using var loggerFactory = LoggerFactory.Create(builder => builder
 switch (args[0])
 {
     case "normalize":
-        var exportPath = Path.Combine(AppContext.BaseDirectory, args.Length > 1 ? args[1] : "samples/mantis_export_sample.json");
-        new NormalizeCommand(loggerFactory).Run(exportPath, Path.Combine(AppContext.BaseDirectory, "output/normalized-issues.json"));
+        var exportPath = args.Length > 1 ? args[1] : "samples/mantis_export_sample.json";
+        var outputPath = args.Length > 2 ? args[2] : "output/normalized-issues.json";
+        new NormalizeCommand(loggerFactory).Run(exportPath, outputPath);
         break;
     case "migrate":
-        var normalizedPath = Path.Combine(AppContext.BaseDirectory, args.Length > 1 ? args[1] : "output/normalized-issues.json");
+        var normalizedPath = args.Length > 1 ? args[1] : "output/normalized-issues.json";
         var options = GitHubClientOptions.FromConfiguration(configuration);
         await new MigrateCommand(loggerFactory).RunAsync(normalizedPath, options);
         break;
@@ -46,5 +47,5 @@ return 0;
 
 void PrintUsage()
 {
-    Console.WriteLine("Usage: migrator <normalize [export-file]|migrate [normalized-file]|discard>");
+    Console.WriteLine("Usage: migrator <normalize [export-file] [output-file]|migrate [normalized-file]|discard>");
 }

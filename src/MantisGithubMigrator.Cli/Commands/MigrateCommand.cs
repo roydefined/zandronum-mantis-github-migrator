@@ -123,7 +123,7 @@ public class MigrateCommand
                 }
 
                 var contentType = string.IsNullOrWhiteSpace(attachment.FileType) ? "application/octet-stream" : attachment.FileType;
-                attachmentUrls[attachment.AssetName] = await client.UploadAssetAsync(release, attachment.AssetName, contentType, Path.GetFullPath(attachment.LocalPath, AppContext.BaseDirectory));
+                attachmentUrls[attachment.AssetName] = await client.UploadAssetAsync(release, attachment.AssetName, contentType, attachment.LocalPath);
 
                 _logger.LogInformation("Uploaded {AssetName} ({SizeKilobytes} KB) to {Tag}.", attachment.AssetName, attachment.SizeBytes / 1024, attachments.Key);
             }

@@ -2,11 +2,11 @@
   "profiles": {
     "normalize": {
       "commandName": "Project",
-      "commandLineArgs": "normalize samples/mantis_export_sample.json"
+      "commandLineArgs": "normalize samples/mantis_export_sample.json output/normalized-issues.json"
     },
     "normalize (formatting)": {
       "commandName": "Project",
-      "commandLineArgs": "normalize samples/mantis_export_formatting.json"
+      "commandLineArgs": "normalize samples/mantis_export_formatting.json output/normalized-issues.json"
     },
     "migrate": {
       "commandName": "Project",
